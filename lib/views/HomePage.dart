@@ -21,7 +21,7 @@ class _HomrpageState extends State<Homepage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Exam Cell'),
+        title: const Text('Result Processing'), //changed from exam to result
       ),
       body: Center(
         child: Column(
