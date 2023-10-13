@@ -1,7 +1,7 @@
 import 'package:examcellapp/services/auth/auth_service.dart';
-import 'package:examcellapp/views/HomePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:examcellapp/views/Student/studenHome.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -64,13 +64,20 @@ class _LoginViewState extends State<LoginView> {
                   final email = _email.text;
                   final password = _password.text;
 
-                  User? user =
-                      await _auth.signInWithEmailAndPassword(email, password);
+                  final userC = await FirebaseAuth.instance
+                      .signInWithEmailAndPassword(
+                          email: email, password: password);
 
-                  if (user != null) {
+                  // User? user = await _auth.signInWithEmailAndPassword(
+                  //     email, password);
+
+                  if (userC != null) {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const Homepage()));
+                        builder: (context) => const StudentHome()));
+                    // return const MyHomePage(title: 'Teacher');
+                    // return const StudentHome();
                   }
+                  print(userC);
                 },
                 child: const Text("LogIn"),
               ),
