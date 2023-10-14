@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "161722356989",
+    "firebase_url": "https://examcell-993e0-default-rtdb.firebaseio.com",
+    "project_id": "examcell-993e0",
+    "storage_bucket": "examcell-993e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161722356989:android:389e92b5b5616d8fe65a94",
+        "android_client_info": {
+          "package_name": "com.example.examcellapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "161722356989-7gk67daqs76mult2kbp62760uh8fqn98.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1YpgYZvMeR4LondokOnR00bxpVva8v7U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "161722356989-7gk67daqs76mult2kbp62760uh8fqn98.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "161722356989-dau3dc05q9gahadbs0aohvpvej9ui97g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.examcellapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
