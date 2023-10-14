@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:examcellapp/views/login_view.dart';
 import 'package:examcellapp/views/Teacher/home.dart';
 import 'package:examcellapp/views/Examcell/ExamcellHome.dart';
+import 'package:examcellapp/views/Examcell/Dashboard/ModuleResultPage.dart';
 
 void main() async {
   // WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
       routes: {
         // The home screen route
         '/login/': (context) => const LoginView(), // The login screen route
+        '/moduleDetails': (context) => ModuleResultPage(),
       },
     );
   }
