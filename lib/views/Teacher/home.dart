@@ -24,8 +24,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       drawer: NavigationDrawerWidget(),
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        backgroundColor: Colors.blue, // Change this color to blue
+        title: Text('Result Processing System'),
+        titleTextStyle: TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+        ),
       ),
       body: _pages[_currentIndex], // Display the selected page
       bottomNavigationBar: BottomNavigationBar(
@@ -58,145 +62,335 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 //************************************  Profile Screen starts  ************************************/
-
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 250,
-      width: 400,
-      child: Stack(
+    return new Scaffold(
+      // appBar: new AppBar(
+      //   title: new Text("Chat Item"),
+      //   backgroundColor: Colors.lightGreen,
+      // ),
+      body: Column(
         children: [
-          Center(
-            child: Container(
-              height: 500,
-              width: 380,
-              decoration: BoxDecoration(
-                  gradient: const LinearGradient(colors: [
-                    Color.fromARGB(255, 249, 250, 250),
-                    Color.fromARGB(255, 247, 243, 243)
-                  ]),
-                  borderRadius: BorderRadius.circular(18),
-                  border: Border.all(
-                      width: 0.5, color: Color.fromARGB(255, 166, 159, 159)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color.fromARGB(255, 214, 197, 147),
-                      blurRadius: 25.0,
-                    )
-                  ]),
-            ),
+          // ChatItemScreen(),
+          // Module(),
+          DetailsItem(),
+          Divider(
+            color: Colors.blue,
+            thickness: 2,
+            indent: 1,
           ),
-          Positioned(
-            top: 0,
-            right: 10,
-            child: Container(
-              height: 80,
-              width: 80,
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 9, 10, 9),
-                shape: BoxShape.circle,
-              ),
-              child: const CircleAvatar(
-                radius: 30,
-              ),
-            ),
+          Text(
+            'List of Module you are currently teaching',
+            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
           ),
-          const Positioned(
-            top: 30,
-            left: 40,
-            child: Text(
-              "Phurpa Tshering",
-              style: TextStyle(
-                  color: Color.fromARGB(255, 3, 3, 3),
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.w700),
-            ),
-          ),
-          const Positioned(
-            top: 90,
-            left: 40,
-            child: Text(
-              "StudentID:02210215",
-              style: TextStyle(
-                  color: Color.fromARGB(255, 11, 11, 11),
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w500),
-            ),
-          ),
-          const Positioned(
-            top: 110,
-            left: 40,
-            child: Text(
-              "3rd Year Student",
-              style: TextStyle(
-                  color: Color.fromARGB(255, 11, 11, 11),
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w500),
-            ),
-          ),
-          const Positioned(
-            top: 130,
-            left: 40,
-            child: Text(
-              "Department of Information Technology",
-              style: TextStyle(
-                  color: Color.fromARGB(255, 15, 14, 14),
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w500),
-            ),
-          ),
-          Positioned(
-            bottom: 55,
-            left: 20,
-            child: SizedBox(
-              width: 300,
-              child:
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Icon(Icons.phone),
-                    Text(
-                      "+975-17800681",
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 15, 14, 14),
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ],
+          Expanded(
+            child: ListView(
+              children: <Widget>[
+                //1
+                Card(
+                  color: Color.fromARGB(255, 231, 233, 233),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      ListTile(
+                        leading: Icon(Icons.message),
+                        title: Text('CTE306'),
+                        subtitle: Text('Fifth Semester/csdd'),
+                        trailing: InkWell(
+                          onTap: () {
+                            // Navigate to the new page here when the trailing icon is tapped.
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => YourNewPage()),
+                            // );
+                            print("Next page");
+                          },
+                          child: Icon(Icons.arrow_right),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(
-                  width: 30,
+
+                //2
+                Card(
+                  color: Color.fromARGB(255, 231, 233, 233),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      ListTile(
+                        leading: Icon(Icons.message),
+                        title: Text('CTE306'),
+                        subtitle: Text('Fifth Semester/csdd'),
+                        trailing: InkWell(
+                          onTap: () {
+                            // Navigate to the new page here when the trailing icon is tapped.
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => YourNewPage()),
+                            // );
+                            print("Next page");
+                          },
+                          child: Icon(Icons.arrow_right),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Icon(Icons.email),
-                    Text(
-                      "p@gmail.com",
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 14, 15, 15),
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                )
-              ]),
+                //3
+                Card(
+                  color: Color.fromARGB(255, 231, 233, 233),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      ListTile(
+                        leading: Icon(Icons.message),
+                        title: Text('CTE306'),
+                        subtitle: Text('Fifth Semester/csdd'),
+                        trailing: InkWell(
+                          onTap: () {
+                            // Navigate to the new page here when the trailing icon is tapped.
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => YourNewPage()),
+                            // );
+                            print("Next page");
+                          },
+                          child: Icon(Icons.arrow_right),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                //4
+                Card(
+                  color: Color.fromARGB(255, 231, 233, 233),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      ListTile(
+                        leading: Icon(Icons.message),
+                        title: Text('CTE306'),
+                        subtitle: Text('Fifth Semester/csdd'),
+                        trailing: InkWell(
+                          onTap: () {
+                            // Navigate to the new page here when the trailing icon is tapped.
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => YourNewPage()),
+                            // );
+                            print("Next page");
+                          },
+                          child: Icon(Icons.arrow_right),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                //5
+                Card(
+                  color: Color.fromARGB(255, 231, 233, 233),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      ListTile(
+                        leading: Icon(Icons.message),
+                        title: Text('CTE306'),
+                        subtitle: Text('Fifth Semester/csdd'),
+                        trailing: InkWell(
+                          onTap: () {
+                            // Navigate to the new page here when the trailing icon is tapped.
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => YourNewPage()),
+                            // );
+                            print("Next page");
+                          },
+                          child: Icon(Icons.arrow_right),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                //6
+                Card(
+                  color: Color.fromARGB(255, 231, 233, 233),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      ListTile(
+                        leading: Icon(Icons.message),
+                        title: Text('CTE306'),
+                        subtitle: Text('Fifth Semester/csdd'),
+                        trailing: InkWell(
+                          onTap: () {
+                            // Navigate to the new page here when the trailing icon is tapped.
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => YourNewPage()),
+                            // );
+                            print("Next page");
+                          },
+                          child: Icon(Icons.arrow_right),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                //7
+                Card(
+                  color: Color.fromARGB(255, 231, 233, 233),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      ListTile(
+                        leading: Icon(Icons.message),
+                        title: Text('CTE306'),
+                        subtitle: Text('Fifth Semester/csdd'),
+                        trailing: InkWell(
+                          onTap: () {
+                            // Navigate to the new page here when the trailing icon is tapped.
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => YourNewPage()),
+                            // );
+                            print("Next page");
+                          },
+                          child: Icon(Icons.arrow_right),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Add more ListTiles as needed
+              ],
             ),
           ),
-          const Positioned(
-            right: 15,
-            top: 45,
-            child: Center(
-              child: Icon(
-                Icons.edit,
-              ),
-            ),
-          )
         ],
+      ),
+    );
+  }
+}
+
+class DetailsItem extends StatelessWidget {
+  final leftSection = new Container(
+    child: new CircleAvatar(
+      backgroundImage: new NetworkImage(
+          "https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg"),
+      backgroundColor: Colors.lightGreen,
+      radius: 40.0,
+    ),
+  );
+
+  //second
+  final middleSection = new Expanded(
+    child: new Container(
+      padding: new EdgeInsets.only(left: 15.0),
+      child: new Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          Container(
+            width: double
+                .infinity, // Set the width to occupy the entire available space
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.blue, width: 1.0),
+                borderRadius: BorderRadius.circular(10.0)),
+            child: Card(
+              child: new Text(
+                "Pema Galey",
+                style: new TextStyle(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16.0,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 0.5),
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.blue, width: 1.0),
+                borderRadius: BorderRadius.circular(10.0)),
+            child: Card(
+              child: new Text(
+                "TeacherID:",
+                style: new TextStyle(color: Colors.black, fontSize: 16.0),
+              ),
+            ),
+          ),
+          SizedBox(height: 0.5),
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.blue, width: 1.0),
+                borderRadius: BorderRadius.circular(10.0)),
+            child: Card(
+              child: new Text(
+                "College of Science and Technology",
+                style: new TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 0.5),
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.blue, width: 1.0),
+                borderRadius: BorderRadius.circular(10.0)),
+            child: Card(
+              child: new Text(
+                "Lecturer",
+                style: new TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 0.5),
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.blue, width: 1.0),
+                borderRadius: BorderRadius.circular(10.0)),
+            child: Card(
+              color: Colors.white,
+              child: new Text(
+                "pemagalax123gmail.com",
+                style: new TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      padding: new EdgeInsets.symmetric(vertical: 3.0, horizontal: 8.0),
+      height: 180.0,
+      child: new Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[leftSection, middleSection],
       ),
     );
   }
@@ -227,300 +421,19 @@ class UploadScreen extends StatelessWidget {
 
 //************************************  ViewResult Screen starts  ************************************/
 
-class ViewResultScreen extends StatefulWidget {
-  @override
-  _ViewResultScreenState createState() => _ViewResultScreenState();
-}
+class ViewResultScreen extends StatelessWidget {
+  const ViewResultScreen({super.key});
 
-class _ViewResultScreenState extends State<ViewResultScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              Card(
-                color: Color.fromARGB(255, 159, 193, 227),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const ListTile(
-                      leading: Icon(Icons.message),
-                      title: Text('CTE306'),
-                      subtitle: Text('Fifth Semester/done'),
-                    ),
-                    ButtonBar(
-                      children: <Widget>[
-                        //additional button can be added here, if required!!
-                        ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            // <-- Icon
-                            Icons.download,
-                            size: 24.0,
-                          ),
-                          label: Text('Download'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              //2
-              Card(
-                color: Color.fromARGB(255, 159, 193, 227),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const ListTile(
-                      leading: Icon(Icons.message),
-                      title: Text('CTE306'),
-                      subtitle: Text('Fifth Semester/done'),
-                    ),
-                    ButtonBar(
-                      children: <Widget>[
-                        //additional button can be added here, if required!!
-                        ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            // <-- Icon
-                            Icons.download,
-                            size: 24.0,
-                          ),
-                          label: Text('Download'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              //3
-              Card(
-                color: Color.fromARGB(255, 159, 193, 227),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const ListTile(
-                      leading: Icon(Icons.message),
-                      title: Text('CTE306'),
-                      subtitle: Text('Fifth Semester/done'),
-                    ),
-                    ButtonBar(
-                      children: <Widget>[
-                        //additional button can be added here, if required!!
-                        ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            // <-- Icon
-                            Icons.download,
-                            size: 24.0,
-                          ),
-                          label: Text('Download'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              //4
-              Card(
-                color: Color.fromARGB(255, 159, 193, 227),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const ListTile(
-                      leading: Icon(Icons.message),
-                      title: Text('CTE306'),
-                      subtitle: Text('Fifth Semester/done'),
-                    ),
-                    ButtonBar(
-                      children: <Widget>[
-                        //additional button can be added here, if required!!
-                        ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            // <-- Icon
-                            Icons.download,
-                            size: 24.0,
-                          ),
-                          label: Text('Download'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              //5
-              Card(
-                color: Color.fromARGB(255, 159, 193, 227),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const ListTile(
-                      leading: Icon(Icons.message),
-                      title: Text('CTE306'),
-                      subtitle: Text('Fifth Semester/done'),
-                    ),
-                    ButtonBar(
-                      children: <Widget>[
-                        //additional button can be added here, if required!!
-                        ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            // <-- Icon
-                            Icons.download,
-                            size: 24.0,
-                          ),
-                          label: Text('Download'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              //6
-              Card(
-                color: Color.fromARGB(255, 159, 193, 227),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const ListTile(
-                      leading: Icon(Icons.message),
-                      title: Text('CTE306'),
-                      subtitle: Text('Fifth Semester/done'),
-                    ),
-                    ButtonBar(
-                      children: <Widget>[
-                        //additional button can be added here, if required!!
-                        ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            // <-- Icon
-                            Icons.download,
-                            size: 24.0,
-                          ),
-                          label: Text('Download'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              //7
-              Card(
-                color: Color.fromARGB(255, 159, 193, 227),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const ListTile(
-                      leading: Icon(Icons.message),
-                      title: Text('CTE306'),
-                      subtitle: Text('Fifth Semester/done'),
-                    ),
-                    ButtonBar(
-                      children: <Widget>[
-                        //additional button can be added here, if required!!
-                        ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            // <-- Icon
-                            Icons.download,
-                            size: 24.0,
-                          ),
-                          label: Text('Download'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              //8
-              Card(
-                color: Color.fromARGB(255, 159, 193, 227),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const ListTile(
-                      leading: Icon(Icons.message),
-                      title: Text('CTE306'),
-                      subtitle: Text('Fifth Semester/done'),
-                    ),
-                    ButtonBar(
-                      children: <Widget>[
-                        //additional button can be added here, if required!!
-                        ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            // <-- Icon
-                            Icons.download,
-                            size: 24.0,
-                          ),
-                          label: Text('Download'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              //9
-              Card(
-                color: Color.fromARGB(255, 159, 193, 227),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const ListTile(
-                      leading: Icon(Icons.message),
-                      title: Text('CTE306'),
-                      subtitle: Text('Fifth Semester/done'),
-                    ),
-                    ButtonBar(
-                      children: <Widget>[
-                        //additional button can be added here, if required!!
-                        ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            // <-- Icon
-                            Icons.download,
-                            size: 24.0,
-                          ),
-                          label: Text('Download'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              //10
-              Card(
-                color: Color.fromARGB(255, 159, 193, 227),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const ListTile(
-                      leading: Icon(Icons.message),
-                      title: Text('CTE306'),
-                      subtitle: Text('Fifth Semester/done'),
-                    ),
-                    ButtonBar(
-                      children: <Widget>[
-                        //additional button can be added here, if required!!
-                        ElevatedButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            // <-- Icon
-                            Icons.download,
-                            size: 24.0,
-                          ),
-                          label: Text('Download'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+    return Center(
+      child: Card(
+        elevation: 0,
+        color: Theme.of(context).colorScheme.surfaceVariant,
+        child: const SizedBox(
+          width: 300,
+          height: 100,
+          child: Center(child: Text('Tabular form will be added')),
         ),
       ),
     );
@@ -541,7 +454,7 @@ class NavigationDrawerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Material(
-        color: Color.fromRGBO(58, 75, 205, 1),
+        color: Colors.blue,
         child: ListView(
           // padding: padding,
           children: <Widget>[

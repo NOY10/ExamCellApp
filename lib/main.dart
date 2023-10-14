@@ -1,9 +1,6 @@
 import 'package:examcellapp/views/HomePage.dart';
 import 'package:flutter/material.dart';
-import 'package:examcellapp/views/Teacher/upload.dart';
 import 'package:examcellapp/views/Teacher/home.dart';
-import 'package:examcellapp/views/Teacher/profile.dart';
-import 'package:examcellapp/views/Teacher/userpage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,11 +16,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        // useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Result Processing'), //from home.dart
+      home: const MyHomePage(
+          title: 'Result Processing'), //from (teacher)home.dart
     );
   }
 }
