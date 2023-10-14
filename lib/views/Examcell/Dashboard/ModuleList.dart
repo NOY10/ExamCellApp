@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 class ModuleList extends StatelessWidget {
   final List<String> moduleList;
   final List<String> moduleCodeList;
+  final String deptNames;
+  final String year;
 
-  ModuleList({
-    required this.moduleList,
-    required this.moduleCodeList,
-  });
+  ModuleList(
+      {required this.moduleList,
+      required this.moduleCodeList,
+      required this.deptNames,
+      required this.year});
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +18,7 @@ class ModuleList extends StatelessWidget {
       children: List.generate(moduleList.length, (index) {
         final moduleName = moduleList[index];
         final moduleCode = moduleCodeList[index];
+        final deptName = deptNames;
         return Padding(
           padding: const EdgeInsets.all(5.0),
           child: Container(
@@ -63,9 +67,11 @@ class ModuleList extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context)
-                        .pushNamed('/moduleDetails', arguments: {
+                        .pushNamed('/moduleResultPage', arguments: {
                       'moduleName': moduleName,
                       'moduleCode': moduleCode,
+                      'deptName': deptName,
+                      'year': year,
                     });
                   },
                   child: Icon(Icons.arrow_forward, color: Colors.blue),

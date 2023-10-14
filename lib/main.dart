@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       routes: {
         // The home screen route
         '/login/': (context) => const LoginView(), // The login screen route
-        '/moduleDetails': (context) => ModuleResultPage(),
+        '/moduleResultPage': (context) => ModuleResultPage(),
       },
     );
   }

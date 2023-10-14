@@ -101,6 +101,7 @@ class _DeptResultState extends State<DeptResult> {
                 return Center(
                   child: YearDepartments(
                     deptList: dept,
+                    year: (index + 1).toString(),
                     moduleData: moduleData,
                     moduleCodeData: moduleCodeData,
                   ),
@@ -127,11 +128,13 @@ class _DeptResultState extends State<DeptResult> {
 
 class YearDepartments extends StatelessWidget {
   final List<String> deptList;
+  final String year;
   final Map<String, List<String>> moduleData;
   final Map<String, List<String>> moduleCodeData;
 
   YearDepartments({
     required this.deptList,
+    required this.year,
     required this.moduleData,
     required this.moduleCodeData,
   });
@@ -159,9 +162,10 @@ class YearDepartments extends StatelessWidget {
                 title: Department(deptName: deptName),
                 children: [
                   ModuleList(
-                    moduleList: moduleData[deptName] ?? [],
-                    moduleCodeList: moduleCodeData[deptName] ?? [],
-                  ),
+                      moduleList: moduleData[deptName] ?? [],
+                      moduleCodeList: moduleCodeData[deptName] ?? [],
+                      deptNames: deptName,
+                      year: year),
                 ],
               ),
             ),
