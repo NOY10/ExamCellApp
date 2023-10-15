@@ -1,3 +1,5 @@
+import 'package:examcellapp/views/Student/stdResult.dart';
+import 'package:examcellapp/views/Student/stdprofile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -11,34 +13,78 @@ class StudentHome extends StatefulWidget {
 }
 
 class _StudentHomeState extends State<StudentHome> {
+
+  final primary = 0xFF3385FF;
+  int _currentIndex = 0;
+  final PageController _pageController = PageController();
+
+  final List<Widget> _pages = [
+    StudentProfile(),
+    StudentResult(),
+  ];
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Student"),
+        title: Row (
+          children: [
+            IconButton(
+              icon: Icon(Icons.menu, size: 30,),
+              onPressed: () => print("menu"),
+            ),
+            Text(
+              "Result Processing System",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+            ),
+          ],
+        ),
         actions: [
-          PopupMenuButton<MenuAction>(
-            onSelected: (value) async {
-              switch (value) {
-                case MenuAction.logout:
-                  final shouldLogout = await showLogOutDialog(context);
-                  if (shouldLogout) {
-                    await FirebaseAuth.instance.signOut();
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil('/login/', (_) => false);
-                  }
-              }
-            },
-            itemBuilder: (context) {
-              return [
-                const PopupMenuItem<MenuAction>(
-                  value: MenuAction.logout,
-                  child: Text("Log out"),
-                ),
-              ];
-            },
+          IconButton(
+            icon: Icon(Icons.notifications, size: 30,),
+            onPressed: () => print("notification"),
           )
         ],
+        backgroundColor: Color(primary),
+      ),
+      //Added Page view for tab slider
+      body: PageView(
+        controller: _pageController,
+        children: _pages,
+        onPageChanged: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color(primary),
+        selectedItemColor: Colors.white,
+        currentIndex: _currentIndex,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle_rounded, size: 30,),
+            label: 'Profile',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.remove_red_eye, size: 30,),
+            label: 'Result',
+          ),
+        ],
+        //added animation so it aligns with the page slider
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+            _pageController.animateToPage(
+              index,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.easeInOut,
+            );
+          });
+        },
       ),
     );
   }
