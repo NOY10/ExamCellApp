@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:examcellapp/views/Examcell/Dashboard/ModuleList.dart';
 
 class DeptResult extends StatefulWidget {
   const DeptResult({Key? key}) : super(key: key);
@@ -31,7 +32,34 @@ class _DeptResultState extends State<DeptResult> {
     'Electronics & Communication Engineering',
     'Electrical Engineering',
     'Information Technology',
+    'Instrumentation and Control Engineering',
   ];
+
+  final Map<String, List<String>> moduleData = {
+    'Architecture Department': ['Module A', 'Module B', 'Module C'],
+    'Civil Engineering': ['Module X', 'Module Y', 'Module Z'],
+    'Electronics & Communication Engineering': [
+      'Module X',
+      'Module Y',
+      'Module Z'
+    ],
+    'Electrical Engineering': ['Module X', 'Module Y', 'Module Z'],
+    'Information Technology': ['Module X', 'Module Y', 'Module Z'],
+    'Instrumentation and Control Engineering': [
+      'Module X',
+      'Module Y',
+      'Module Z'
+    ],
+  };
+
+  final Map<String, List<String>> moduleCodeData = {
+    'Architecture Department': ['CTE101', 'CTE201', 'CTE301'],
+    'Civil Engineering': ['CE101', 'CE201', 'CE301'],
+    'Electronics & Communication Engineering': ['ECE101', 'ECE201', 'ECE301'],
+    'Electrical Engineering': ['EE101', 'EE201', 'EE301'],
+    'Information Technology': ['IT101', 'IT201', 'IT301'],
+    'Instrumentation and Control Engineering': ['ICE101', 'ICE201', 'ICE301'],
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +99,12 @@ class _DeptResultState extends State<DeptResult> {
               controller: _pageController,
               children: List.generate(Years.length, (index) {
                 return Center(
-                  child: YearDepartments(deptList: dept),
+                  child: YearDepartments(
+                    deptList: dept,
+                    year: (index + 1).toString(),
+                    moduleData: moduleData,
+                    moduleCodeData: moduleCodeData,
+                  ),
                 );
               }),
               onPageChanged: (index) {
@@ -95,29 +128,50 @@ class _DeptResultState extends State<DeptResult> {
 
 class YearDepartments extends StatelessWidget {
   final List<String> deptList;
-  YearDepartments({required this.deptList});
+  final String year;
+  final Map<String, List<String>> moduleData;
+  final Map<String, List<String>> moduleCodeData;
+
+  YearDepartments({
+    required this.deptList,
+    required this.year,
+    required this.moduleData,
+    required this.moduleCodeData,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: deptList.map((deptName) {
-        return Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  blurRadius: 2.0,
-                  offset: const Offset(0, 4),
-                ),
-              ],
+    return Container(
+      height: 400,
+      child: ListView(
+        children: deptList.map((deptName) {
+          return Padding(
+            padding: const EdgeInsets.all(5),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 2.0,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: ExpansionTile(
+                title: Department(deptName: deptName),
+                children: [
+                  ModuleList(
+                      moduleList: moduleData[deptName] ?? [],
+                      moduleCodeList: moduleCodeData[deptName] ?? [],
+                      deptNames: deptName,
+                      year: year),
+                ],
+              ),
             ),
-            child: Department(deptName: deptName),
-          ),
-        );
-      }).toList(),
+          );
+        }).toList(),
+      ),
     );
   }
 }
@@ -134,17 +188,25 @@ class Department extends StatelessWidget {
         children: [
           Container(
             color: Colors.blue,
-            width: MediaQuery.of(context).size.width / 6,
+            width: MediaQuery.of(context).size.width / 7,
           ),
-          Container(
-            width: MediaQuery.of(context).size.width / 2,
-            alignment: Alignment.center,
-            child: Text(
-              deptName,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 12,
-              ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Text(
+                    deptName,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 11,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
