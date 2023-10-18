@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:examcellapp/views/Examcell/NavBar.dart';
 
 enum MenuAction { logout }
 
@@ -14,6 +15,7 @@ class _StudentHomeState extends State<StudentHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(),
       appBar: AppBar(
         title: const Text("Student"),
         actions: [
