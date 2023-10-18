@@ -8,7 +8,7 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       // drawer: NavigationDrawerWidget(), //enable it if you want to have the drawer in the page
       appBar: AppBar(
-        title: Text('Profile'),
+        title: Text('Setting'),
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 39, 121, 189),
       ),

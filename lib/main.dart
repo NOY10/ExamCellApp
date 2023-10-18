@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:examcellapp/views/login_view.dart';
-import 'package:examcellapp/views/Teacher/home.dart';
+import 'package:examcellapp/views/Teacher/TeacherHome.dart';
 import 'package:examcellapp/views/Examcell/ExamcellHome.dart';
 import 'package:examcellapp/views/Examcell/Dashboard/ModuleResultPage.dart';
 
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const ExamcellHome(),
+      home: const StudentHome(),
       routes: {
         // The home screen route
         '/login/': (context) => const LoginView(), // The login screen route
