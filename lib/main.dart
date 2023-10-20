@@ -64,7 +64,7 @@ class _HomepageState extends State<Homepage> {
               final user = FirebaseAuth.instance.currentUser;
 
               if (user != null) {
-                return const StudentHome();
+                return const MyHomePage();
               } else {
                 return const LoginView();
               }

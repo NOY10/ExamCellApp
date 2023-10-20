@@ -105,6 +105,8 @@ class _NavBarState extends State<NavBar> {
       child: Material(
         color: Colors.white,
         child: ListView(
+          shrinkWrap:
+              true, // Allow the ListView to take up only the necessary vertical space
           // padding: padding,
           children: <Widget>[
             buildHeader(
@@ -116,8 +118,16 @@ class _NavBarState extends State<NavBar> {
                           name: name,
                           urlImage: urlImage,
                         )))),
-            const SizedBox(height: 16),
-            buildSearchField(),
+            const Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal:
+                      8.0), // to set the desired space in the front or end
+              child: Divider(
+                color: Colors.black,
+                height: 5,
+              ),
+            ),
+            // buildSearchField(),
             const SizedBox(height: 16),
 
             buildMenuItem(
@@ -137,12 +147,8 @@ class _NavBarState extends State<NavBar> {
               icon: Icons.settings_outlined,
               onclicked: () => selectedItem(context, 0),
             ),
-
-            const SizedBox(height: 12),
-            const Divider(color: Colors.black), //divider to create the section
             const SizedBox(
-              height: 24,
-              width: 20,
+              height: 16,
             ),
             buildMenuItem(
               text: 'Help',
@@ -150,6 +156,18 @@ class _NavBarState extends State<NavBar> {
               //change the index
               // onclicked: () => selectedItem(context, 0),
             ),
+
+            const SizedBox(height: 12),
+            const Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal:
+                      16.0), // Adjust the value to set the desired space
+              child: Divider(
+                color: Colors.black,
+                height: 5,
+              ),
+            ),
+
             const SizedBox(height: 5),
             buildMenuItem(
               text: 'Log Out',
@@ -173,7 +191,7 @@ class _NavBarState extends State<NavBar> {
           onTap: onClicked, // to navigate to the page by when we click on photo
           child: Container(
             padding: padding.add(EdgeInsets.symmetric(vertical: 30)),
-            color: Colors.blue,
+            // color: Colors.blue,
             child: Row(
               children: [
                 CircleAvatar(
@@ -195,41 +213,15 @@ class _NavBarState extends State<NavBar> {
                 ),
                 //edit or plus icon==>> to add the functionalities of editing the details
                 Spacer(),
-                const CircleAvatar(
-                  radius: 2,
-                  backgroundColor: Color.fromRGBO(203, 204, 208, 1),
-                  child: Icon(Icons.add_comment_outlined, color: Colors.black),
-                )
+                // const CircleAvatar(
+                //   radius: 2,
+                //   backgroundColor: Color.fromRGBO(203, 204, 208, 1),
+                //   child: Icon(Icons.add_comment_outlined, color: Colors.black),
+                // )
               ],
             ),
           ));
 
-  //buildSearchField functions implementation
-  Widget buildSearchField() {
-    final color = const Color.fromARGB(255, 10, 10, 10);
-
-    return TextField(
-      style: TextStyle(color: color),
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 12),
-        hintText: 'Search',
-        hintStyle: TextStyle(color: color),
-        prefixIcon: Icon(Icons.search, color: color),
-        filled: true,
-        fillColor: Colors.white12,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
-          borderSide: BorderSide(color: color.withOpacity(0.7)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
-          borderSide: BorderSide(color: color.withOpacity(0.7)),
-        ),
-      ),
-    );
-  }
-
-//search functions ends
   //build MenuItem
   Widget buildMenuItem({
     required String text,
@@ -240,8 +232,22 @@ class _NavBarState extends State<NavBar> {
     final hoverColor = Colors.white70;
 
     return ListTile(
-      leading: Icon(icon, color: Color),
-      title: Text(text, style: TextStyle(color: Color)),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
+      leading: Icon(
+        icon,
+        color: Color,
+        size: 30,
+      ),
+      title: Row(
+        children: [
+          SizedBox(width: 15.0),
+          Text(text,
+              style: TextStyle(
+                color: Color,
+                fontSize: 20,
+              )),
+        ],
+      ),
       hoverColor: hoverColor,
       onTap: onclicked,
     );
