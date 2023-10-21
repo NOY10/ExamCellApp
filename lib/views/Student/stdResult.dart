@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 class StudentResult extends StatelessWidget {
   const StudentResult({super.key});
 
+  final FONT_SIZE = 12;
+  final TEXT_COLOR = 0xFF1A1717;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

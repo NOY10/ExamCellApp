@@ -117,7 +117,7 @@ class _NavBarState extends State<NavBar> {
                           urlImage: urlImage,
                         )))),
             const SizedBox(height: 16),
-            buildSearchField(),
+            // buildSearchField(),
             const SizedBox(height: 16),
 
             buildMenuItem(
@@ -173,7 +173,7 @@ class _NavBarState extends State<NavBar> {
           onTap: onClicked, // to navigate to the page by when we click on photo
           child: Container(
             padding: padding.add(EdgeInsets.symmetric(vertical: 30)),
-            color: Colors.blue,
+            // color: Colors.blue,
             child: Row(
               children: [
                 CircleAvatar(
@@ -195,11 +195,11 @@ class _NavBarState extends State<NavBar> {
                 ),
                 //edit or plus icon==>> to add the functionalities of editing the details
                 Spacer(),
-                const CircleAvatar(
-                  radius: 2,
-                  backgroundColor: Color.fromRGBO(203, 204, 208, 1),
-                  child: Icon(Icons.add_comment_outlined, color: Colors.black),
-                )
+                // const CircleAvatar(
+                //   radius: 2,
+                //   backgroundColor: Color.fromRGBO(203, 204, 208, 1),
+                //   child: Icon(Icons.add_comment_outlined, color: Colors.black),
+                // )
               ],
             ),
           ));

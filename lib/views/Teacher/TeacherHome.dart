@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'userpage.dart';
-import 'profile.dart';
-import 'upload.dart';
+import 'Setting.dart';
+import 'About.dart';
+import 'package:examcellapp/views/Examcell/NavBar.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -22,11 +22,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavigationDrawerWidget(),
+      drawer: NavBar(),
       appBar: AppBar(
         backgroundColor: Colors.blue, // Change this color to blue
-        title: Text('Result Processing System'),
-        titleTextStyle: TextStyle(
+        title: const Text('Result Processing System'),
+        titleTextStyle: const TextStyle(
           color: Colors.white,
           fontSize: 20,
         ),
@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       // appBar: new AppBar(
       //   title: new Text("Chat Item"),
       //   backgroundColor: Colors.lightGreen,
@@ -75,12 +75,12 @@ class ProfileScreen extends StatelessWidget {
           // ChatItemScreen(),
           // Module(),
           DetailsItem(),
-          Divider(
+          const Divider(
             color: Colors.blue,
             thickness: 2,
             indent: 1,
           ),
-          Text(
+          const Text(
             'List of Module you are currently teaching',
             style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
           ),
@@ -89,28 +89,39 @@ class ProfileScreen extends StatelessWidget {
               children: <Widget>[
                 //1
                 Card(
-                  color: Color.fromARGB(255, 231, 233, 233),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      ListTile(
-                        leading: Icon(Icons.message),
-                        title: Text('CTE306'),
-                        subtitle: Text('Fifth Semester/csdd'),
-                        trailing: InkWell(
-                          onTap: () {
-                            // Navigate to the new page here when the trailing icon is tapped.
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (context) => YourNewPage()),
-                            // );
-                            print("Next page");
-                          },
-                          child: Icon(Icons.arrow_right),
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        left: 1), // Add a left margin of 15 pixels
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        left: BorderSide(
+                          color: Colors.blue, // Set the border color to blue
+                          width: 45, // Set the border width to 15 pixels
                         ),
                       ),
-                    ],
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        ListTile(
+                          leading: Icon(Icons.message),
+                          title: Text('CTE306'),
+                          subtitle: Text('Fifth Semester/csdd'),
+                          trailing: InkWell(
+                            onTap: () {
+                              // Navigate to the new page here when the trailing icon is tapped.
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (context) => YourNewPage()),
+                              // );
+                              print("Next page");
+                            },
+                            child: Icon(Icons.arrow_right),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
 
@@ -283,9 +294,9 @@ class ProfileScreen extends StatelessWidget {
 }
 
 class DetailsItem extends StatelessWidget {
-  final leftSection = new Container(
-    child: new CircleAvatar(
-      backgroundImage: new NetworkImage(
+  final leftSection = Container(
+    child: const CircleAvatar(
+      backgroundImage: NetworkImage(
           "https://content-static.upwork.com/uploads/2014/10/01073427/profilephoto1.jpg"),
       backgroundColor: Colors.lightGreen,
       radius: 40.0,
@@ -293,10 +304,10 @@ class DetailsItem extends StatelessWidget {
   );
 
   //second
-  final middleSection = new Expanded(
-    child: new Container(
-      padding: new EdgeInsets.only(left: 15.0),
-      child: new Column(
+  final middleSection = Expanded(
+    child: Container(
+      padding: const EdgeInsets.only(left: 15.0),
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
@@ -306,10 +317,10 @@ class DetailsItem extends StatelessWidget {
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.blue, width: 1.0),
                 borderRadius: BorderRadius.circular(10.0)),
-            child: Card(
-              child: new Text(
+            child: const Card(
+              child: Text(
                 "Pema Galey",
-                style: new TextStyle(
+                style: TextStyle(
                   color: Colors.black87,
                   fontWeight: FontWeight.w600,
                   fontSize: 16.0,
@@ -317,16 +328,16 @@ class DetailsItem extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 0.5),
+          const SizedBox(height: 0.5),
           Container(
             width: double.infinity,
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.blue, width: 1.0),
                 borderRadius: BorderRadius.circular(10.0)),
-            child: Card(
-              child: new Text(
+            child: const Card(
+              child: Text(
                 "TeacherID:",
-                style: new TextStyle(color: Colors.black, fontSize: 16.0),
+                style: TextStyle(color: Colors.black, fontSize: 16.0),
               ),
             ),
           ),
@@ -336,26 +347,26 @@ class DetailsItem extends StatelessWidget {
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.blue, width: 1.0),
                 borderRadius: BorderRadius.circular(10.0)),
-            child: Card(
-              child: new Text(
+            child: const Card(
+              child: Text(
                 "College of Science and Technology",
-                style: new TextStyle(
+                style: TextStyle(
                   color: Colors.black,
                   fontSize: 16.0,
                 ),
               ),
             ),
           ),
-          SizedBox(height: 0.5),
+          const SizedBox(height: 0.5),
           Container(
             width: double.infinity,
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.blue, width: 1.0),
                 borderRadius: BorderRadius.circular(10.0)),
-            child: Card(
-              child: new Text(
+            child: const Card(
+              child: Text(
                 "Lecturer",
-                style: new TextStyle(
+                style: TextStyle(
                   color: Colors.black,
                   fontSize: 16.0,
                 ),
@@ -368,11 +379,11 @@ class DetailsItem extends StatelessWidget {
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.blue, width: 1.0),
                 borderRadius: BorderRadius.circular(10.0)),
-            child: Card(
+            child: const Card(
               color: Colors.white,
-              child: new Text(
+              child: Text(
                 "pemagalax123gmail.com",
-                style: new TextStyle(
+                style: TextStyle(
                   color: Colors.black,
                   fontSize: 16.0,
                 ),
@@ -385,10 +396,10 @@ class DetailsItem extends StatelessWidget {
   );
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      padding: new EdgeInsets.symmetric(vertical: 3.0, horizontal: 8.0),
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 8.0),
       height: 180.0,
-      child: new Row(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[leftSection, middleSection],
       ),
@@ -441,176 +452,177 @@ class ViewResultScreen extends StatelessWidget {
 }
 //************************************  ViewResult Screen  ends ************************************/
 
-//************************************  NavigationDrawer/side navigation starts  *********************************/
-class NavigationDrawerWidget extends StatelessWidget {
-  NavigationDrawerWidget({Key? key}) : super(key: key);
-  final padding = EdgeInsets.symmetric(horizontal: 20);
-  final name = 'Phurpa Tshering';
-  final email = '02210215.cst@rub.edu.bt';
-  final urlImage =
-      'https://unsplash.com/photos/Kt8eGw8_S8Y/download?ixid=M3wxMjA3fDB8MXxzZWFyY2h8NXx8YW5pbWF0ZWQlMjBtYW58ZW58MHx8fHwxNjk2OTUzNTU5fDA&force=true'; //change the photo url
+// //************************************  NavigationDrawer/side navigation starts  *********************************/
+// class NavigationDrawerWidget extends StatelessWidget {
+//   NavigationDrawerWidget({Key? key}) : super(key: key);
+//   final padding = EdgeInsets.symmetric(horizontal: 20);
+//   String name = 'Phurpa Tshering';
+//   String email = '02210215.cst@rub.edu.bt';
+//   String urlImage =
+//       'https://unsplash.com/photos/Kt8eGw8_S8Y/download?ixid=M3wxMjA3fDB8MXxzZWFyY2h8NXx8YW5pbWF0ZWQlMjBtYW58ZW58MHx8fHwxNjk2OTUzNTU5fDA&force=true'; //change the photo url
 
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: Material(
-        color: Colors.blue,
-        child: ListView(
-          // padding: padding,
-          children: <Widget>[
-            buildHeader(
-                urlImage: urlImage,
-                name: name,
-                email: email,
-                onClicked: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => UserPage(
-                          name: name,
-                          urlImage: urlImage,
-                        )))),
-            const SizedBox(height: 12),
-            buildSearchField(),
-            const SizedBox(height: 24),
+//   @override
+//   Widget build(BuildContext context) {
+//     return Drawer(
+//       child: Material(
+//         color: Colors.blue,
+//         child: ListView(
+//           // padding: padding,
+//           children: <Widget>[
+//             buildHeader(
+//                 urlImage: urlImage,
+//                 name: name,
+//                 email: email,
+//                 onClicked: () => Navigator.of(context).push(MaterialPageRoute(
+//                     builder: (context) => UserPage(
+//                           name: name,
+//                           urlImage: urlImage,
+//                         )))),
+//             const SizedBox(height: 15),
+//             buildSearchField(),
+//             const SizedBox(height: 12),
+//             buildMenuItem(
+//               text: 'Profile',
+//               icon: Icons.people,
+//               onclicked: () => selectedItem(context, 0),
+//             ),
+//             const SizedBox(height: 12),
+//             buildMenuItem(
+//               text: 'Upload Result',
+//               icon: Icons.upload,
+//               onclicked: () => selectedItem(context, 1),
+//             ),
+//             const SizedBox(height: 16),
+//             buildMenuItem(
+//               text: 'View Result',
+//               icon: Icons.message,
+//               onclicked: () => selectedItem(context, 1),
+//             ),
 
-            buildMenuItem(
-              text: 'Profile',
-              icon: Icons.people,
-              onclicked: () => selectedItem(context, 0),
-            ),
-            const SizedBox(height: 16),
-            buildMenuItem(
-              text: 'Upload Result',
-              icon: Icons.upload,
-              onclicked: () => selectedItem(context, 1),
-            ),
-            const SizedBox(height: 16),
-            buildMenuItem(
-              text: 'View Result',
-              icon: Icons.message,
-              onclicked: () => selectedItem(context, 1),
-            ),
+//             const SizedBox(height: 24),
+//             const Divider(
+//                 color: Colors.white70), //divider to create the section
+//             const SizedBox(height: 24),
+//             buildMenuItem(
+//               text: 'Setting',
+//               icon: Icons.settings,
+//               //change the index
+//               // onclicked: () => selectedItem(context, 0),
+//             ),
+//             const SizedBox(height: 16),
+//             buildMenuItem(
+//               text: 'Help',
+//               icon: Icons.help,
+//               // onclicked: () => ,
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
 
-            const SizedBox(height: 24),
-            Divider(color: Colors.white70), //divider to create the section
-            const SizedBox(height: 24),
-            buildMenuItem(
-              text: 'Setting',
-              icon: Icons.settings,
-              //change the index
-              // onclicked: () => selectedItem(context, 0),
-            ),
-            const SizedBox(height: 16),
-            buildMenuItem(
-              text: 'Help',
-              icon: Icons.help,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+//   // buildheader
+//   Widget buildHeader({
+//     required String urlImage,
+//     required String name,
+//     required String email,
+//     required VoidCallback onClicked,
+//   }) =>
+//       InkWell(
+//           onTap: onClicked, // to navigate to the page by when we click on photo
+//           child: Container(
+//             padding: padding.add(EdgeInsets.symmetric(vertical: 40)),
+//             child: Row(
+//               children: [
+//                 CircleAvatar(
+//                     radius: 30, backgroundImage: NetworkImage(urlImage)),
+//                 SizedBox(width: 20),
+//                 Column(
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: [
+//                     Text(
+//                       name,
+//                       style: TextStyle(fontSize: 20, color: Colors.white),
+//                     ),
+//                     const SizedBox(height: 4),
+//                     Text(
+//                       email,
+//                       style: TextStyle(fontSize: 14, color: Colors.white),
+//                     ),
+//                   ],
+//                 ),
+//                 //edit or plus icon==>> to add the functionalities of editing the details
+//                 Spacer(),
+//                 const CircleAvatar(
+//                   radius: 2,
+//                   backgroundColor: Color.fromRGBO(30, 68, 168, 1),
+//                   child: Icon(Icons.add_comment_outlined, color: Colors.white),
+//                 )
+//               ],
+//             ),
+//           ));
 
-  //buildheader
-  Widget buildHeader({
-    required String urlImage,
-    required String name,
-    required String email,
-    required VoidCallback onClicked,
-  }) =>
-      InkWell(
-          onTap: onClicked, // to navigate to the page by when we click on photo
-          child: Container(
-            padding: padding.add(EdgeInsets.symmetric(vertical: 40)),
-            child: Row(
-              children: [
-                CircleAvatar(
-                    radius: 30, backgroundImage: NetworkImage(urlImage)),
-                SizedBox(width: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      email,
-                      style: TextStyle(fontSize: 14, color: Colors.white),
-                    ),
-                  ],
-                ),
-                //edit or plus icon==>> to add the functionalities of editing the details
-                Spacer(),
-                CircleAvatar(
-                  radius: 2,
-                  backgroundColor: Color.fromRGBO(30, 68, 168, 1),
-                  child: Icon(Icons.add_comment_outlined, color: Colors.white),
-                )
-              ],
-            ),
-          ));
+//   //buildSearchField functions implementation
+//   Widget buildSearchField() {
+//     final color = Colors.white;
 
-  //buildSearchField functions implementation
-  Widget buildSearchField() {
-    final color = Colors.white;
+//     return TextField(
+//       style: TextStyle(color: color),
+//       decoration: InputDecoration(
+//         contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+//         hintText: 'Search',
+//         hintStyle: TextStyle(color: color),
+//         prefixIcon: Icon(Icons.search, color: color),
+//         filled: true,
+//         fillColor: Colors.white12,
+//         enabledBorder: OutlineInputBorder(
+//           borderRadius: BorderRadius.circular(5),
+//           borderSide: BorderSide(color: color.withOpacity(0.7)),
+//         ),
+//         focusedBorder: OutlineInputBorder(
+//           borderRadius: BorderRadius.circular(5),
+//           borderSide: BorderSide(color: color.withOpacity(0.7)),
+//         ),
+//       ),
+//     );
+//   } //search functions ends
 
-    return TextField(
-      style: TextStyle(color: color),
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-        hintText: 'Search',
-        hintStyle: TextStyle(color: color),
-        prefixIcon: Icon(Icons.search, color: color),
-        filled: true,
-        fillColor: Colors.white12,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
-          borderSide: BorderSide(color: color.withOpacity(0.7)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5),
-          borderSide: BorderSide(color: color.withOpacity(0.7)),
-        ),
-      ),
-    );
-  } //search functions ends
+//   //build MenuItem
+//   Widget buildMenuItem({
+//     required String text,
+//     required IconData icon,
+//     VoidCallback? onclicked,
+//   }) {
+//     final Color = Colors.white;
+//     final hoverColor = Colors.white70;
 
-  //build MenuItem
-  Widget buildMenuItem({
-    required String text,
-    required IconData icon,
-    VoidCallback? onclicked,
-  }) {
-    final Color = Colors.white;
-    final hoverColor = Colors.white70;
+//     return ListTile(
+//       leading: Icon(icon, color: Color),
+//       title: Text(text, style: TextStyle(color: Color)),
+//       hoverColor: hoverColor,
+//       onTap: onclicked,
+//     );
+//   }
 
-    return ListTile(
-      leading: Icon(icon, color: Color),
-      title: Text(text, style: TextStyle(color: Color)),
-      hoverColor: hoverColor,
-      onTap: onclicked,
-    );
-  }
-
-  //selectItem method
-  void selectedItem(BuildContext context, int index) {
-    Navigator.of(context)
-        .pop(); /*to automatically close the drawer after tapping back button,
-        also if you want to include the navigation bar in other page simply paste drawer: NavigationDrawerWidget(), under the scaffold
-        */
-    switch (index) {
-      case 0:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ProfilePage(),
-        ));
-        break;
-      case 1:
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => UploadPage(),
-        ));
-        break;
-      //add here if you wish//==> to navigate to other pages add here
-    }
-  }
-}
-//************************************  NavigationDrawer/side navigation ends  *********************************/
+//   //selectItem method
+//   void selectedItem(BuildContext context, int index) {
+//     Navigator.of(context)
+//         .pop(); /*to automatically close the drawer after tapping back button,
+//         also if you want to include the navigation bar in other page simply paste drawer: NavigationDrawerWidget(), under the scaffold
+//         */
+//     switch (index) {
+//       case 0:
+//         Navigator.of(context).push(MaterialPageRoute(
+//           builder: (context) => ProfilePage(),
+//         ));
+//         break;
+//       case 1:
+//         Navigator.of(context).push(MaterialPageRoute(
+//           builder: (context) => UploadPage(),
+//         ));
+//         break;
+//       //add here if you wish//==> to navigate to other pages add here
+//     }
+//   }
+// }
+// //************************************  NavigationDrawer/side navigation ends  *********************************/

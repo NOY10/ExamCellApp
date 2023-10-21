@@ -1,3 +1,4 @@
+import 'package:examcellapp/views/Student/stdDashboard.dart';
 import 'package:examcellapp/views/Student/stdResult.dart';
 import 'package:examcellapp/views/Student/stdprofile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,7 +21,7 @@ class _StudentHomeState extends State<StudentHome> {
   final PageController _pageController = PageController();
 
   final List<Widget> _pages = [
-    StudentProfile(),
+    StudentDashboard(),
     StudentResult(),
   ];
   
@@ -31,15 +32,11 @@ class _StudentHomeState extends State<StudentHome> {
       appBar: AppBar(
         title: Row (
           children: [
-            IconButton(
-              icon: Icon(Icons.menu, size: 30,),
-              onPressed: () => print("menu"),
-            ),
             Text(
               "Result Processing System",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 20,
+                fontSize: 18,
               ),
             ),
           ],
