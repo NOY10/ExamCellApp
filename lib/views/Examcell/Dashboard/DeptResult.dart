@@ -84,7 +84,7 @@ class _DeptResultState extends State<DeptResult> {
                     alignment: Alignment.center,
                     child: Text(
                       Years[index],
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
@@ -148,13 +148,13 @@ class YearDepartments extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.all(5),
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey,
                     blurRadius: 2.0,
-                    offset: const Offset(0, 4),
+                    offset: Offset(0, 4),
                   ),
                 ],
               ),
