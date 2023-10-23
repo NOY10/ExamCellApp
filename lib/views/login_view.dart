@@ -100,19 +100,6 @@ class _LoginState extends State<Login> {
                 child: Column(
                   verticalDirection: VerticalDirection.down,
                   children: [
-                    Container(
-                      color: Colors.white,
-                      child: Center(
-                        child: Text(
-                          'Login',
-                          style: TextStyle(
-                            color: Color(0xFF0028A8),
-                            fontSize: 40,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ),
-                    ),
                     SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40),

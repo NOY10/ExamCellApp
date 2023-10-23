@@ -5,8 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:examcellapp/views/Examcell/NavBar.dart';
 
-enum MenuAction { logout }
-
 class StudentHome extends StatefulWidget {
   const StudentHome({super.key});
 
@@ -35,22 +33,28 @@ class _StudentHomeState extends State<StudentHome> {
       appBar: AppBar(
         title: Text(
           getAppBarTitle(),
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 18,
           ),
         ),
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.notifications,
+              color: const Color.fromARGB(255, 238, 235, 235),
               size: 30,
             ),
             onPressed: () => print("notification"),
           )
         ],
         backgroundColor: Color(primary),
+        iconTheme: const IconThemeData(
+          color:
+              Colors.white, // Set the icon color of the hamburger menu to white
+        ),
       ),
+
       // Added Page view for tab slider
       body: PageView(
         controller: _pageController,
@@ -95,28 +99,4 @@ class _StudentHomeState extends State<StudentHome> {
       ),
     );
   }
-}
-
-Future<bool> showLogOutDialog(BuildContext context) {
-  return showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: const Text("Sign Out"),
-        content: const Text("Are You sure you want to sign out?"),
-        actions: [
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-              child: const Text("Cancel")),
-          TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(true);
-              },
-              child: const Text("Log out")),
-        ],
-      );
-    },
-  ).then((value) => value ?? false);
 }

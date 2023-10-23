@@ -3,84 +3,6 @@ import 'package:examcellapp/views/Teacher/Setting.dart';
 import 'package:examcellapp/views/Teacher/About.dart';
 import 'package:examcellapp/views/Teacher/userpage.dart';
 
-// class NavBar extends StatelessWidget {
-//   const NavBar({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Drawer(
-//       child: ListView(children: [
-//         const SizedBox(
-//           height: 65,
-//           width: double.infinity,
-//           child: DrawerHeader(
-//             decoration: BoxDecoration(color: Colors.blue),
-//             child: Text(
-//               'Student Result System',
-//               style: TextStyle(color: Colors.white),
-//             ),
-//           ),
-//         ),
-//         ListTile(
-//           contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
-//           dense: true, // Reduce ListTile height
-//           leading: Icon(Icons.dark_mode_outlined),
-//           title: Text(
-//             "Dark Mode",
-//             style: TextStyle(fontSize: 14.0),
-//           ),
-//           onTap: () => null,
-//         ),
-//         const Divider(),
-//         ListTile(
-//           contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
-//           dense: true,
-//           leading: Icon(Icons.info_outline_rounded),
-//           title: Text(
-//             "About",
-//             style: TextStyle(fontSize: 14.0),
-//           ),
-//           onTap: () => null,
-//         ),
-//         const Divider(),
-//         ListTile(
-//           contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
-//           dense: true,
-//           leading: Icon(Icons.help_outline),
-//           title: Text(
-//             "Help",
-//             style: TextStyle(fontSize: 14.0),
-//           ),
-//           onTap: () {},
-//         ),
-//         const Divider(),
-//         ListTile(
-//           contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
-//           dense: true,
-//           leading: Icon(Icons.settings_outlined),
-//           title: Text(
-//             "Setting",
-//             style: TextStyle(fontSize: 14.0),
-//           ),
-//           onTap: () => null,
-//         ),
-//         const Divider(),
-//         ListTile(
-//           contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
-//           dense: true,
-//           leading: Icon(Icons.logout),
-//           title: Text(
-//             "Log Out",
-//             style: TextStyle(fontSize: 14.0),
-//           ),
-//           onTap: () => null,
-//         ),
-//         const Divider(),
-//       ]),
-//     );
-//   }
-// }
-
 //************************************  NavigationDrawer/side navigation starts  *********************************/
 class NavBar extends StatefulWidget {
   NavBar({Key? key}) : super(key: key);
@@ -102,6 +24,10 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+        child: Theme(
+      data: Theme.of(context).copyWith(
+        canvasColor: Colors.white, // Set the background color to white
+      ),
       child: Material(
         color: Colors.white,
         child: ListView(
@@ -169,7 +95,7 @@ class _NavBarState extends State<NavBar> {
           ],
         ),
       ),
-    );
+    ));
   }
 
   // buildheader
@@ -228,7 +154,7 @@ class _NavBarState extends State<NavBar> {
       leading: Icon(
         icon,
         color: Color,
-        size: 30,
+        size: 27,
       ),
       title: Row(
         children: [
@@ -236,7 +162,7 @@ class _NavBarState extends State<NavBar> {
           Text(text,
               style: TextStyle(
                 color: Color,
-                fontSize: 20,
+                fontSize: 16.5,
               )),
         ],
       ),
