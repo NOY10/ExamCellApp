@@ -1,18 +1,38 @@
+import 'package:examcellapp/views/Student/stdResultView.dart';
 import 'package:flutter/material.dart';
 
 class StudentResult extends StatelessWidget {
   const StudentResult({super.key});
 
-  final TEXT_COLOR = 0xFF1A1717;
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Column(
         children: [
-          const SizedBox(height: 16), // space at the top of the Column
+          Expanded(
+            flex: 1,
+            child: ResultHeader(),
+          ),
+          Expanded(
+            flex: 3,
+            child: StudentResultView(),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
-          // First Row with a photo, text, and another photo
+class ResultHeader extends StatelessWidget {
+  const ResultHeader({Key? key}) : super(key: key);
+  final TEXT_COLOR = 0xFF1A1717;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 5.0), // space from the top
+      child: Column(
+        children: [
+          const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.only(top: 5.0), // space from the top
             child: Row(
@@ -76,5 +96,14 @@ class StudentResult extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class ResultTable extends StatelessWidget {
+  const ResultTable({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }
