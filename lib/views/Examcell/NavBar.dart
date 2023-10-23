@@ -118,19 +118,7 @@ class _NavBarState extends State<NavBar> {
                           name: name,
                           urlImage: urlImage,
                         )))),
-<<<<<<< HEAD
             const SizedBox(height: 16),
-=======
-            const Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal:
-                      8.0), // to set the desired space in the front or end
-              child: Divider(
-                color: Colors.black,
-                height: 5,
-              ),
-            ),
->>>>>>> 079caee3ef9b21c1e506ac3607d3db95c85e834c
             // buildSearchField(),
             const SizedBox(height: 16),
 

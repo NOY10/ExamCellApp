@@ -31,13 +31,6 @@ class _StudentHomeState extends State<StudentHome> {
       appBar: AppBar(
         title: Row(
           children: [
-<<<<<<< HEAD
-=======
-            // IconButton(
-            //   icon: Icon(Icons.menu, size: 30,),
-            //   onPressed: () => print("menu"),
-            // ),
->>>>>>> 079caee3ef9b21c1e506ac3607d3db95c85e834c
             Text(
               "Result Processing System",
               style: TextStyle(
