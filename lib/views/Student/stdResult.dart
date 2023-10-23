@@ -14,9 +14,7 @@ class StudentResult extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Color.fromARGB(255, 39, 121, 189),
       ),
-      body: Container(
-        
-      ),
+      body: Container(),
     );
   }
 }

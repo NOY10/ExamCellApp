@@ -10,10 +10,10 @@ import 'package:examcellapp/views/Examcell/ExamcellHome.dart';
 import 'package:examcellapp/views/Examcell/Dashboard/ModuleResultPage.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -30,10 +30,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: const Login(),
       routes: {
         // The home screen route
-        '/login/': (context) => const LoginView(), // The login screen route
+        '/login/': (context) => const Login(), // The login screen route
         '/moduleResultPage': (context) => ModuleResultPage(),
       },
     );
@@ -66,7 +66,7 @@ class _HomepageState extends State<Homepage> {
               if (user != null) {
                 return const MyHomePage();
               } else {
-                return const LoginView();
+                return const Login();
               }
             default:
               return const Center(

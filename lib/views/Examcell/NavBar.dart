@@ -164,7 +164,7 @@ class _NavBarState extends State<NavBar> {
             buildMenuItem(
               text: 'Log Out',
               icon: Icons.logout,
-              // onclicked: () => ,
+              onclicked: () => {},
             ),
           ],
         ),
