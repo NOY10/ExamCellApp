@@ -44,41 +44,34 @@ class ResultHeader extends StatelessWidget {
                   height: 80,
                   child: Image.asset('assets/images/RUB_logo.png'),
                 ),
-                SizedBox(width: 20), // space between the elements
+                SizedBox(width: 40), // space between the elements
                 // Text
                 Container(
-                  width: 190,
-                  child: Center(
-                    // Center the content horizontally
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment
-                          .center, // Center the content vertically
-                      children: [
-                        Text(
-                          'College of Science and Technology',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Color(TEXT_COLOR),
-                          ),
+                  width: 140,
+                  child: Column(
+                    children: [
+                      Text(
+                        'College of Science and Technology',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Color(TEXT_COLOR),
                         ),
-                        SizedBox(
-                          height: 10,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'ཚན་རག་དང་འཕྲུལ་རིག་མཐོ་རིམ་སློབ་གྲྭ',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(TEXT_COLOR),
                         ),
-                        Text(
-                          'ཚན་རིག་དང་འཕྲུལ་རིག་མཐོ་རིམ་སློབ་གྲྭ',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Color(TEXT_COLOR),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(width: 40),
                 // CST photo
                 Container(
                   width: 80,

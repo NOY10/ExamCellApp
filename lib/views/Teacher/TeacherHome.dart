@@ -13,13 +13,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
+  final PageController _pageController = PageController();
+
   final List<Widget> _pages = [
     ProfileScreen(),
     UploadScreen(),
     ViewResultScreen(),
   ];
 
-  // Define a list of titles for each page.
   final List<String> _pageTitles = [
     'Result Processing System',
     'Upload Result',
@@ -32,20 +33,34 @@ class _MyHomePageState extends State<MyHomePage> {
       drawer: NavBar(),
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text(_pageTitles[
-            _currentIndex]), // Dynamic title based on the selected index
+        title: Text(
+          _pageTitles[_currentIndex],
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+          ),
+        ),
         titleTextStyle: const TextStyle(
           color: Colors.white,
           fontSize: 20,
         ),
-        iconTheme:
-            IconThemeData(color: Colors.white), // White hamburger menu icon
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
       ),
-      body: _pages[_currentIndex],
+      body: PageView(
+        controller: _pageController,
+        children: _pages,
+        onPageChanged: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+      ),
       bottomNavigationBar: ClipRRect(
-        // Wrap the BottomNavigationBar with ClipRRect
         borderRadius: const BorderRadius.vertical(
-            top: Radius.circular(25.0)), // Adjust the border radius as needed
+          top: Radius.circular(25.0),
+        ),
         child: BottomNavigationBar(
           backgroundColor: Colors.blue,
           selectedItemColor: Color.fromARGB(255, 245, 247, 245),
@@ -67,6 +82,11 @@ class _MyHomePageState extends State<MyHomePage> {
           onTap: (index) {
             setState(() {
               _currentIndex = index;
+              _pageController.animateToPage(
+                index,
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.easeInOut,
+              );
             });
           },
         ),

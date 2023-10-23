@@ -33,7 +33,7 @@ class _StudentHomeState extends State<StudentHome> {
       appBar: AppBar(
         title: Text(
           getAppBarTitle(),
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.white,
             fontSize: 18,
           ),
@@ -54,7 +54,6 @@ class _StudentHomeState extends State<StudentHome> {
               Colors.white, // Set the icon color of the hamburger menu to white
         ),
       ),
-
       // Added Page view for tab slider
       body: PageView(
         controller: _pageController,
