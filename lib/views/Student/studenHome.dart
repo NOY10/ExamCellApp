@@ -24,21 +24,21 @@ class _StudentHomeState extends State<StudentHome> {
     StudentResult(),
   ];
 
+  String getAppBarTitle() {
+    return _currentIndex == 0 ? "Result Processing System" : "Result";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: NavBar(),
       appBar: AppBar(
-        title: Row(
-          children: [
-            Text(
-              "Result Processing System",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-              ),
-            ),
-          ],
+        title: Text(
+          getAppBarTitle(),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+          ),
         ),
         actions: [
           IconButton(
@@ -51,7 +51,7 @@ class _StudentHomeState extends State<StudentHome> {
         ],
         backgroundColor: Color(primary),
       ),
-      //Added Page view for tab slider
+      // Added Page view for tab slider
       body: PageView(
         controller: _pageController,
         children: _pages,
@@ -78,10 +78,10 @@ class _StudentHomeState extends State<StudentHome> {
               Icons.remove_red_eye,
               size: 30,
             ),
-            label: 'Result',
+            label: 'View Result',
           ),
         ],
-        //added animation so it aligns with the page slider
+        // Added animation so it aligns with the page slider
         onTap: (index) {
           setState(() {
             _currentIndex = index;
