@@ -43,25 +43,36 @@ class _StudentResultViewState extends State<StudentResultView> {
   List<GridColumn> getColumns() {
     return <GridColumn>[
       GridColumn(
+        columnName: 'ModuleName',
+        label:
+            Container(alignment: Alignment.center, child: Text('Module Name')),
+        width: 150,
+      ),
+      GridColumn(
         columnName: 'ModuleCode',
         label:
-            Container(alignment: Alignment.center, child: Text('ModuleCode')),
+            Container(alignment: Alignment.center, child: Text('Module Code')),
+        width: 80,
       ),
       GridColumn(
         columnName: 'Credit',
         label: Container(alignment: Alignment.center, child: Text('Credit')),
+        width: 70,
       ),
       GridColumn(
         columnName: 'CA',
         label: Container(alignment: Alignment.center, child: Text('CA')),
+        width: 70,
       ),
       GridColumn(
         columnName: 'Practical',
         label: Container(alignment: Alignment.center, child: Text('Practical')),
+        width: 70,
       ),
       GridColumn(
         columnName: 'Exam',
         label: Container(alignment: Alignment.center, child: Text('Exam')),
+        width: 70,
       ),
     ];
   }
@@ -100,14 +111,22 @@ class _StudentResultViewState extends State<StudentResultView> {
               }
               if (snapshot.hasData) {
                 employeeDataSource = EmployeeDataSource(snapshot.data!);
-                return Transform.scale(
-                  scale: _zoom,
-                  child: SfDataGrid(
-                    source: employeeDataSource,
-                    columns: _columns,
-                    columnWidthMode: ColumnWidthMode.fill,
-                    gridLinesVisibility: GridLinesVisibility.both,
-                    headerGridLinesVisibility: GridLinesVisibility.both,
+                return SingleChildScrollView(
+                  scrollDirection:
+                      Axis.horizontal, // Enable horizontal scrolling
+                  child: Container(
+                    width:
+                        MediaQuery.of(context).size.width, // Match screen width
+                    child: Transform.scale(
+                      scale: _zoom,
+                      child: SfDataGrid(
+                        source: employeeDataSource,
+                        columns: _columns,
+                        columnWidthMode: ColumnWidthMode.fill,
+                        gridLinesVisibility: GridLinesVisibility.both,
+                        headerGridLinesVisibility: GridLinesVisibility.both,
+                      ),
+                    ),
                   ),
                 );
               }
@@ -133,6 +152,7 @@ class EmployeeDataSource extends DataGridSource {
   @override
   List<DataGridRow> get rows => employees
       .map<DataGridRow>((e) => DataGridRow(cells: [
+            DataGridCell<String>(columnName: 'ModuleName', value: e.ModuleName),
             DataGridCell<String>(columnName: 'ModuleCode', value: e.ModuleCode),
             DataGridCell<String>(columnName: 'Credit', value: e.Credit),
             DataGridCell<String>(columnName: 'CA', value: e.CA),
