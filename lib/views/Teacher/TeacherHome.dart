@@ -38,6 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.white,
           fontSize: 20,
         ),
+        iconTheme:
+            IconThemeData(color: Colors.white), // White hamburger menu icon
       ),
       body: _pages[_currentIndex],
       bottomNavigationBar: ClipRRect(
@@ -128,8 +130,11 @@ class ProfileScreen extends StatelessWidget {
                             subtitle: Text(module.description),
                             trailing: InkWell(
                               onTap: () {
-                                // Handle module item click here
-                                print("Next page");
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => ModuleResult(),
+                                  ),
+                                );
                               },
                               child: Icon(Icons.arrow_forward_ios_outlined),
                             ),
@@ -200,3 +205,23 @@ class ViewResultScreen extends StatelessWidget {
   }
 }
 //************************************  ViewResult Screen  ends ************************************/
+
+class ModuleResult extends StatelessWidget {
+  const ModuleResult({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // drawer: NavigationDrawerWidget(), //enable it if you want to have the drawer in the page
+      appBar: AppBar(
+        title: Text('Module Result'),
+        titleTextStyle: const TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.blue,
+      ),
+    );
+  }
+}
