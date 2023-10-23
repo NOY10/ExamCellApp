@@ -15,7 +15,6 @@ class StudentHome extends StatefulWidget {
 }
 
 class _StudentHomeState extends State<StudentHome> {
-
   final primary = 0xFF3385FF;
   int _currentIndex = 0;
   final PageController _pageController = PageController();
@@ -24,14 +23,21 @@ class _StudentHomeState extends State<StudentHome> {
     StudentDashboard(),
     StudentResult(),
   ];
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: NavBar(),
       appBar: AppBar(
-        title: Row (
+        title: Row(
           children: [
+<<<<<<< HEAD
+=======
+            // IconButton(
+            //   icon: Icon(Icons.menu, size: 30,),
+            //   onPressed: () => print("menu"),
+            // ),
+>>>>>>> 079caee3ef9b21c1e506ac3607d3db95c85e834c
             Text(
               "Result Processing System",
               style: TextStyle(
@@ -43,7 +49,10 @@ class _StudentHomeState extends State<StudentHome> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.notifications, size: 30,),
+            icon: Icon(
+              Icons.notifications,
+              size: 30,
+            ),
             onPressed: () => print("notification"),
           )
         ],
@@ -65,11 +74,17 @@ class _StudentHomeState extends State<StudentHome> {
         currentIndex: _currentIndex,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_rounded, size: 30,),
+            icon: Icon(
+              Icons.account_circle_rounded,
+              size: 30,
+            ),
             label: 'Profile',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.remove_red_eye, size: 30,),
+            icon: Icon(
+              Icons.remove_red_eye,
+              size: 30,
+            ),
             label: 'Result',
           ),
         ],
