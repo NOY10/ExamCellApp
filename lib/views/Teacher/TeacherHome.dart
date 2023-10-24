@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(25.0),
+          top: Radius.circular(23.0),
         ),
         child: BottomNavigationBar(
           backgroundColor: Colors.blue,

@@ -64,38 +64,43 @@ class _StudentHomeState extends State<StudentHome> {
           });
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color(primary),
-        selectedItemColor: Colors.white,
-        currentIndex: _currentIndex,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.account_circle_rounded,
-              size: 30,
-            ),
-            label: 'Profile',
+
+      bottomNavigationBar: ClipRRect(
+          borderRadius: const BorderRadius.vertical(
+            top: Radius.circular(23.0),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.remove_red_eye,
-              size: 30,
-            ),
-            label: 'View Result',
-          ),
-        ],
-        // Added animation so it aligns with the page slider
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-            _pageController.animateToPage(
-              index,
-              duration: const Duration(milliseconds: 400),
-              curve: Curves.easeInOut,
-            );
-          });
-        },
-      ),
+          child: BottomNavigationBar(
+            backgroundColor: Color(primary),
+            selectedItemColor: Colors.white,
+            currentIndex: _currentIndex,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.account_circle_rounded,
+                  size: 30,
+                ),
+                label: 'Profile',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.remove_red_eye,
+                  size: 30,
+                ),
+                label: 'View Result',
+              ),
+            ],
+            // Added animation so it aligns with the page slider
+            onTap: (index) {
+              setState(() {
+                _currentIndex = index;
+                _pageController.animateToPage(
+                  index,
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.easeInOut,
+                );
+              });
+            },
+          )),
     );
   }
 }
