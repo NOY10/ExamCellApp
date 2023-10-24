@@ -1,10 +1,10 @@
 <?php
 require('config.php');
 
-$sql = "SELECT Mark.*, Module.Credit, Module.ModuleName, Module.MaxCA, Module.MaxExam, Module.MaxPractical
-              FROM Mark
-              JOIN Module ON Module.ModuleCode = Mark.ModuleCode
-              WHERE Mark.StdID = '02210215' AND YEAR(Mark.DateofExam) = 2023 AND Mark.SemNo = 4";
+$sql = "SELECT Mark.*, Module.maxCA, Module.maxExam, Module.MaxPractical
+FROM Mark 
+JOIN Module ON Module.code = Mark.code
+WHERE Mark.sid = '02210233' and Mark.semester = 'AS2021'";
 
 $result = $connection->prepare($sql);
 

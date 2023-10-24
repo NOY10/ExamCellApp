@@ -16,7 +16,7 @@ class _StudentResultViewState extends State<StudentResultView> {
   double _zoom = 1.0;
 
   Future<List<Employee>> fetchEmployees() async {
-    var url = 'https://resultsystemdb.000webhostapp.com/getMarks.php';
+    var url = 'https://examcellflutter.000webhostapp.com/getResult.php';
 
     try {
       final response = await http.get(Uri.parse(url));
@@ -189,12 +189,12 @@ class Employee {
 
   factory Employee.fromJson(Map<String, dynamic> json) {
     return Employee(
-      ModuleCode: json['ModuleCode'] as String? ?? '',
-      ModuleName: json['ModuleName'] as String? ?? '',
-      Credit: json['Credit'].toString(),
-      CA: json['CA'].toString(),
-      Practical: json['Practical'].toString(),
-      Exam: json['Exam'].toString(),
+      ModuleCode: json['code'] as String? ?? '',
+      ModuleName: json['name'] as String? ?? '',
+      Credit: json['credit'].toString(),
+      CA: json['ca'].toString(),
+      Practical: json['practical'].toString(),
+      Exam: json['exam'].toString(),
     );
   }
 }

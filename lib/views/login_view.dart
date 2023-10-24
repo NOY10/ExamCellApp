@@ -36,7 +36,7 @@ class _LoginState extends State<Login> {
 
     if (current != "Error") {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('email', data['email']);
+      await prefs.setString('userID', data['userID']);
 
       Fluttertoast.showToast(
         msg: "Login",

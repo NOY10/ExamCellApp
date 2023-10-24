@@ -4,6 +4,9 @@ import 'package:examcellapp/views/Teacher/About.dart';
 import 'package:examcellapp/views/Teacher/userpage.dart';
 import 'package:examcellapp/views/login_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class NavBar extends StatefulWidget {
   NavBar({Key? key}) : super(key: key);
@@ -13,23 +16,43 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
-  late SharedPreferences prefs; // Declare SharedPreferences instance
+  late SharedPreferences prefs;
+  String name = '';
+  String email = '';
+  bool dataLoaded = false;
 
   @override
   void initState() {
     super.initState();
+    initSharedPreferences();
+  }
+
+  Future<void> initSharedPreferences() async {
+    prefs = await SharedPreferences.getInstance();
     loadSharedPreferences();
   }
 
-  void loadSharedPreferences() async {
-    prefs = await SharedPreferences.getInstance();
-    final String? email = prefs.getString('email');
+  Future<void> loadSharedPreferences() async {
+    if (!dataLoaded) {
+      final String? userID = prefs.getString('userID');
+      final Uri url =
+          Uri.parse("https://examcellflutter.000webhostapp.com/NavInfo.php");
+
+      final response = await http.post(url, body: {
+        "userID": userID,
+      });
+
+      var data = json.decode(response.body);
+      setState(() {
+        name = data['name'];
+        email = data['email'];
+        dataLoaded = true;
+      });
+    }
   }
 
   final padding = EdgeInsets.symmetric(horizontal: 20);
 
-  final name = 'Phurpa Tshering';
-  final email = '02210215.cst@rub.edu.bt';
   final urlImage =
       'https://unsplash.com/photos/Kt8eGw8_S8Y/download?ixid=M3wxMjA3fDB8MXxzZWFyY2h8NXx8YW5pbWF0ZWQlMjBtYW58ZW58MHx8fHwxNjk2OTUzNTU5fDA&force=true';
 
@@ -123,7 +146,7 @@ class _NavBarState extends State<NavBar> {
               children: [
                 Text(
                   name,
-                  style: const TextStyle(fontSize: 20, color: Colors.black),
+                  style: const TextStyle(fontSize: 14, color: Colors.black),
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -187,7 +210,7 @@ class _NavBarState extends State<NavBar> {
             TextButton(
               onPressed: () {
                 // Clear data from SharedPreferences
-                prefs.remove('email');
+                prefs.remove('userID');
                 Navigator.of(context).pop();
                 Navigator.push(
                   context,
