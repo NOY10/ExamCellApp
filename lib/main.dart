@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: const StudentHome(),
       routes: {
         // The home screen route
         '/login/': (context) => const Login(), // The login screen route
