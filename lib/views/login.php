@@ -1,12 +1,16 @@
 <?php
 include 'config.php';
 
-if (isset($_POST['Email'])) {
+// Add debugging statements
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+if (isset($_POST['Email']) && isset($_POST['Password'])) {
     $email = $_POST['Email'];
     $password = $_POST['Password'];
 
     $table = "Users";
-    $sql = "SELECT * FROM $table WHERE Email = :Email AND Password = :Password";
+    $sql = "SELECT * FROM $table WHERE email = :Email AND password = :Password";
 
     // Prepare the SQL statement
     $stmt = $connection->prepare($sql);
@@ -23,7 +27,11 @@ if (isset($_POST['Email'])) {
         $response = $stmt->fetch(PDO::FETCH_ASSOC);
         echo json_encode($response);
     } else {
-        $response = array("Role" => "Error");
+        $response = array("role" => "Error");
         echo json_encode($response);
     }
+} else {
+    $response = array("role" => "Error");
+    echo json_encode($response);
 }
+?>

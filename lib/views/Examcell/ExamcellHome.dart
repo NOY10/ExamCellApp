@@ -1,6 +1,6 @@
 import 'package:examcellapp/views/Examcell/Dashboard.dart';
 import 'package:flutter/material.dart';
-import 'package:examcellapp/views/Examcell/NavBar.dart';
+import 'package:examcellapp/views/NavBar/NavBar.dart';
 import 'package:examcellapp/views/Examcell/Declaration.dart';
 
 class ExamcellHome extends StatefulWidget {

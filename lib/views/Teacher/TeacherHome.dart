@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'userpage.dart';
 import 'Setting.dart';
 import 'About.dart';
-import 'package:examcellapp/views/Examcell/NavBar.dart';
+import 'package:examcellapp/views/NavBar/NavBar.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});

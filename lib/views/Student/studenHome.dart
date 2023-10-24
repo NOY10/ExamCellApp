@@ -3,7 +3,7 @@ import 'package:examcellapp/views/Student/stdResult.dart';
 import 'package:examcellapp/views/Student/stdprofile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:examcellapp/views/Examcell/NavBar.dart';
+import 'package:examcellapp/views/NavBar/NavBar.dart';
 
 class StudentHome extends StatefulWidget {
   const StudentHome({super.key});
