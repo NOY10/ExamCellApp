@@ -45,7 +45,8 @@ dependencies:
   fluttertoast: ^8.2.2
   image_picker: ^1.0.4
   shared_preferences: ^2.2.2
-
+  file_picker: ^6.0.0
+  excel: ^2.1.0
 
 dev_dependencies:
   flutter_test:

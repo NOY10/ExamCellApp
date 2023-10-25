@@ -3,6 +3,7 @@ import 'userpage.dart';
 import 'Setting.dart';
 import 'About.dart';
 import 'package:examcellapp/views/NavBar/NavBar.dart';
+import 'package:examcellapp/views/Teacher/filePicker/filePicker.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -185,23 +186,22 @@ class Module {
 //************************************  Upload Screen  starts ************************************/
 
 class UploadScreen extends StatelessWidget {
-  const UploadScreen({super.key});
+  const UploadScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        elevation: 0,
-        color: Theme.of(context).colorScheme.surfaceVariant,
-        child: const SizedBox(
-          width: 300,
-          height: 100,
-          child: Center(child: Text('To be Added')),
-        ),
+    return Card(
+      elevation: 0,
+      color: Theme.of(context).colorScheme.surfaceVariant,
+      child: SizedBox(
+        width: 300,
+        height: 100,
+        child: FilePickerE(),
       ),
     );
   }
 }
+
 //************************************  Profile Screen ends  **************************************/
 
 //************************************  ViewResult Screen starts  ************************************/
