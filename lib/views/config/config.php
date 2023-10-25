@@ -1,4 +1,4 @@
-<!-- <?php
+<?php
 try {
     $connection = new PDO('mysql:host=localhost;dbname=id21425530_examcelldb', 'id21425530_root', 'Examcell@2023');
     $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -6,8 +6,8 @@ try {
     echo $exc->getMessage();
     die;
 }
-?> -->
-<?php
+?>
+<!-- <?php
 
 try{
     $connection = new PDO('mysql:host=localhost;dbname=id21433673_resultdb','id21433673_norphel','1qaz@WSX' );
@@ -18,4 +18,4 @@ try{
     die("Could not connected");
 }
 
-?>
+?> -->

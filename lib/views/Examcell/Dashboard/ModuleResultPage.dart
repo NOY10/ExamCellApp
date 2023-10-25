@@ -8,7 +8,7 @@ class ModuleResultPage extends StatelessWidget {
     final String moduleName = args?['moduleName'] ?? 'No Module Name';
     final String moduleCode = args?['moduleCode'] ?? 'No Module Code';
     final String deptaName = args?['deptName'] ?? 'No deptName';
-    final String year = args?['year'] ?? 'No year';
+    final String semester = args?['semester'] ?? 'No year';
 
     TableRow _tableRow1 = TableRow(
       children: <Widget>[
@@ -72,7 +72,7 @@ class ModuleResultPage extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(top: 8),
           child: Text(
-            "Year: $year",
+            "Semester: $semester",
             textAlign: TextAlign.start,
             style: TextStyle(
               fontSize: 12,

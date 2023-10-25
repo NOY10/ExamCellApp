@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'ModuleResultPage.dart';
 
 class ModuleList extends StatelessWidget {
   final List<String> moduleList;
   final List<String> moduleCodeList;
   final String deptNames;
-  final String year;
+  final String semester;
 
   ModuleList(
       {required this.moduleList,
       required this.moduleCodeList,
       required this.deptNames,
-      required this.year});
+      required this.semester});
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +72,7 @@ class ModuleList extends StatelessWidget {
                       'moduleName': moduleName,
                       'moduleCode': moduleCode,
                       'deptName': deptName,
-                      'year': year,
+                      'semester': semester,
                     });
                   },
                   child: Icon(Icons.arrow_forward, color: Colors.blue),
