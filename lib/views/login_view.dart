@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:examcellapp/views/Teacher/TeacherHome.dart';
 import 'package:examcellapp/views/Examcell/ExamcellHome.dart';
 import 'package:examcellapp/views/Student/studenHome.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -31,19 +32,23 @@ class _LoginState extends State<Login> {
     });
     var data = json.decode(response.body);
 
-    String current = data['Role'];
+    String current = data['role'];
 
-    if (true) {
+    if (current != "Error") {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('userID', data['userID']);
+
       Fluttertoast.showToast(
-          msg: "Login",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+        msg: "Login",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
 
-      if (current == "student") {
+      if (current == "Student") {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => StudentHome()));
       } else if (current == "Examcell") {
