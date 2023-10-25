@@ -10,11 +10,11 @@ class StudentResult extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            flex: 1,
+            // flex: 1,
             child: ResultHeader(),
           ),
           Expanded(
-            flex: 3,
+            flex: 1,
             child: StudentResultView(),
           ),
         ],
@@ -44,41 +44,36 @@ class ResultHeader extends StatelessWidget {
                   height: 80,
                   child: Image.asset('assets/images/RUB_logo.png'),
                 ),
-                SizedBox(width: 20), // space between the elements
+                SizedBox(width: 12), // space between the elements
                 // Text
                 Container(
-                  width: 190,
-                  child: Center(
-                    // Center the content horizontally
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment
-                          .center, // Center the content vertically
-                      children: [
-                        Text(
-                          'College of Science and Technology',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Color(TEXT_COLOR),
-                          ),
+                  width: 172,
+                  child: Column(
+                    children: [
+                      Text(
+                        'College of Science and Technology',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Color(TEXT_COLOR),
                         ),
-                        SizedBox(
-                          height: 10,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'ཚན་རིག་དང་འཕྲུལ་རིག་མཐོ་རིམ་སློབ་གྲྭ།',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(TEXT_COLOR),
                         ),
-                        Text(
-                          'ཚན་རིག་དང་འཕྲུལ་རིག་མཐོ་རིམ་སློབ་གྲྭ',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Color(TEXT_COLOR),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(width: 12),
                 // CST photo
                 Container(
                   width: 80,
@@ -92,6 +87,50 @@ class ResultHeader extends StatelessWidget {
             color: Colors.blue,
             thickness: 2,
             indent: 1,
+          ),
+          Row(
+            mainAxisAlignment:
+                MainAxisAlignment.center, // Align the text in the center
+            children: [
+              Text(
+                'Name: Phurpa Tshering',
+                style: TextStyle(
+                  fontSize: 16,
+                  // fontWeight: FontWeight.bold,
+                  color: Color(TEXT_COLOR),
+                ),
+              ),
+              SizedBox(width: 20), // Add some space between the text elements
+              Text(
+                'Student ID: 02210215',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Color(TEXT_COLOR),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            // mainAxisAlignment:
+            //     MainAxisAlignment.center, // Align the text in the center
+            children: [
+              Text(
+                'Semester: 4',
+                style: TextStyle(
+                  fontSize: 16,
+                  // fontWeight: FontWeight.bold,
+                  color: Color(TEXT_COLOR),
+                ),
+              ),
+              SizedBox(width: 20), // Add some space between the text elements
+              Text(
+                'BE Information Technology',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Color(TEXT_COLOR),
+                ),
+              ),
+            ],
           ),
         ],
       ),
