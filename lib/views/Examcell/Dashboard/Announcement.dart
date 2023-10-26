@@ -42,7 +42,7 @@ class AnnouncementMain extends StatelessWidget {
                       padding: const EdgeInsets.all(10.0),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.grey,
+                          color: Color.fromARGB(255, 241, 235, 235),
                           border: Border.all(
                             color: Colors.black, // Border color
                             width: 1.0, // Border width
@@ -59,7 +59,7 @@ class AnnouncementMain extends StatelessWidget {
                       padding: const EdgeInsets.all(10.0),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.grey,
+                          color: Color.fromARGB(255, 241, 235, 235),
                           border: Border.all(
                             color: Colors.black, // Border color
                             width: 1.0, // Border width
@@ -76,7 +76,7 @@ class AnnouncementMain extends StatelessWidget {
                       padding: const EdgeInsets.all(10.0),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.grey,
+                          color: Color.fromARGB(255, 241, 235, 235),
                           border: Border.all(
                             color: Colors.black, // Border color
                             width: 1.0, // Border width

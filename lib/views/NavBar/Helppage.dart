@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-class UploadPage extends StatelessWidget {
-  const UploadPage({super.key});
+class HelpPage extends StatelessWidget {
+  const HelpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // drawer: NavigationDrawerWidget(), //enable it if you want to have the drawer in the page
       appBar: AppBar(
-        title: Text('About App'),
+        title: Text('Help'),
         centerTitle: true,
         backgroundColor: Colors.blue,
       ),

@@ -90,7 +90,7 @@ class ModuleList extends StatelessWidget {
               height: 50,
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.blue),
-                color: Colors.blue,
+                color: Colors.white,
               ),
               child: GestureDetector(
                 onTap: () {

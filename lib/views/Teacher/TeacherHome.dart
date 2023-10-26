@@ -1,8 +1,5 @@
 import 'package:examcellapp/views/Teacher/Landing.dart';
 import 'package:flutter/material.dart';
-import 'userpage.dart';
-import 'Setting.dart';
-import 'About.dart';
 import 'package:examcellapp/views/NavBar/NavBar.dart';
 import 'package:examcellapp/views/Teacher/filePicker/filePicker.dart';
 
