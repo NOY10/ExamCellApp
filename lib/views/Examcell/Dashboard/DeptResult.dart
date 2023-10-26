@@ -232,11 +232,13 @@ class _DeptResultState extends State<DeptResult> {
                   child: Container(
                     width: buttonWidth,
                     height: 50,
-                    color: index == _currentIndex ? Colors.blue : Colors.grey,
+                    color: index == _currentIndex
+                        ? Colors.white
+                        : const Color.fromARGB(255, 85, 166, 232),
                     alignment: Alignment.center,
                     child: Text(
                       years[index],
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),

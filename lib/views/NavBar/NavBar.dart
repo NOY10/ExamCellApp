@@ -146,21 +146,16 @@ class _NavBarState extends State<NavBar> {
               children: [
                 Text(
                   name,
-                  style: const TextStyle(fontSize: 14, color: Colors.black),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  email,
-                  style: const TextStyle(fontSize: 14, color: Colors.black),
-                ),
-              ],
-            ),
-            Spacer(),
-          ],
+                style: const TextStyle(fontSize: 20, color: Colors.black),
+              ),
+              Text(
+                email,
+                style: const TextStyle(fontSize: 14, color: Colors.black),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 
   Widget buildMenuItem({
     required String text,
