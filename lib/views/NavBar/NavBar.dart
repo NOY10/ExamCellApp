@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:examcellapp/views/Teacher/Setting.dart';
-import 'package:examcellapp/views/Teacher/About.dart';
-import 'package:examcellapp/views/Teacher/userpage.dart';
+import 'Aboutpage.dart';
+import 'Helppage.dart';
+import 'Settingpage.dart';
+import 'PictureLarge.dart';
 import 'package:examcellapp/views/login_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -84,22 +85,30 @@ class _NavBarState extends State<NavBar> {
                 text: 'Dark Mode',
                 icon: Icons.dark_mode_outlined,
               ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Divider(
+                  color: Colors.black,
+                  height: 1,
+                ),
+              ),
               const SizedBox(height: 5),
               buildMenuItem(
                 text: 'About',
                 icon: Icons.info_outline_rounded,
-                onClicked: () => selectedItem(context, 1),
+                onClicked: () => selectedItem(context, 0),
               ),
               const SizedBox(height: 5),
               buildMenuItem(
                 text: 'Setting',
                 icon: Icons.settings_outlined,
-                onClicked: () => selectedItem(context, 0),
+                onClicked: () => selectedItem(context, 1),
               ),
               const SizedBox(height: 16),
               buildMenuItem(
                 text: 'Help',
                 icon: Icons.help_outline,
+                onClicked: () => selectedItem(context, 2),
               ),
               const SizedBox(height: 12),
               const Padding(
@@ -124,36 +133,53 @@ class _NavBarState extends State<NavBar> {
     );
   }
 
-  Widget buildHeader({
+  // buildheader
+  buildHeader({
     required String urlImage,
     required String name,
     required String email,
     required VoidCallback onClicked,
-  }) {
-    return InkWell(
-      onTap: onClicked,
-      child: Container(
-        padding: padding.add(EdgeInsets.symmetric(vertical: 30)),
-        child: Row(
+  }) =>
+      Container(
+        color: Colors.blue,
+        padding: EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CircleAvatar(
-              radius: 35,
-              backgroundImage: NetworkImage(urlImage),
-            ),
-            SizedBox(width: 20),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
               children: [
-                Text(
-                  name,
-                style: const TextStyle(fontSize: 20, color: Colors.black),
-              ),
-              Text(
-                email,
-                style: const TextStyle(fontSize: 14, color: Colors.black),
-              ),
-            ],
-          ),
+                GestureDetector(
+                  onTap:
+                      onClicked, // Apply the onTap function to the CircleAvatar
+                  child: CircleAvatar(
+                    radius: 35,
+                    backgroundImage: NetworkImage(urlImage),
+                  ),
+                ),
+                SizedBox(width: 10),
+                Spacer(),
+                GestureDetector(
+                  // Wrap the "clear" icon with GestureDetector
+                  onTap: () {
+                    Navigator.of(context).pop(); // Close the drawer
+                  },
+                  child: Icon(
+                    Icons.clear,
+                    size: 30,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            Text(
+              name,
+              style: const TextStyle(fontSize: 20, color: Colors.black),
+            ),
+            Text(
+              email,
+              style: const TextStyle(fontSize: 14, color: Colors.black),
+            ),
+          ],
         ),
       );
 
@@ -221,6 +247,28 @@ class _NavBarState extends State<NavBar> {
   }
 
   void selectedItem(BuildContext context, int index) {
-    // Handle navigation based on the selected item (if needed).
+    // Navigator.of(context)
+    //     .pop();
+    /*to automatically close the drawer after tapping back button,
+        also if you want to include the navigation bar in other page simply paste drawer: NavigationDrawerWidget(), under the scaffold
+        */
+    switch (index) {
+      case 0:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => AboutPage(),
+        ));
+        break;
+      case 1:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => SettingPage(),
+        ));
+        break;
+      case 2:
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => HelpPage(),
+        ));
+        break;
+      //add here if you wish//==> to navigate to other pages add here
+    }
   }
 }

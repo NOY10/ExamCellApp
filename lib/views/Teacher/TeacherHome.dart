@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'userpage.dart';
-import 'Setting.dart';
-import 'About.dart';
 import 'package:examcellapp/views/NavBar/NavBar.dart';
 
 class MyHomePage extends StatefulWidget {

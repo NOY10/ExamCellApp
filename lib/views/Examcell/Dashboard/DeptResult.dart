@@ -239,7 +239,7 @@ class _DeptResultState extends State<DeptResult> {
                     child: Text(
                       years[index],
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

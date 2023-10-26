@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:examcellapp/views/Teacher/Setting.dart';
-import 'package:examcellapp/views/Teacher/About.dart';
-import 'package:examcellapp/views/Teacher/userpage.dart';
+import 'package:examcellapp/views/NavBar/Aboutpage.dart';
+import 'package:examcellapp/views/NavBar/Settingpage.dart';
+import 'package:examcellapp/views/NavBar/PictureLarge.dart';
+import 'package:examcellapp/views/NavBar/Helppage.dart';
 
 //************************************  NavigationDrawer/side navigation starts  *********************************/
 class NavBar extends StatefulWidget {
@@ -104,6 +105,7 @@ class _NavBarState extends State<NavBar> {
   }
 
   // buildheader
+
   Widget buildHeader({
     required String urlImage,
     required String name,
@@ -113,6 +115,7 @@ class _NavBarState extends State<NavBar> {
       InkWell(
         onTap: onClicked, // to navigate to the page by when we click on photo
         child: Container(
+          color: Colors.blue,
           padding: padding.add(EdgeInsets.symmetric(vertical: 30)),
           child: Column(
             children: [
@@ -120,6 +123,7 @@ class _NavBarState extends State<NavBar> {
                 radius: 35,
                 backgroundImage: NetworkImage(urlImage),
               ),
+              SizedBox(height: 10),
               Text(
                 name,
                 style: const TextStyle(fontSize: 20, color: Colors.black),
@@ -131,8 +135,45 @@ class _NavBarState extends State<NavBar> {
               ),
             ],
           ),
+          // const CircleAvatar(
+          //   radius: 2,
+          //   backgroundColor: Color.fromRGBO(203, 204, 208, 1),
+          //   child: Icon(Icons.add_comment_outlined, color: Colors.black),
+          // )
         ),
       );
+
+  // buildheader
+  // Widget buildHeader({
+  //   required String urlImage,
+  //   required String name,
+  //   required String email,
+  //   required VoidCallback onClicked,
+  // }) =>
+  //     InkWell(
+  //       onTap: onClicked,
+  //       child: Container(
+  //         color: Colors.blue, // Optional background color
+  //         padding: EdgeInsets.only(top: 0), // Remove top padding
+  //         child: Column(
+  //           children: [
+  //             CircleAvatar(
+  //               radius: 35,
+  //               backgroundImage: NetworkImage(urlImage),
+  //             ),
+  //             Text(
+  //               name,
+  //               style: const TextStyle(fontSize: 20, color: Colors.black),
+  //             ),
+  //             const SizedBox(height: 4),
+  //             Text(
+  //               email,
+  //               style: const TextStyle(fontSize: 14, color: Colors.black),
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     );
 
   //build MenuItem
   Widget buildMenuItem({
@@ -175,12 +216,12 @@ class _NavBarState extends State<NavBar> {
     switch (index) {
       case 0:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ProfilePage(),
+          builder: (context) => AboutPage(),
         ));
         break;
       case 1:
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => UploadPage(),
+          builder: (context) => SettingPage(),
         ));
         break;
       //add here if you wish//==> to navigate to other pages add here
