@@ -8,6 +8,7 @@ import 'package:examcellapp/views/login_view.dart';
 import 'package:examcellapp/views/Teacher/TeacherHome.dart';
 import 'package:examcellapp/views/Examcell/ExamcellHome.dart';
 import 'package:examcellapp/views/Examcell/Dashboard/ModuleResultPage.dart';
+import 'package:examcellapp/views/Examcell/Dashboard/ResultView.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         // The home screen route
         '/login/': (context) => const Login(), // The login screen route
         '/moduleResultPage': (context) => ModuleResultPage(),
+        '/ResultView': (context) => ResultView(),
       },
     );
   }

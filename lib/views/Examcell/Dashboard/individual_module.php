@@ -1,30 +1,31 @@
 <?php
 require('config.php');
 
-$userID = $_POST['userID'];
+// Check if the required parameters exist in the POST data
+if (isset($_POST['semester'], $_POST['moduleCode'])) {
+    $semester = $_POST['semester'];
+    $moduleCode = $_POST['moduleCode'];
 
-$sql = "SELECT Mark.*, Module.maxCA, Module.maxExam, Module.MaxPractical
-FROM Mark 
-JOIN Module ON Module.code = Mark.code
-WHERE Mark.sid = '02210233' and Mark.semester = 'AS2021'";
+    // $sql = "SELECT sid, name, practical, ca, exam FROM Mark, Student WHERE sid = :userID AND code = :moduleCode AND SemNo = :semester";
+    $sql = "SELECT Mark.*,name FROM Mark,Student WHERE code = :moduleCode";
 
-"SELECT sid,name,practical,ca,exam FROM Mark,Student WHERE sid ='id' and code = 'CPL101' and SemNo='5'";
+    $result = $connection->prepare($sql);
+    // $result->bindParam(':userID', $userID, PDO::PARAM_INT);
+    // $result->bindParam(':semester', $semester, PDO::PARAM_INT);
+    $result->bindParam(':moduleCode', $moduleCode, PDO::PARAM_STR);
+   
+    
+    $result->execute();
 
-$result = $connection->prepare($sql);
-
-$result->execute();
-
-$db_data = array();
-
-if ($result->rowCount() > 0) {
-    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-        $db_data[] = $row;
+    // Check for results
+    if ($result->rowCount() > 0) {
+        $response = $result->fetch(PDO::FETCH_ASSOC);
+        echo json_encode($response);
+    } else {
+        echo json_encode(array("error" => "No data found"));
     }
-    echo json_encode($db_data);
 } else {
-    echo "error";
+    echo json_encode(array("error" => "Missing parameters"));
 }
-$connection = null;
 
-return;
-?>
+$connection = null;

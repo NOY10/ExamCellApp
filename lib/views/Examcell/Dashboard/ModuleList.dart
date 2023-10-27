@@ -67,16 +67,19 @@ class ModuleList extends StatelessWidget {
                 Spacer(), // Adds space between text and the arrow
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context)
-                        .pushNamed('/moduleResultPage', arguments: {
-                      'moduleName': moduleName,
-                      'moduleCode': moduleCode,
-                      'deptName': deptName,
-                      'semester': semester,
-                    });
+                    Navigator.pushNamed(
+                      context,
+                      '/moduleResultPage',
+                      arguments: {
+                        'moduleName': moduleName,
+                        'moduleCode': moduleCode,
+                        'deptName': deptName,
+                        'semester': semester,
+                      },
+                    );
                   },
                   child: Icon(Icons.arrow_forward, color: Colors.blue),
-                ),
+                )
               ],
             ),
           ),
@@ -94,7 +97,14 @@ class ModuleList extends StatelessWidget {
               ),
               child: GestureDetector(
                 onTap: () {
-                  print("reu"); // Navigate to the result page
+                  Navigator.pushNamed(
+                    context,
+                    '/ResultView',
+                    arguments: {
+                      'deptName': deptNames,
+                      'semester': semester,
+                    },
+                  );
                 },
                 child: Container(
                   margin: EdgeInsets.only(left: 0),

@@ -20,6 +20,7 @@ class _StudentResultViewState extends State<StudentResultView> {
 
     try {
       final response = await http.get(Uri.parse(url));
+
       if (response.statusCode == 200) {
         var list = json.decode(response.body);
         List<Employee> employees =
