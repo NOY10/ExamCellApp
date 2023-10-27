@@ -1,6 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:examcellapp/views/login_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
-class ModuleResultPage extends StatelessWidget {
+class ModuleResultPage extends StatefulWidget {
+  @override
+  State<ModuleResultPage> createState() => _ModuleResultPageState();
+}
+
+class _ModuleResultPageState extends State<ModuleResultPage> {
+  Future<void> loadSharedPreferences() async {
+    late SharedPreferences prefs;
+    String name = '';
+    String email = '';
+
+    Future<void> initSharedPreferences() async {
+      prefs = await SharedPreferences.getInstance();
+      loadSharedPreferences();
+    }
+
+    final String? userID = prefs.getString('userID');
+    final Uri url =
+        Uri.parse("https://examcellflutter.000webhostapp.com/NavInfo.php");
+
+    // final response = await http.post(url, body: {
+    //   "moduleCode": moduleCode,
+    //   "userID": userID,
+    //   "semester":semester,
+    // });
+
+    // var data = json.decode(response.body);
+    // setState(() {
+    //   name = data['name'];
+    //   email = data['email'];
+
+    // });
+  }
+
   @override
   Widget build(BuildContext context) {
     final Map<String, String>? args =

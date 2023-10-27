@@ -25,7 +25,7 @@ class _NavBarState extends State<NavBar> {
   @override
   void initState() {
     super.initState();
-    initSharedPreferences();
+    initSharedPreferences(); // Call initSharedPreferences in initState
   }
 
   Future<void> initSharedPreferences() async {
