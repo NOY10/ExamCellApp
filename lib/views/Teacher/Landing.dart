@@ -7,14 +7,14 @@ import 'dart:convert';
 class ProfileScreen extends StatelessWidget {
   // Create a list of module data
 
-
-  Future<List<Map<String, dynamic>>> fetchData(String tid, String semester) async {
-    var url = Uri.parse("https://resultsystemdb.000webhostapp.com/getModuleList.php?tid=$tid&semester=$semester");
+  Future<List<Map<String, dynamic>>> fetchData(
+      String tid, String semester) async {
+    var url = Uri.parse(
+        "https://resultsystemdb.000webhostapp.com/getModuleList.php?tid=$tid&semester=$semester");
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
       return List<Map<String, dynamic>>.from(json.decode(response.body));
-   
     } else {
       throw Exception('Failed to load data');
     }
@@ -36,7 +36,7 @@ class ProfileScreen extends StatelessWidget {
           ),
           Expanded(
             child: FutureBuilder(
-              future: fetchData("RUB200704052","AS2023"),
+              future: fetchData("RUB200704052", "AS2023"),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -44,7 +44,8 @@ class ProfileScreen extends StatelessWidget {
                   return Center(child: Text('${snapshot.error}'));
                 } else {
                   if (snapshot.hasData) {
-                    List<Map<String, dynamic>> data = snapshot.data as List<Map<String, dynamic>>;
+                    List<Map<String, dynamic>> data =
+                        snapshot.data as List<Map<String, dynamic>>;
                     return ListView.builder(
                       itemCount: data.length,
                       itemBuilder: (context, index) {
@@ -79,7 +80,8 @@ class ProfileScreen extends StatelessWidget {
                                         ),
                                       );
                                     },
-                                    child: Icon(Icons.arrow_forward_ios_outlined),
+                                    child:
+                                        Icon(Icons.arrow_forward_ios_outlined),
                                   ),
                                 ),
                               ],

@@ -1,5 +1,5 @@
 import 'package:examcellapp/views/Student/stdDashboard.dart';
-import 'package:examcellapp/views/Student/stdResult.dart';
+import 'package:examcellapp/views/Student/stdResultView/stdResult.dart';
 import 'package:examcellapp/views/Student/stdprofile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

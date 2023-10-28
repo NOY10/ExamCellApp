@@ -25,6 +25,49 @@ class _StudentResultViewState extends State<StudentResultView> {
         var list = json.decode(response.body);
         List<Employee> employees =
             list.map<Employee>((json) => Employee.fromJson(json)).toList();
+
+        double grandTotalCm = employees
+            .map((e) => double.parse(e.TotCm))
+            .fold(0, (prev, amount) => prev + amount);
+        double grandTotalCmMax = employees
+            .map((e) => double.parse(e.TotCmMax))
+            .fold(0, (prev, amount) => prev + amount);
+
+        double aggregate = (grandTotalCm / grandTotalCmMax) * 100;
+
+        Employee grandTotalRow = Employee(
+          ModuleName: 'Grand Total',
+          ModuleCode: '',
+          Credit: '',
+          CA: '',
+          Practical: '',
+          Exam: '',
+          Total: '',
+          TotCm: grandTotalCm.toStringAsFixed(2),
+          TotCmMax: grandTotalCmMax.toStringAsFixed(0),
+          Remarks: '',
+        );
+
+        Employee aggregateRow = Employee(
+          ModuleName: 'Aggregate',
+          ModuleCode: '',
+          Credit: '',
+          CA: '',
+          Practical: '',
+          Exam: '',
+          Total: '',
+          TotCm: '',
+          TotCmMax: '${aggregate.toStringAsFixed(2)}%',
+          Remarks: '',
+        );
+
+        employees.add(grandTotalRow);
+        employees.add(aggregateRow);
+
+        _columns = getColumns(); // Update the columns with Remarks column.
+
+        employeeDataSource = EmployeeDataSource(employees);
+
         return employees;
       } else {
         throw Exception(
@@ -53,7 +96,7 @@ class _StudentResultViewState extends State<StudentResultView> {
         columnName: 'ModuleCode',
         label:
             Container(alignment: Alignment.center, child: Text('Module Code')),
-        width: 80,
+        width: 100,
       ),
       GridColumn(
         columnName: 'Credit',
@@ -75,34 +118,34 @@ class _StudentResultViewState extends State<StudentResultView> {
         label: Container(alignment: Alignment.center, child: Text('Exam')),
         width: 70,
       ),
+      GridColumn(
+        columnName: 'Total',
+        label: Container(alignment: Alignment.center, child: Text('Total')),
+        width: 70,
+      ),
+      GridColumn(
+        columnName: 'Total CM',
+        label: Container(alignment: Alignment.center, child: Text('Total CM')),
+        width: 100,
+      ),
+      GridColumn(
+        columnName: 'Total CM Max',
+        label:
+            Container(alignment: Alignment.center, child: Text('Total CM Max')),
+        width: 100,
+      ),
+      GridColumn(
+        columnName: 'Remarks',
+        label: Container(alignment: Alignment.center, child: Text('Remarks')),
+        width: 100, // Adjust the width as needed.
+      ),
     ];
-  }
-
-  void zoomIn() {
-    setState(() {
-      _zoom += 0.1;
-    });
-  }
-
-  void zoomOut() {
-    setState(() {
-      if (_zoom > 0.1) {
-        _zoom -= 0.1;
-      }
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: GestureDetector(
-        onScaleUpdate: (ScaleUpdateDetails details) {
-          if (details.scale > 1.0) {
-            zoomIn();
-          } else {
-            zoomOut();
-          }
-        },
         child: FutureBuilder<List<Employee>>(
           future: fetchEmployees(),
           builder: (context, snapshot) {
@@ -122,6 +165,7 @@ class _StudentResultViewState extends State<StudentResultView> {
                       scale: _zoom,
                       child: SfDataGrid(
                         source: employeeDataSource,
+                        frozenColumnsCount: 1,
                         columns: _columns,
                         columnWidthMode: ColumnWidthMode.fill,
                         gridLinesVisibility: GridLinesVisibility.both,
@@ -159,6 +203,11 @@ class EmployeeDataSource extends DataGridSource {
             DataGridCell<String>(columnName: 'CA', value: e.CA),
             DataGridCell<String>(columnName: 'Practical', value: e.Practical),
             DataGridCell<String>(columnName: 'Exam', value: e.Exam),
+            DataGridCell<String>(columnName: 'Total', value: e.Total),
+            DataGridCell<String>(columnName: 'TotCm', value: e.TotCm),
+            DataGridCell<String>(columnName: 'TotCmMax', value: e.TotCmMax),
+            DataGridCell<String>(
+                columnName: 'Remarks', value: e.Remarks), // Add Remarks cell
           ]))
       .toList();
 
@@ -177,7 +226,16 @@ class EmployeeDataSource extends DataGridSource {
 }
 
 class Employee {
-  String ModuleCode, Credit, CA, Practical, Exam, ModuleName;
+  String ModuleCode,
+      Credit,
+      CA,
+      Practical,
+      Exam,
+      ModuleName,
+      Total,
+      TotCm,
+      TotCmMax,
+      Remarks;
 
   Employee({
     required this.ModuleCode,
@@ -186,9 +244,16 @@ class Employee {
     required this.CA,
     required this.Practical,
     required this.Exam,
+    required this.Total,
+    required this.TotCm,
+    required this.TotCmMax,
+    required this.Remarks,
   });
 
   factory Employee.fromJson(Map<String, dynamic> json) {
+    double total = double.parse(json['total'].toString());
+    String remarks = total > 50.0 ? 'Pass' : 'Fail';
+
     return Employee(
       ModuleCode: json['code'] as String? ?? '',
       ModuleName: json['name'] as String? ?? '',
@@ -196,6 +261,10 @@ class Employee {
       CA: json['ca'].toString(),
       Practical: json['practical'].toString(),
       Exam: json['exam'].toString(),
+      Total: total.toString(),
+      TotCm: json['totCm'].toString(),
+      TotCmMax: json['totCmMax'].toString(),
+      Remarks: remarks,
     );
   }
 }
