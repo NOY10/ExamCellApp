@@ -23,8 +23,8 @@ class _EditableMarkTable extends State<markTable> {
     {
   "column_count": null, // Number of columns (the number of columns that are automatically created when [columns] is empty, [column_count] and [columns] are both empty at the same time, 1 column will be created)
   "row_count": null, // Number of rows (the number of rows created automatically when [rows] is empty, and 1 row will be created if both [row_count] and [rows] are empty at the same time)
-  "addable": true, // Allow add new row
-  "removable": true, // Allow remove row
+  "addable": false, // Allow add new row
+  "removable": false, // Allow remove row
   "caption": { // Table caption
     "layout_direction": "row", // Caption layout direction, support [row] and [column]
     "main_caption": { // Main caption
@@ -58,24 +58,7 @@ class _EditableMarkTable extends State<markTable> {
     }
   },
   "columns": [ // Column
-    {
-      "primary_key": true, // Specify the row is  primary key or not, just for specify the data identification, it has no effect on the structure and display of the table
-      "auto_increase": false,
-      "name": "id", // Key of the rows data, see [rows]
-      "title": null, // Column name for display
-      "type": "int", // Column data type, to specifies how to convert the value after edit(if the type is integer/float, the value will be [minimum] in [constrains] when convert failed)
-      "format": null,
-      "description": null, // Column description, if not [null] or blank, it will display a tooltip with this description when `Long Press` the header
-      "display": false,
-      "editable": false,
-      "input_decoration": {"min_lines": 1, "max_lines": 1, "max_length": 64, "hint_text": "Please input"},
-      "constrains": { // [TextFormField] constrains, when [type] is int/float, and [editable] is [true], it will take effect
-        "required": true, // Required to fill, default value is [false], if [true] but this field not fill, it will return [false] when you get `isFilled`
-        "minimum": 0, // The minimum value to input, when input less then this value will replaced with this value(it will affect the keyboard type)
-        "maximum": 99999999 // The maximum value to input, when input grater then this value will replaced with this value
-      },
-      "style": {"font_weight": "bold", "font_size": 14.0, "font_color": "#333333", "background_color": "#b5cfd2", "horizontal_alignment": "center", "vertical_alignment": "center", "text_align": "center"}
-    },
+
     {
       "primary_key": false,
       "auto_increase": false,
@@ -111,7 +94,7 @@ class _EditableMarkTable extends State<markTable> {
       "auto_increase": false,
       "name": "ca",
       "title": "CA",
-      "type": "string", // Data types support [integer/int], [float/double/decimal], [bool], [date], [datetime], [string], different types have different interaction behaviors and keyboard
+      "type": "float", // Data types support [integer/int], [float/double/decimal], [bool], [date], [datetime], [string], different types have different interaction behaviors and keyboard
       "format": null,
       "description": "User ID",
       "display": true,
@@ -126,7 +109,7 @@ class _EditableMarkTable extends State<markTable> {
       "auto_increase": false,
       "name": "exam",
       "title": "Exam",
-      "type": "int", // Data types support [integer/int], [float/double/decimal], [bool], [date], [datetime], [string], different types have different interaction behaviors and keyboard
+      "type": "float", // Data types support [integer/int], [float/double/decimal], [bool], [date], [datetime], [string], different types have different interaction behaviors and keyboard
       "format": null,
       "description": "Semester ID",
       "display": true,
@@ -141,7 +124,7 @@ class _EditableMarkTable extends State<markTable> {
       "auto_increase": false,
       "name": "practical",
       "title": "Practical",
-      "type": "int", // Data types support [integer/int], [float/double/decimal], [bool], [date], [datetime], [string], different types have different interaction behaviors and keyboard
+      "type": "float", // Data types support [integer/int], [float/double/decimal], [bool], [date], [datetime], [string], different types have different interaction behaviors and keyboard
       "format": null,
       "description": "Semester ID",
       "display": true,
@@ -155,6 +138,21 @@ class _EditableMarkTable extends State<markTable> {
   "rows": [],
   };
 
+
+  Future<void> sendJsonToApi(String data) async{
+    var apiUrl = Uri.parse("https://resultsystemdb.000webhostapp.com/addMark.php");
+    var jsonData = data;
+    
+    var response = await http.post(
+      apiUrl,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonData,
+    );
+
+    if (response.statusCode == 200){
+      print("Data Input Success!");
+    }
+  }
 
   Future<List<Map<String, dynamic>>> fetchData(String tid, String semester) async {
     var url = Uri.parse("https://resultsystemdb.000webhostapp.com/getStudentList.php?module=$tid&semester=$semester");
@@ -182,33 +180,116 @@ class _EditableMarkTable extends State<markTable> {
     }
   }
 
+  String addColumnsToList(String data) {
+    List<Map<String, dynamic>> modifiedList = [];
+
+    try {
+      final List<dynamic> jsonData = json.decode(data);
+
+      if (jsonData is List && jsonData.isNotEmpty && jsonData.first is Map<String, dynamic>) {
+        // Data is valid JSON, proceed with modification
+        for (var item in jsonData) {
+          // Add new columns to each item
+          item['tid'] = 'RUB200705012'; // You can set the values as needed
+          item['dateOfExam'] = "2023-11-22";
+          item['semester'] = "AS2023";
+          item['code'] = "CTE305";
+
+          modifiedList.add(item);
+        }
+      } else {
+        // Data is not in the expected format
+        print("Data format is not as expected.");
+      }
+    } catch (e) {
+      // JSON decoding error
+      print("JSON decoding error: $e");
+    }
+
+    return jsonEncode(modifiedList);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-        future: fetchData(widget.mCode, widget.semester),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator(); // Display a loading indicator.
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            if (snapshot.hasData) {
-              data["rows"] = snapshot.data as List<Map<String, dynamic>>;
-
-              return SingleChildScrollView(
-                child: EditableTable(
-                  key: _editableTableKey,
-                  data: data,
-                  readOnly: false,
-                ),
-              );
-            } else {
-              return Text('No data available.');
-            }
-          }
-        },
+      appBar: AppBar(
+        title: Text(widget.mCode ,
+        style: TextStyle(color: Colors.white),),
+        backgroundColor: Colors.blue,
       ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            heading(),
+            buttons(),
+            tableMark(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Padding buttons() {
+    return Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                 OutlinedButton(
+                  onPressed:() {
+                    print('excel');
+                  }, 
+                  child: Text("Excel")
+                ),
+                OutlinedButton(
+                  onPressed:() {
+                    final data = _editableTableKey.currentState?.currentData.rows;
+                    var jsonData = jsonEncode(data);
+                    sendJsonToApi(addColumnsToList(jsonData));
+                    print(addColumnsToList(jsonData));
+                  }, 
+                  child: Text("Save")
+                ),
+                OutlinedButton(
+                  onPressed:() {print("Reset");}, 
+                  child: Text("Clear")
+                )
+              ],
+            ),
+          );
+  }
+
+  Padding heading() {
+    return Padding(
+            padding: const EdgeInsets.only(top:8.0),
+            child: Text("Semester: ${widget.semester}"),
+          );
+  }
+
+  FutureBuilder<List<Map<String, dynamic>>> tableMark() {
+    return FutureBuilder(
+      future: fetchData(widget.mCode, widget.semester),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator(); // Display a loading indicator.
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          if (snapshot.hasData) {
+            data["rows"] = snapshot.data as List<Map<String, dynamic>>;
+
+            return SingleChildScrollView(
+              child: EditableTable(
+                key: _editableTableKey,
+                data: data,
+                readOnly: false,
+              ),
+            );
+          } else {
+            return Text('No data available.');
+          }
+        }
+      },
     );
   }
 }
