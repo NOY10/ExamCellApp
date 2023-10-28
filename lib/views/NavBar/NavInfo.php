@@ -6,7 +6,7 @@ if (isset($_POST['userID'])) {
     $userID = $_POST['userID'];
 
     $table = "Users";
-    $sql = "SELECT email, name FROM Student, Users WHERE id = :userID and userID = :userID";
+    $sql = "SELECT email, name FROM User, Users WHERE id = :userID and userID = :userID";
 
     // Prepare the SQL statement
     $stmt = $connection->prepare($sql);

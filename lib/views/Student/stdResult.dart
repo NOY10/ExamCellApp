@@ -10,11 +10,11 @@ class StudentResult extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            // flex: 1,
+            flex: 1,
             child: ResultHeader(),
           ),
           Expanded(
-            flex: 1,
+            flex: 2,
             child: StudentResultView(),
           ),
         ],
