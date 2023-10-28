@@ -8,8 +8,8 @@ class ProfileScreen extends StatelessWidget {
   // Create a list of module data
 
 
-  Future<List<Map<String, dynamic>>> fetchData() async {
-    var url = Uri.parse("https://resultsystemdb.000webhostapp.com/getModuleList.php");
+  Future<List<Map<String, dynamic>>> fetchData(String tid, String semester) async {
+    var url = Uri.parse("https://resultsystemdb.000webhostapp.com/getModuleList.php?tid=$tid&semester=$semester");
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -36,7 +36,7 @@ class ProfileScreen extends StatelessWidget {
           ),
           Expanded(
             child: FutureBuilder(
-              future: fetchData(),
+              future: fetchData("RUB200704052","AS2023"),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
