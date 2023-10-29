@@ -1,7 +1,13 @@
+import 'dart:io';
+
+import 'package:examcellapp/views/Teacher/filePicker/filePicker.dart';
 import 'package:flutter_editable_table/flutter_editable_table.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:file_picker/file_picker.dart';
+import 'package:excel/excel.dart';
+
 
 class markTable extends StatefulWidget {
   final String semester;
@@ -18,6 +24,7 @@ class markTable extends StatefulWidget {
 
 class _EditableMarkTable extends State<markTable> {
   final GlobalKey<EditableTableState> _editableTableKey = GlobalKey<EditableTableState>();
+  bool haveExcel = false;
   
   Map<String, dynamic> data = 
     {
@@ -109,7 +116,7 @@ class _EditableMarkTable extends State<markTable> {
       "auto_increase": false,
       "name": "exam",
       "title": "Exam",
-      "type": "float", // Data types support [integer/int], [float/double/decimal], [bool], [date], [datetime], [string], different types have different interaction behaviors and keyboard
+      "type": "double", // Data types support [integer/int], [float/double/decimal], [bool], [date], [datetime], [string], different types have different interaction behaviors and keyboard
       "format": null,
       "description": "Semester ID",
       "display": true,
@@ -149,15 +156,25 @@ class _EditableMarkTable extends State<markTable> {
       body: jsonData,
     );
 
-    if (response.statusCode == 200){
-      print("Data Input Success!");
+    if (response.statusCode == 200) {
+    // The request was successful, and you can check the response content
+    final responseData = json.decode(response.body);
+    if (responseData['success'] == true) {
+      // Data insertion was successful
+      print("Data inserted successfully.");
+    } else {
+      // Data insertion failed, and you can access the error message
+      print("Data insertion failed: ${responseData['error']}");
     }
+  } else {
+    // Request failed (e.g., connection issue)
+    print("Request failed with status code: ${response.statusCode}");
+  }
   }
 
   Future<List<Map<String, dynamic>>> fetchData(String tid, String semester) async {
     var url = Uri.parse("https://resultsystemdb.000webhostapp.com/getStudentList.php?module=$tid&semester=$semester");
     var response = await http.get(url);
-    print(tid);
 
     if (response.statusCode == 200) {
        List<dynamic> originalData = json.decode(response.body);
@@ -209,6 +226,7 @@ class _EditableMarkTable extends State<markTable> {
     return jsonEncode(modifiedList);
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -235,16 +253,17 @@ class _EditableMarkTable extends State<markTable> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                 OutlinedButton(
-                  onPressed:() {
-                    print('excel');
-                  }, 
-                  child: Text("Excel")
+                OutlinedButton(
+                  onPressed: retrieveExcel, 
+                  child: Text("excel")
                 ),
                 OutlinedButton(
                   onPressed:() {
-                    final data = _editableTableKey.currentState?.currentData.rows;
-                    var jsonData = jsonEncode(data);
+                    print('123');
+                    var tableData = _editableTableKey.currentState?.currentData.rows;
+                    // print(data["rows"]);
+                    // var jsonData = jsonEncode(data["rows"]);
+                    var jsonData = jsonEncode(tableData);
                     sendJsonToApi(addColumnsToList(jsonData));
                     print(addColumnsToList(jsonData));
                   }, 
@@ -266,6 +285,76 @@ class _EditableMarkTable extends State<markTable> {
           );
   }
 
+  Future<void> retrieveExcel() async {
+  File? excelFile;
+  FilePickerResult? result = await FilePicker.platform.pickFiles(
+    type: FileType.custom,
+    allowedExtensions: ['xlsx'], // You can specify other Excel formats as needed.
+  );
+
+  if (result != null && result.files.isNotEmpty) {
+    String? filePath = result.files.single.path;
+    if (filePath != null) {
+      excelFile = File(filePath);
+
+      final bytes = File(filePath).readAsBytesSync();
+      final excel = Excel.decodeBytes(bytes);
+
+      final sheet = excel.tables[excel.tables.keys.first]!;
+        List<List<dynamic>> excelContent = sheet.rows; // Get the rows as a list
+
+      // Extract data from Excel and set it to the table.
+      List<Map<String, dynamic>> excelData = [];
+
+     
+         excelContent = excelContent.map((row) {
+          return row.map((cell) => cell.value.toString()).toList();
+        }).toList();
+
+        List<Student> students = [];
+        for (int i = 1; i < excelContent.length; i++) {
+          students.add(Student(
+            name: excelContent[i][0],
+            id: int.parse(excelContent[i][1]),
+            ca: int.parse(excelContent[i][2]),
+            exam: int.parse(excelContent[i][3]),
+            practical: int.parse(excelContent[i][4]),
+          ));
+        }
+
+        // Convert the 'students' list to a list of maps
+        List<Map<String, dynamic>> studentListAsMaps = students.map((student) {
+          return {
+            'Name': student.name,
+            'ID': '0${student.id}',
+            'ca': student.ca,
+            'exam': student.exam,
+            'practical': student.practical,
+          };
+        }).toList();
+
+      // Update the table with the Excel data.
+      setState(() {
+        data['rows'] = studentListAsMaps;
+        haveExcel = true;
+      });
+    }
+  }
+}
+
+bool validateMarks(String data) {
+    List<Map<String, dynamic>> listData = List<Map<String, dynamic>>.from(json.decode(data));
+    for(var row in listData){
+      if(row['ca'] == '' || row['exam'] == '' || row['practical'] == ''){
+        return false;
+      }
+      if(row['ca'] == null || row['exam'] == null || row['practical'] == null){
+        return false;
+      }
+    }
+
+    return true;
+  }
   FutureBuilder<List<Map<String, dynamic>>> tableMark() {
     return FutureBuilder(
       future: fetchData(widget.mCode, widget.semester),
@@ -276,8 +365,11 @@ class _EditableMarkTable extends State<markTable> {
           return Text('Error: ${snapshot.error}');
         } else {
           if (snapshot.hasData) {
-            data["rows"] = snapshot.data as List<Map<String, dynamic>>;
-
+            
+            if(!haveExcel){
+              data["rows"] = snapshot.data as List<Map<String, dynamic>>;
+            }
+            print(data["rows"]);
             return SingleChildScrollView(
               child: EditableTable(
                 key: _editableTableKey,

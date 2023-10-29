@@ -11,9 +11,9 @@ class FilePickerE extends StatefulWidget {
 
 class _FilePickerState extends State<FilePickerE> {
   File? excelFile;
-  List<List<dynamic>> excelContent = [];
+  List<Map<String, dynamic>> excelData = [];
 
-  void pickExcelFile() async {
+  Future<List<Map<String, dynamic>>> pickExcelFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['xlsx', 'xls'],
@@ -28,51 +28,76 @@ class _FilePickerState extends State<FilePickerE> {
         final excel = Excel.decodeBytes(bytes);
 
         final sheet = excel.tables[excel.tables.keys.first]!;
-        excelContent = sheet.rows; // Get the rows as a list
+        List<List<dynamic>> excelContent = sheet.rows; // Get the rows as a list
 
         // Extract the first element of each Data object
         excelContent = excelContent.map((row) {
           return row.map((cell) => cell.value.toString()).toList();
         }).toList();
 
-        setState(() {}); // Refresh the UI to display the picked file content
+        List<Student> students = [];
+        for (int i = 1; i < excelContent.length; i++) {
+          students.add(Student(
+            name: excelContent[i][0],
+            id: int.parse(excelContent[i][1]),
+            ca: int.parse(excelContent[i][2]),
+            exam: int.parse(excelContent[i][3]),
+            practical: int.parse(excelContent[i][4]),
+          ));
+        }
+
+        // Convert the 'students' list to a list of maps
+        List<Map<String, dynamic>> studentListAsMaps = students.map((student) {
+          return {
+            'name': student.name,
+            'id': student.id,
+            'ca': student.ca,
+            'exam': student.exam,
+            'practical': student.practical,
+          };
+        }).toList();
+
+        return studentListAsMaps;
       }
     }
+
+    return []; // Return an empty list if no file is selected
   }
+  
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            if (excelFile != null)
-              Text('Selected Excel File: ${path.basename(excelFile!.path)}'),
-            if (excelContent.isNotEmpty)
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: DataTable(
-                  columns: excelContent[0]
-                      .map<DataColumn>(
-                          (cell) => DataColumn(label: Text('$cell')))
-                      .toList(),
-                  rows: excelContent.sublist(1).map<DataRow>((row) {
-                    return DataRow(
-                      cells: row
-                          .map<DataCell>((cell) => DataCell(Text('$cell')))
-                          .toList(),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ElevatedButton(
-              onPressed: pickExcelFile,
-              child: Text('Pick Excel File'),
-            ),
-          ],
+  return Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        if (excelFile != null)
+          Text('Selected Excel File: ${path.basename(excelFile!.path)}'),
+        ElevatedButton(
+          onPressed: () async {
+            excelData = await pickExcelFile();
+          },
+          child: Text('Pick Excel File'),
         ),
-      ),
-    );
-  }
+      ],
+    ),
+  );
+}
+
+}
+
+class Student {
+  String name;
+  int id;
+  int ca;
+  int exam;
+  int practical;
+
+  Student({
+    required this.name,
+    required this.id,
+    required this.ca,
+    required this.exam,
+    required this.practical,
+  });
 }
