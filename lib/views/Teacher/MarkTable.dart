@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:examcellapp/views/Teacher/filePicker/filePicker.dart';
 import 'package:flutter_editable_table/flutter_editable_table.dart';
 import 'package:flutter/material.dart';
@@ -161,6 +162,7 @@ class _EditableMarkTable extends State<markTable> {
     final responseData = json.decode(response.body);
     if (responseData['success'] == true) {
       // Data insertion was successful
+      diaglog(context);
       print("Data inserted successfully.");
     } else {
       // Data insertion failed, and you can access the error message
@@ -258,19 +260,29 @@ class _EditableMarkTable extends State<markTable> {
                   child: Text("excel")
                 ),
                 OutlinedButton(
-                  onPressed:() {
-                    print('123');
+                  onPressed: () {
                     var tableData = _editableTableKey.currentState?.currentData.rows;
-                    // print(data["rows"]);
-                    // var jsonData = jsonEncode(data["rows"]);
                     var jsonData = jsonEncode(tableData);
-                    sendJsonToApi(addColumnsToList(jsonData));
-                    print(addColumnsToList(jsonData));
-                  }, 
-                  child: Text("Save")
+                    if (validateMarks(jsonData)) {
+                      sendJsonToApi(addColumnsToList(jsonData));
+                      diaglog(context);
+                    } else {
+                      // Display an error message if validation fails
+                      diaglog2(context);
+                    }
+                  },
+                  child: Text("Save"),
                 ),
                 OutlinedButton(
-                  onPressed:() {print("Reset");}, 
+                  onPressed:() {
+                    setState(() {
+                      for (var row in data["rows"]){
+                        row["ca"] = '';
+                        row["exam"] = '';
+                        row["practical"] = '';
+                      }
+                    });
+                  }, 
                   child: Text("Clear")
                 )
               ],
@@ -285,6 +297,31 @@ class _EditableMarkTable extends State<markTable> {
           );
   }
 
+  diaglog(BuildContext context) {
+  return AwesomeDialog(
+    context: context,
+    dialogType: DialogType.success,
+    animType: AnimType.topSlide,
+    showCloseIcon: true,
+    title: "Success!",
+    desc: "Marks Added!!",
+    btnOkOnPress: () {},
+    btnOkColor: Colors.blue,
+  )..show();
+}
+
+diaglog2(BuildContext context) {
+  return AwesomeDialog(
+    context: context,
+    dialogType: DialogType.error,
+    animType: AnimType.topSlide,
+    showCloseIcon: true,
+    title: "Error!",
+    desc: "Missing Marks!!",
+    btnOkOnPress: () {},
+    btnOkColor: Colors.red,
+  )..show();
+}
   Future<void> retrieveExcel() async {
   File? excelFile;
   FilePickerResult? result = await FilePicker.platform.pickFiles(
