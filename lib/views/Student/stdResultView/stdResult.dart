@@ -1,3 +1,4 @@
+import 'package:examcellapp/views/Student/semesterList.dart';
 import 'package:examcellapp/views/Student/stdResultView/stdResultView.dart';
 import 'package:flutter/material.dart';
 import 'package:examcellapp/views/Student/stdResultView/stdInfo.dart';
@@ -16,7 +17,7 @@ class StudentResult extends StatelessWidget {
           ),
           Expanded(
             flex: 2,
-            child: StudentResultView(),
+            child: semesterResult(),
           ),
         ],
       ),

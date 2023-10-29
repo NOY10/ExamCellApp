@@ -4,7 +4,13 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class StudentResultView extends StatefulWidget {
-  const StudentResultView({Key? key}) : super(key: key);
+  final String sid;
+  final String semester;
+
+  const StudentResultView({
+    required this.semester,
+    required this.sid,
+    Key? key}) : super(key: key);
 
   @override
   State<StudentResultView> createState() => _StudentResultViewState();
@@ -15,8 +21,8 @@ class _StudentResultViewState extends State<StudentResultView> {
   List<GridColumn> _columns = [];
   double _zoom = 1.0;
 
-  Future<List<Employee>> fetchEmployees() async {
-    var url = 'https://examcellflutter.000webhostapp.com/getResult.php';
+  Future<List<Employee>> fetchEmployees(String sid, String semester) async {
+    var url = 'https://resultsystemdb.000webhostapp.com/getResult.php?sid=$sid&semester=$semester';
 
     try {
       final response = await http.get(Uri.parse(url));
@@ -144,46 +150,62 @@ class _StudentResultViewState extends State<StudentResultView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GestureDetector(
-        child: FutureBuilder<List<Employee>>(
-          future: fetchEmployees(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              }
-              if (snapshot.hasData) {
-                employeeDataSource = EmployeeDataSource(snapshot.data!);
-                return SingleChildScrollView(
-                  scrollDirection:
-                      Axis.horizontal, // Enable horizontal scrolling
-                  child: Container(
-                    width:
-                        MediaQuery.of(context).size.width, // Match screen width
-                    child: Transform.scale(
-                      scale: _zoom,
-                      child: SfDataGrid(
-                        source: employeeDataSource,
-                        frozenColumnsCount: 1,
-                        columns: _columns,
-                        columnWidthMode: ColumnWidthMode.fill,
-                        gridLinesVisibility: GridLinesVisibility.both,
-                        headerGridLinesVisibility: GridLinesVisibility.both,
-                      ),
+    //print(widget.semester);
+    //print(widget.sid);
+    return Container(
+      child: Column(
+        children: [
+          Text(widget.semester, 
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.left,),
+          semesterTable(),
+        ],
+      ),
+    );
+
+  }
+
+  GestureDetector semesterTable() {
+    return GestureDetector(
+      child: FutureBuilder<List<Employee>>(
+        future: fetchEmployees(widget.sid, widget.semester),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
+            if (snapshot.hasData) {
+              employeeDataSource = EmployeeDataSource(snapshot.data!);
+              print(employeeDataSource.toString());
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal, // Enable horizontal scrolling
+                child: Container(
+                  //height: 500,
+                  width: MediaQuery.of(context).size.width, // Match screen width
+                  child: Transform.scale(
+                    scale: _zoom,
+                    child: SfDataGrid(
+                      source: employeeDataSource,
+                      frozenColumnsCount: 1,
+                      columns: _columns,
+                      columnWidthMode: ColumnWidthMode.fill,
+                      gridLinesVisibility: GridLinesVisibility.both,
+                      headerGridLinesVisibility: GridLinesVisibility.both,
                     ),
                   ),
-                );
-              }
+                ),
+              );
             }
-            return Center(
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                value: 0.8,
-              ),
-            );
-          },
-        ),
+          }
+          return Center(
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              value: 0.8,
+            ),
+          );
+        },
       ),
     );
   }
