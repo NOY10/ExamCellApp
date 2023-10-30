@@ -1,9 +1,11 @@
 import 'package:examcellapp/views/Student/stdDashboard.dart';
+import 'package:examcellapp/views/Student/stdDetailManager.dart';
 import 'package:examcellapp/views/Student/stdResultView/stdResult.dart';
-import 'package:examcellapp/views/Student/stdprofile.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:examcellapp/views/NavBar/NavBar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class StudentHome extends StatefulWidget {
   const StudentHome({super.key});
@@ -16,6 +18,10 @@ class _StudentHomeState extends State<StudentHome> {
   final primary = 0xFF3385FF;
   int _currentIndex = 0;
   final PageController _pageController = PageController();
+  void initState(){
+    super.initState();
+    setData();
+  }
 
   final List<Widget> _pages = [
     StudentDashboard(),
@@ -25,6 +31,31 @@ class _StudentHomeState extends State<StudentHome> {
   String getAppBarTitle() {
     return _currentIndex == 0 ? "Result Processing System" : "Result";
   }
+
+  Future<void> setData() async {
+  SharedPreferencesManager manager = SharedPreferencesManager();
+  String? storedUserID = await manager.getUserID();
+  final Uri url = Uri.parse("https://resultsystemdb.000webhostapp.com/getStdData.php?sid=$storedUserID");
+  var response = await http.get(url);
+  List stdData = json.decode(response.body);
+  if (response.statusCode == 200) {
+    if (stdData.isNotEmpty) {
+      // Assuming the API response returns a single data object
+      Map<String, dynamic> std = stdData[0];
+
+      final prefs = await SharedPreferences.getInstance();
+      // await prefs.setString('UserID', std['id']);
+      await prefs.setString('UserName', std['name']);
+      await prefs.setString('Program', std['program']);
+      await prefs.setString('Semester', std['semester']);
+      await prefs.setString('SemNo', std['SemNo']);
+      print("success");
+    }
+    
+  } else {
+    throw Exception('Failed to load data');
+  }
+}
 
   @override
   Widget build(BuildContext context) {

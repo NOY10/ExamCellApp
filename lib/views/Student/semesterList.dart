@@ -1,8 +1,11 @@
 
+import 'package:examcellapp/views/Student/stdDetailManager.dart';
 import 'package:examcellapp/views/Student/stdResultView/stdResultView.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class semesterResult extends StatefulWidget {
   const semesterResult({Key? key}) : super(key: key);
@@ -13,7 +16,27 @@ class semesterResult extends StatefulWidget {
 }
 
 class _semesterResultState extends State<semesterResult>{
-  final sid = "02210233";
+ 
+  String? userID;
+  
+  @override
+void initState() {
+  super.initState();
+    getUserID();
+}
+
+Future<void> getUserID() async {
+  SharedPreferencesManager manager = SharedPreferencesManager();
+  String? storedUserID = await manager.getUserID();
+
+  if (storedUserID != null) {
+    setState(() {
+      userID = storedUserID;
+    });
+  }
+}
+
+
   Future<List<dynamic>> fetchSemester(String sid) async {
     var url = 'https://resultsystemdb.000webhostapp.com/getSemesterList.php?sid=$sid';
 
@@ -31,11 +54,15 @@ class _semesterResultState extends State<semesterResult>{
     return [];
   }
 
+  
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    if(userID != null){
+      return Scaffold(
       body: FutureBuilder<List<dynamic>>(
-        future: fetchSemester(sid),
+        future: fetchSemester(userID!),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator(); // Display a loading indicator while fetching data.
@@ -53,7 +80,7 @@ class _semesterResultState extends State<semesterResult>{
                           padding: const EdgeInsets.all(8.0),
                           child: StudentResultView(
                             key: ValueKey<String>('semester_${item["semester"]}'),
-                            sid: sid, 
+                            sid: userID!, 
                             semester : item["semester"]),
                         ), // Create a StudentResultView for each item
                       ],
@@ -66,5 +93,12 @@ class _semesterResultState extends State<semesterResult>{
         },
       ),
     );
+    }else {
+      return Scaffold(
+        body: Center(
+          child: Text('User ID is null. Please log in.'),
+        ),
+      );
+    }
   }
 }

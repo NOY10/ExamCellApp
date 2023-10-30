@@ -3,11 +3,14 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class StudentLineChart extends StatefulWidget {
-  const StudentLineChart({super.key});
+  final List<dynamic> marks; // Add this property
+
+  StudentLineChart({Key? key, required this.marks}) : super(key: key);
 
   @override
   State<StudentLineChart> createState() => _StudentLineChartState();
 }
+
 
 class _StudentLineChartState extends State<StudentLineChart> {
   List<Color> gradientColors = [
@@ -20,7 +23,10 @@ class _StudentLineChartState extends State<StudentLineChart> {
 
   @override
   Widget build(BuildContext context) {
-    List<double> marks = [85, 90, 78, 95, 88, 75, 92, 87];
+    //print(widget.marks);
+    List<dynamic> widgetMarks = [81.996666, 64.75, 78.78, 79.4];
+List<double> marks = List<double>.generate(widgetMarks.length, (index) => widgetMarks[index].toDouble());
+
     return Stack(
       children: <Widget>[
         AspectRatio(
