@@ -47,6 +47,7 @@ dependencies:
   file_picker: ^6.0.0
   excel: ^2.1.0
   flutter_editable_table: ^1.1.2
+  awesome_dialog: ^3.1.0
 
 dev_dependencies:
   flutter_test:
