@@ -12,11 +12,15 @@ class StudentResult extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            flex: 1,
             child: ResultHeader(),
           ),
+          Divider(
+            color: Colors.blue,
+            thickness: 1,
+            indent: 1,
+          ),
           Expanded(
-            flex: 2,
+            flex: 4,
             child: semesterResult(),
           ),
         ],
@@ -34,7 +38,7 @@ class ResultHeader extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-          flex: 2,
+          //flex: 2,
           child: Padding(
             padding: const EdgeInsets.only(top: 5.0),
             child: Column(
@@ -91,15 +95,15 @@ class ResultHeader extends StatelessWidget {
             ),
           ),
         ),
-        const Divider(
-          color: Colors.blue,
-          thickness: 2,
-          indent: 1,
-        ),
-        Expanded(
-          flex: 1,
-          child: StdInfo(),
-        )
+        // const Divider(
+        //   color: Colors.blue,
+        //   thickness: 1,
+        //   indent: 1,
+        // ),
+        // Expanded(
+        //   flex: 1,
+        //   child: StdInfo(),
+        // )
       ],
     );
   }

@@ -155,17 +155,40 @@ class _StudentResultViewState extends State<StudentResultView> {
     return Container(
       child: Column(
         children: [
-          Text(widget.semester, 
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.left,),
+          header(),
           semesterTable(),
         ],
       ),
     );
 
   }
+
+  Padding header() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Text(
+            "ID: ${widget.sid}",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.left,
+          ),
+          SizedBox(width: 10,),
+          Text(
+            "Semester: ${widget.semester}",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.left,
+          ),
+        ],
+      ),
+    );
+  }
+
+
 
   GestureDetector semesterTable() {
     return GestureDetector(
@@ -178,11 +201,11 @@ class _StudentResultViewState extends State<StudentResultView> {
             }
             if (snapshot.hasData) {
               employeeDataSource = EmployeeDataSource(snapshot.data!);
-              print(employeeDataSource.toString());
+              // print(employeeDataSource.toString());
               return SingleChildScrollView(
                 scrollDirection: Axis.horizontal, // Enable horizontal scrolling
                 child: Container(
-                  //height: 500,
+                  height: 400,
                   width: MediaQuery.of(context).size.width, // Match screen width
                   child: Transform.scale(
                     scale: _zoom,
