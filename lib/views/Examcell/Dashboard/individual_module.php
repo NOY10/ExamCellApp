@@ -7,7 +7,7 @@ if (isset($_POST['semester'], $_POST['moduleCode'])) {
     $moduleCode = $_POST['moduleCode'];
 
     // $sql = "SELECT sid, name, practical, ca, exam FROM Mark, Student WHERE sid = :userID AND code = :moduleCode AND SemNo = :semester";
-    $sql = "SELECT Mark.*,name FROM Mark,Student WHERE code = :moduleCode";
+    $sql = "SELECT Mark.*,name FROM Mark,Student WHERE code = :moduleCode and id=sid";
 
     $result = $connection->prepare($sql);
     // $result->bindParam(':userID', $userID, PDO::PARAM_INT);
@@ -17,10 +17,13 @@ if (isset($_POST['semester'], $_POST['moduleCode'])) {
     
     $result->execute();
 
-    // Check for results
+    $db_data = array();
+
     if ($result->rowCount() > 0) {
-        $response = $result->fetch(PDO::FETCH_ASSOC);
-        echo json_encode($response);
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            $db_data[] = $row;
+        }
+        echo json_encode($db_data);
     } else {
         echo json_encode(array("error" => "No data found"));
     }

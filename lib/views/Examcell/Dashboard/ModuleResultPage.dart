@@ -35,28 +35,10 @@ class _ModuleResultPageState extends State<ModuleResultPage> {
 
     try {
       if (response.statusCode == 200) {
-        final jsonResponse = json.decode(response.body);
-
-        if (jsonResponse is Map<String, dynamic>) {
-          final sid = jsonResponse['sid'];
-          final name = jsonResponse['name'];
-          final practical = jsonResponse['practical'];
-          final ca = jsonResponse['ca'];
-          final exam = jsonResponse['exam'];
-
-          final student = StudentR(
-            StudentId: sid.toString(),
-            Name: name.toString(),
-            Practical: practical.toString(),
-            CA: ca.toString(),
-            Exam: exam.toString(),
-          );
-
-          // Return a list with the single student
-          return [student];
-        } else {
-          throw Exception('Unexpected response format');
-        }
+        var list = json.decode(response.body);
+        List<StudentR> employees =
+            list.map<StudentR>((json) => StudentR.fromJson(json)).toList();
+        return employees;
       } else {
         throw Exception(
             'Failed to fetch data. Status code: ${response.statusCode}');
@@ -71,12 +53,12 @@ class _ModuleResultPageState extends State<ModuleResultPage> {
       GridColumn(
         columnName: 'sid',
         label: Container(alignment: Alignment.center, child: Text('StudentId')),
-        width: 150,
+        width: 100,
       ),
       GridColumn(
         columnName: 'name',
         label: Container(alignment: Alignment.center, child: Text('Name')),
-        width: 80,
+        width: 150,
       ),
       GridColumn(
         columnName: 'practical',
@@ -225,6 +207,7 @@ class _ModuleResultPageState extends State<ModuleResultPage> {
                             .width, // Match screen width
                         child: SfDataGrid(
                           source: studentDataSource,
+                          frozenColumnsCount: 1,
                           columns: columns,
                           columnWidthMode: ColumnWidthMode.fill,
                           gridLinesVisibility: GridLinesVisibility.both,
