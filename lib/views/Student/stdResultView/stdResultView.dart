@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -223,11 +224,11 @@ class _StudentResultViewState extends State<StudentResultView> {
             }
           }
           return Center(
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-              value: 0.8,
-            ),
-          );
+              child: SpinKitChasingDots(
+                color: Colors.blue,
+                size: 50.0,
+              ),
+            );
         },
       ),
     );
