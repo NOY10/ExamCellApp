@@ -2,6 +2,7 @@
 import 'package:examcellapp/views/Student/stdDetailManager.dart';
 import 'package:examcellapp/views/Student/stdResultView/stdResultView.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -64,8 +65,15 @@ Future<void> getUserID() async {
       body: FutureBuilder<List<dynamic>>(
         future: fetchSemester(userID!),
         builder: (context, snapshot) {
+         
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator(); // Display a loading indicator while fetching data.
+            return Center(
+              child: SpinKitChasingDots(
+                color: Colors.blue,
+                size: 50.0,
+              ),
+            );
+             // Display a loading indicator while fetching data.
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {

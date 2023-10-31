@@ -1,5 +1,6 @@
 
 import 'package:examcellapp/views/Student/stdDetailManager.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:examcellapp/views/Student/stdLineChart.dart';
@@ -29,28 +30,44 @@ class _StudentDashboardState extends State<StudentDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          assessment(),
-          banner(context),
-          moduleCard(context),
-          FutureBuilder(
-            future: fetchMarks(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                List<dynamic> marks = snapshot.data as List<dynamic>;
-                //print(marks);
-                return StudentLineChart(marks: marks);
-            } else {
-              return CircularProgressIndicator();
-            }
-  },
-)
-
-        ],
+      body: FutureBuilder(
+        future: fetchMarks(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting || snapshot.connectionState == ConnectionState.active) {
+          
+            return Center(
+              child: SpinKitChasingDots(
+                color: Colors.blue,
+                size: 50.0,
+              ),
+            );
+          } else if (snapshot.connectionState == ConnectionState.done) {
+            
+            List<dynamic> marks = snapshot.data as List<dynamic>;
+            return content(context, marks);
+          } else {
+          
+            return Center(
+              child: Text('An error occurred.'), // Replace with your error handling widget.
+            );
+          }
+        },
       ),
     );
   }
+
+  Widget content(BuildContext context, List<dynamic> marks) {
+    return Column(
+      children: [
+        assessment(),
+        banner(context),
+        moduleCard(context),
+        StudentLineChart(marks: marks),
+      ],
+    );
+  }
+
+  
 
   Future<List<dynamic>> fetchMarks() async {
   var url = 'https://resultsystemdb.000webhostapp.com/getAnalysis.php?sid=02210233';
