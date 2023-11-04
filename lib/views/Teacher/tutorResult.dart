@@ -1,18 +1,25 @@
 import 'package:examcellapp/views/Teacher/MarkTable.dart';
 import 'package:examcellapp/views/Teacher/TutorMananger.dart';
+import 'package:examcellapp/views/Teacher/analysis/undeclaredAnalysis.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-class ProfileScreen extends StatelessWidget {
+class ViewResultScreen extends StatefulWidget {
+  const ViewResultScreen({super.key});
+
+  @override
+  State<ViewResultScreen> createState() => _ViewResultScreenState();
+}
+
+class _ViewResultScreenState extends State<ViewResultScreen> {
   String? storedUserID;
 
   Future<List<Map<String, dynamic>>> fetchData(String semester) async {
     SharedPreferencesManager manager = SharedPreferencesManager();
     storedUserID = await manager.getUserID();
-    print(storedUserID);
     var url = Uri.parse(
-        "https://resultsystemdb.000webhostapp.com/getModuleList.php?tid=$storedUserID&semester=$semester");
+        "https://resultsystemdb.000webhostapp.com/getGradedModules.php?tid=$storedUserID");
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -22,20 +29,18 @@ class ProfileScreen extends StatelessWidget {
     }
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          const Divider(
-            color: Colors.blue,
-            thickness: 2,
-            indent: 1,
-          ),
+          // const Divider(
+          //   color: Colors.blue,
+          //   thickness: 2,
+          //   indent: 1,
+          // ),
           const Text(
-            'List of Modules you are currently teaching',
+            'Graded Modules',
             style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
           ),
           Expanded(
@@ -71,16 +76,15 @@ class ProfileScreen extends StatelessWidget {
                               children: <Widget>[
                                 ListTile(
                                   leading: Icon(Icons.message),
-                                  title: Text(moduleData['mCode']),
-                                  subtitle: Text(moduleData['mName']),
+                                  title: Text(moduleData['code']),
+                                  subtitle: Text(moduleData['name']),
                                   trailing: InkWell(
                                     onTap: () {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
-                                          builder: (context) => markTable(
+                                          builder: (context) => undeclaredAnalysis(
                                             tid: storedUserID!,
-                                            semester: moduleData['semester'],
-                                            mCode: moduleData['mCode'],
+                                            mCode: moduleData['code'],
                                           ),
                                         ),
                                       );
@@ -107,56 +111,3 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
-
-class Module {
-  final String name;
-  final String description;
-
-  Module(this.name, this.description);
-}
-
-
-
-
-// child: ListView(
-//                 children: modules.map((module) {
-//                   return Padding(
-//                     padding: const EdgeInsets.fromLTRB(
-//                         1, 0, 8, 0), // Add right-side padding
-//                     child: Card(
-//                       color: Colors.white,
-//                       child: Container(
-//                         margin: const EdgeInsets.only(left: 1),
-//                         decoration: const BoxDecoration(
-//                           border: Border(
-//                             left: BorderSide(
-//                               color: Colors.blue,
-//                               width: 40,
-//                             ),
-//                           ),
-//                         ),
-//                         child: Column(
-//                           mainAxisSize: MainAxisSize.min,
-//                           children: <Widget>[
-//                             ListTile(
-//                               leading: Icon(Icons.message),
-//                               title: Text(module.name),
-//                               subtitle: Text(module.description),
-//                               trailing: InkWell(
-//                                 onTap: () {
-//                                   Navigator.of(context).push(
-//                                     MaterialPageRoute(
-//                                       builder: (context) => ModuleResult(),
-//                                     ),
-//                                   );
-//                                 },
-//                                 child: Icon(Icons.arrow_forward_ios_outlined),
-//                               ),
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//                     ),
-//                   );
-//                 }).toList(),
-//               ),

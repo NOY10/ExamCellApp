@@ -10,22 +10,20 @@ import 'package:file_picker/file_picker.dart';
 import 'package:excel/excel.dart';
 
 
-class markTable extends StatefulWidget {
-  final String tid;
+class gradedTable extends StatefulWidget {
   final String semester;
   final String mCode;
 
-  const markTable({
-    required this.tid,
+  const gradedTable({
     required this.semester,
     required this.mCode,
     Key? key}): super(key:key);
 
   @override
-  _EditableMarkTable createState() => _EditableMarkTable();
+  _gradedTableState createState() => _gradedTableState();
 }
 
-class _EditableMarkTable extends State<markTable> {
+class _gradedTableState extends State<gradedTable> {
   final GlobalKey<EditableTableState> _editableTableKey = GlobalKey<EditableTableState>();
   bool haveExcel = false;
   
@@ -149,32 +147,32 @@ class _EditableMarkTable extends State<markTable> {
   };
 
 
-  Future<void> sendJsonToApi(String data) async{
-    var apiUrl = Uri.parse("https://resultsystemdb.000webhostapp.com/addMark.php");
-    var jsonData = data;
+  // Future<void> sendJsonToApi(String data) async{
+  //   var apiUrl = Uri.parse("https://resultsystemdb.000webhostapp.com/addMark.php");
+  //   var jsonData = data;
     
-    var response = await http.post(
-      apiUrl,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonData,
-    );
+  //   var response = await http.post(
+  //     apiUrl,
+  //     headers: {'Content-Type': 'application/json'},
+  //     body: jsonData,
+  //   );
 
-    if (response.statusCode == 200) {
-    // The request was successful, and you can check the response content
-    final responseData = json.decode(response.body);
-    if (responseData['success'] == true) {
-      // Data insertion was successful
-      diaglog(context);
-      print("Data inserted successfully.");
-    } else {
-      // Data insertion failed, and you can access the error message
-      print("Data insertion failed: ${responseData['error']}");
-    }
-  } else {
-    // Request failed (e.g., connection issue)
-    print("Request failed with status code: ${response.statusCode}");
-  }
-  }
+  //   if (response.statusCode == 200) {
+  //   // The request was successful, and you can check the response content
+  //   final responseData = json.decode(response.body);
+  //   if (responseData['success'] == true) {
+  //     // Data insertion was successful
+  //     diaglog(context);
+  //     print("Data inserted successfully.");
+  //   } else {
+  //     // Data insertion failed, and you can access the error message
+  //     print("Data insertion failed: ${responseData['error']}");
+  //   }
+  // } else {
+  //   // Request failed (e.g., connection issue)
+  //   print("Request failed with status code: ${response.statusCode}");
+  // }
+  // }
 
   Future<List<Map<String, dynamic>>> fetchData(String tid, String semester) async {
     var url = Uri.parse("https://resultsystemdb.000webhostapp.com/getStudentList.php?module=$tid&semester=$semester");
@@ -201,34 +199,34 @@ class _EditableMarkTable extends State<markTable> {
     }
   }
 
-  String addColumnsToList(String data) {
-    List<Map<String, dynamic>> modifiedList = [];
+  // String addColumnsToList(String data) {
+  //   List<Map<String, dynamic>> modifiedList = [];
 
-    try {
-      final List<dynamic> jsonData = json.decode(data);
+  //   try {
+  //     final List<dynamic> jsonData = json.decode(data);
 
-      if (jsonData is List && jsonData.isNotEmpty && jsonData.first is Map<String, dynamic>) {
-        // Data is valid JSON, proceed with modification
-        for (var item in jsonData) {
-          // Add new columns to each item
-          item['tid'] = widget.tid; // You can set the values as needed
-          item['dateOfExam'] = "2023-11-22";
-          item['semester'] = "AS2023";
-          item['code'] = widget.mCode;
+  //     if (jsonData is List && jsonData.isNotEmpty && jsonData.first is Map<String, dynamic>) {
+  //       // Data is valid JSON, proceed with modification
+  //       for (var item in jsonData) {
+  //         // Add new columns to each item
+  //         item['tid'] = widget.tid; // You can set the values as needed
+  //         item['dateOfExam'] = "2023-11-22";
+  //         item['semester'] = "AS2023";
+  //         item['code'] = widget.mCode;
 
-          modifiedList.add(item);
-        }
-      } else {
-        // Data is not in the expected format
-        print("Data format is not as expected.");
-      }
-    } catch (e) {
-      // JSON decoding error
-      print("JSON decoding error: $e");
-    }
+  //         modifiedList.add(item);
+  //       }
+  //     } else {
+  //       // Data is not in the expected format
+  //       print("Data format is not as expected.");
+  //     }
+  //   } catch (e) {
+  //     // JSON decoding error
+  //     print("JSON decoding error: $e");
+  //   }
 
-    return jsonEncode(modifiedList);
-  }
+  //   return jsonEncode(modifiedList);
+  // }
 
 
   @override
@@ -266,7 +264,7 @@ class _EditableMarkTable extends State<markTable> {
                     var tableData = _editableTableKey.currentState?.currentData.rows;
                     var jsonData = jsonEncode(tableData);
                     if (validateMarks(jsonData)) {
-                      sendJsonToApi(addColumnsToList(jsonData));
+                      // sendJsonToApi(addColumnsToList(jsonData));
                       diaglog(context);
                     } else {
                       // Display an error message if validation fails

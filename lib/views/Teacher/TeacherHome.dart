@@ -1,7 +1,12 @@
+import 'package:examcellapp/views/Student/stdDetailManager.dart';
 import 'package:examcellapp/views/Teacher/Landing.dart';
+import 'package:examcellapp/views/Teacher/tutorResult.dart';
 import 'package:flutter/material.dart';
 import 'package:examcellapp/views/NavBar/NavBar.dart';
 import 'package:examcellapp/views/Teacher/filePicker/filePicker.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -14,17 +19,47 @@ class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
   final PageController _pageController = PageController();
 
+  @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   //setData();
+  // }
+
+  @override
   final List<Widget> _pages = [
     ProfileScreen(),
-    UploadScreen(),
     ViewResultScreen(),
   ];
 
   final List<String> _pageTitles = [
     'Result Processing System',
-    'Upload Result',
     'View Result',
   ];
+
+  Future<void> setData() async {
+    SharedPreferencesManager manager = SharedPreferencesManager();
+    String? storedUserID = await manager.getUserID();
+    final Uri url = Uri.parse("https://resultsystemdb.000webhostapp.com/getTutor.php?tid=$storedUserID");
+    var response = await http.get(url);
+    List stdData = json.decode(response.body);
+    if (response.statusCode == 200) {
+      if (stdData.isNotEmpty) {
+        // Assuming the API response returns a single data object
+        Map<String, dynamic> std = stdData[0];
+
+        final prefs = await SharedPreferences.getInstance();
+        // await prefs.setString('UserID', std['id']);
+        await prefs.setString('mCode', std['mCode']);
+        await prefs.setString('Semester', std['semester']);
+        await prefs.setString('SemNo', std['SemNo']);
+        print("success");
+      }
+      
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,10 +103,6 @@ class _MyHomePageState extends State<MyHomePage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
               label: 'Profile',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.upload),
-              label: 'Upload Result',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.remove_red_eye),
@@ -121,23 +152,6 @@ class UploadScreen extends StatelessWidget {
 
 //************************************  ViewResult Screen starts  ************************************/
 
-class ViewResultScreen extends StatelessWidget {
-  const ViewResultScreen({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        elevation: 0,
-        color: Theme.of(context).colorScheme.surfaceVariant,
-        child: const SizedBox(
-          width: 300,
-          height: 100,
-          child: Center(child: Text('Tabular form will be added')),
-        ),
-      ),
-    );
-  }
-}
 //************************************  ViewResult Screen  ends ************************************/
 

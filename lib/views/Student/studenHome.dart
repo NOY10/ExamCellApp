@@ -33,29 +33,29 @@ class _StudentHomeState extends State<StudentHome> {
   }
 
   Future<void> setData() async {
-  SharedPreferencesManager manager = SharedPreferencesManager();
-  String? storedUserID = await manager.getUserID();
-  final Uri url = Uri.parse("https://resultsystemdb.000webhostapp.com/getStdData.php?sid=$storedUserID");
-  var response = await http.get(url);
-  List stdData = json.decode(response.body);
-  if (response.statusCode == 200) {
-    if (stdData.isNotEmpty) {
-      // Assuming the API response returns a single data object
-      Map<String, dynamic> std = stdData[0];
+    SharedPreferencesManager manager = SharedPreferencesManager();
+    String? storedUserID = await manager.getUserID();
+    final Uri url = Uri.parse("https://resultsystemdb.000webhostapp.com/getStdData.php?sid=$storedUserID");
+    var response = await http.get(url);
+    List stdData = json.decode(response.body);
+    if (response.statusCode == 200) {
+      if (stdData.isNotEmpty) {
+        // Assuming the API response returns a single data object
+        Map<String, dynamic> std = stdData[0];
 
-      final prefs = await SharedPreferences.getInstance();
-      // await prefs.setString('UserID', std['id']);
-      await prefs.setString('UserName', std['name']);
-      await prefs.setString('Program', std['program']);
-      await prefs.setString('Semester', std['semester']);
-      await prefs.setString('SemNo', std['SemNo']);
-      print("success");
+        final prefs = await SharedPreferences.getInstance();
+        // await prefs.setString('UserID', std['id']);
+        await prefs.setString('UserName', std['name']);
+        await prefs.setString('Program', std['program']);
+        await prefs.setString('Semester', std['semester']);
+        await prefs.setString('SemNo', std['SemNo']);
+        print("success");
+      }
+      
+    } else {
+      throw Exception('Failed to load data');
     }
-    
-  } else {
-    throw Exception('Failed to load data');
   }
-}
 
   @override
   Widget build(BuildContext context) {
