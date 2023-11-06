@@ -1,5 +1,6 @@
 import 'dart:math';
-
+import 'package:examcellapp/views/NavBar/NavBar.dart';
+import 'package:examcellapp/views/Teacher/analysis/markAnalysis.dart';
 import 'package:examcellapp/views/Teacher/analysis/scatter.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
@@ -37,60 +38,51 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
     var response = await http.get(url);
 
     if (response.statusCode == 200) {
-      return List<Map<String, dynamic>>.from(json.decode(response.body));
+      List<Map<String, dynamic>> data =
+        List<Map<String, dynamic>>.from(json.decode(response.body));
+
+      for (var student in data) {
+        // Calculate pass status for the student
+        bool passTotal = isPassingTotal(student);
+        bool passCa = isPassCa(student);
+        bool passPractical = isPassingPractical(student);
+        bool passExam = isPassingExam(student);
+
+        // Append pass status to the student's data
+        student['passTotal'] = passTotal;
+        student['passCa'] = passCa;
+        student['passPractical'] = passPractical;
+        student['passExam'] = passExam;
+      }
+
+      
+
+      return data;
     } else {
       throw Exception('Failed to load data');
     }
   }
 
-  Map<String, dynamic> calculateStatistics(List<Map<String, dynamic>> data) {
-    if (data.isEmpty) {
-      return {
-        'mean': 0.0,
-        'max': 0,
-        'min': 0,
-      };
-    }
-
-    int sumTotal = 0;
-    int maxTotal =
-        data[0]['ca'] + data[0]['exam'] + data[0]['practical'];
-    int minTotal =
-        data[0]['ca'] + data[0]['exam'] + data[0]['practical'];
-
-    for (var item in data) {
-      int total = item['ca'] + item['exam'] + item['practical'];
-      sumTotal += total;
-      if (total > maxTotal) {
-        maxTotal = total;
-      }
-      if (total < minTotal) {
-        minTotal = total;
-      }
-    }
-
-    int meanTotal = (sumTotal ~/ data.length).toInt();
-
-    return {
-      'mean': meanTotal,
-      'max': maxTotal,
-      'min': minTotal,
-    };
-  }
-
   @override
   Widget build(BuildContext context) {
     final buttonWidth = MediaQuery.of(context).size.width / 3;
-
     return Scaffold(
       appBar: AppBar(
-        title: Text("Analysis"),
+        title: Text(
+          "Analysis",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+          ),
+        ),
+        backgroundColor: Colors.blue,
       ),
+     
       body: FutureBuilder(
         future: fetch("RUB201204006", "CTE306"),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: SpinKitChasingDots(
                 color: Colors.blue,
                 size: 50.0,
@@ -102,36 +94,17 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
             if (snapshot.hasData) {
               List<Map<String, dynamic>> data =
                   snapshot.data as List<Map<String, dynamic>>;
-              List<String> category = ['ca', 'practical', 'exam'];
-
-              return Container(
-                width: buttonWidth*3,
-                height: 400,
-                child: PageView(
-                  controller: _pageController,
-                  children: List.generate(category.length, (index) {
-                    final cat = category[index];
-                    return Center(
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              color: Colors.grey,
-                              child: Text(
-                                cat,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
-                              )),
-                          ),
-                          ScatterPlotChart(data: data, category: cat,),
-                        ],
-                      ),
-                    );
-                  }),
+              List<String> category = ['ca', 'practical', 'exam','total'];
+              
+              return SingleChildScrollView(
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height + 500,
+                  child: Column(
+                    children: [   
+                      chart(buttonWidth, category, context, data),
+                      gradedMarkView(tid: widget.tid, code: widget.mCode),
+                    ],
+                  ),
                 ),
               );
             } else {
@@ -139,6 +112,79 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
             }
           }
         },
+      ),
+    );
+  }
+
+  SizedBox chart(double buttonWidth, List<String> category, BuildContext context, List<Map<String, dynamic>> data) {
+    return SizedBox(
+              width: buttonWidth*3,
+              height: 400,
+              child: PageView(
+                controller: _pageController,
+                children: List.generate(category.length, (index) {
+                  final cat = category[index];
+                  return Center(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            color: Colors.grey,
+                            child: chartheader(data, cat)),
+                        ),
+                        ScatterPlotChart(data: data, category: cat,),
+                      ],
+                    ),
+                  );
+                }),
+              ),
+            );
+  }
+
+  Padding chartheader(List<Map<String, dynamic>> data, String cat) {
+    String title = '';
+    if(cat == 'ca'){
+      title = 'Continuos Assessment';
+    }else if(cat == 'practical'){
+      title = 'Practical Assessment';
+    }if(cat == 'exam'){
+      title = 'Exam Assessment';
+    }else if(cat == 'total'){
+      title = 'Aggregate';
+    }
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(title,
+          style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                'Pass: ${countPassFail(data, cat)['pass'].toString()}',
+                style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+                Text(
+                'Fail: ${countPassFail(data, cat)['fail'].toString()}',
+                style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -200,4 +246,63 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
     _pageController.dispose();
     super.dispose();
   }
+}
+
+bool isPassingTotal(Map<String, dynamic> student) {
+  double total = student['total'].toDouble(); 
+  return total >= 50;
+}
+
+bool isPassingExam(Map<String, dynamic> student) {
+  double exam = student['exam'].toDouble(); 
+  double maxExam = student['maxExam'].toDouble(); 
+
+  return exam >= (0.4 * maxExam);
+}
+
+bool isPassingPractical(Map<String, dynamic> student) {
+  double practical = student['practical'].toDouble(); 
+  double maxPractical = student['MaxPractical'].toDouble(); 
+  return practical >= (0.4 * maxPractical);
+  
+}
+
+bool isPassCa(Map<String, dynamic> student) {
+  double ca = student['ca'].toDouble(); 
+  double maxCa = student['maxCA'].toDouble(); 
+  return ca >= (0.4 * maxCa);
+}
+
+Map<String, int> countPassFail(List<Map<String, dynamic>> data, String type){
+  int passCount = 0;
+  int failCount = 0;
+
+  if(type == 'ca'){
+    for(var mark in data){
+      bool passCa = isPassCa(mark);
+      passCa ? passCount++ : failCount++;
+    }
+  }else if(type == 'practical'){
+    for(var mark in data){
+      bool passPractical = isPassingPractical(mark);
+
+      passPractical ? passCount++ : failCount++;
+    }
+  }else if(type == 'exam'){
+    for(var mark in data){
+
+    bool passExam = isPassingExam(mark);
+
+    passExam ? passCount++ : failCount++;
+  }
+    }else if(type == 'total'){
+      for(var mark in data){
+
+      bool passExam = isPassingTotal(mark);
+
+      passExam ? passCount++ : failCount++;
+    }
+  }
+
+  return {'pass': passCount, 'fail': failCount};
 }
