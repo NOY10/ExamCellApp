@@ -80,7 +80,7 @@ class _gradedMarkViewState extends State<gradedMarkView> {
       GridColumn(
         columnName: 'ID',
         label:
-            Container(alignment: Alignment.center, child: Text('Module Name')),
+            Container(alignment: Alignment.center, child: Text('StudentID')),
         width: 150,
       ),
 
@@ -114,7 +114,7 @@ class _gradedMarkViewState extends State<gradedMarkView> {
     return Container(
       child: Column(
         children: [
-          header(),
+          //header(),
           semesterTable(),
         ],
       ),

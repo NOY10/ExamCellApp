@@ -253,13 +253,13 @@ class _DeptResultState extends State<DeptResult> {
               controller: _pageController,
               children: List.generate(years.length, (index) {
                 final year = years[index];
-                return Center(
-                  child: YearDepartments(
+                return 
+                  YearDepartments(
                     deptList: moduleData[year]?.keys.toList() ?? [],
                     semester: ((index + 1) * 2).toString(),
                     moduleData: moduleData[year] ?? {},
                     moduleCodeData: moduleCodeData[year] ?? {},
-                  ),
+                
                 );
               }),
               onPageChanged: (index) {

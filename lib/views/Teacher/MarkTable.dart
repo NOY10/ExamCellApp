@@ -1,7 +1,7 @@
 import 'dart:io';
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:examcellapp/views/Teacher/filePicker/filePicker.dart';
+import 'package:examcellapp/views/Teacher/notification/tutorNotitification.dart';
 import 'package:flutter_editable_table/flutter_editable_table.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -267,6 +267,7 @@ class _EditableMarkTable extends State<markTable> {
                     var jsonData = jsonEncode(tableData);
                     if (validateMarks(jsonData)) {
                       sendJsonToApi(addColumnsToList(jsonData));
+                      sendTutorNotification(widget.tid, widget.mCode, widget.semester);
                       diaglog(context);
                     } else {
                       // Display an error message if validation fails

@@ -1,4 +1,5 @@
 import 'package:examcellapp/views/Examcell/Dashboard.dart';
+import 'package:examcellapp/views/Examcell/Dashboard/Announcement.dart';
 import 'package:flutter/material.dart';
 import 'package:examcellapp/views/NavBar/NavBar.dart';
 import 'package:examcellapp/views/Examcell/Declaration.dart';
@@ -42,6 +43,15 @@ class _ExamcellHomeState extends State<ExamcellHome> {
           iconTheme: IconThemeData(
             color: Colors.white,
           ),
+          actions: <Widget>[
+            IconButton(
+              onPressed: (){
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder:(context) => AnnouncementMain(),
+                  ));
+                }, 
+              icon: Icon(Icons.notifications)),
+          ]
         ),
         body: PageView(
           controller: _pageController,
