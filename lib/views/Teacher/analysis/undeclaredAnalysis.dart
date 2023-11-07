@@ -79,7 +79,7 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
       ),
      
       body: FutureBuilder(
-        future: fetch("RUB201204006", "CTE306"),
+        future: fetch(widget.tid, widget.mCode),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(

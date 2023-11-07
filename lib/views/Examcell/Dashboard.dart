@@ -10,12 +10,11 @@ class Dashboard extends StatelessWidget {
     return const Scaffold(
       body: Column(
         children: [
+          // Expanded(
+          //   flex: 1,
+          //   child: AnnouncementMain(),
+          // ),
           Expanded(
-            flex: 1,
-            child: AnnouncementMain(),
-          ),
-          Expanded(
-            flex: 2,
             child: DeptResult(),
           ),
         ],
