@@ -107,7 +107,12 @@ class _DeptResultState extends State<DeptResult> {
         'Module Z'
       ],
       'Electrical Engineering': ['Module X', 'Module Y', 'Module Z'],
-      'Information Technology': ['Module X', 'Module Y', 'Module Z'],
+      'Information Technology': [
+        'Software Engineering', 
+        'Mobile Application Development', 
+        'Human Computer Interaction',
+        'Advanced Web Technology',
+        'Objected Oriented Analysis & Design'],
       'Instrumentation and Control Engineering': [
         'Module X',
         'Module Y',
@@ -197,7 +202,7 @@ class _DeptResultState extends State<DeptResult> {
       'Civil Engineering': ['CE101', 'CE201', 'CE301'],
       'Electronics & Communication Engineering': ['ECE101', 'ECE201', 'ECE301'],
       'Electrical Engineering': ['EE101', 'EE201', 'EE301'],
-      'Information Technology': ['IT101', 'IT201', 'IT301'],
+      'Information Technology': ['CTE305', 'CTE306', 'CTE307', 'CTE308', 'DIS302'],
       'Instrumentation and Control Engineering': ['ICE101', 'ICE201', 'ICE301'],
     },
     '4th Year': {

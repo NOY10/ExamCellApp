@@ -26,7 +26,7 @@ class _ModuleResultPageState extends State<ModuleResultPage> {
     final String semester = args?['semester'] ?? 'No year';
 
     final Uri url = Uri.parse(
-        "https://examcellflutter.000webhostapp.com/individual_module.php");
+        "https://resultsystemdb.000webhostapp.com/examcell/individual_module.php");
 
     final response = await http.post(url, body: {
       "moduleCode": moduleCode,

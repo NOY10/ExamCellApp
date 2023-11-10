@@ -11,6 +11,7 @@ class ScatterPlotChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //print(data.length);
     final List<ChartData> chartData = data.asMap().entries
         .map((entry) => ChartData(
               x: entry.key + 1, // Extract 'ca' as double

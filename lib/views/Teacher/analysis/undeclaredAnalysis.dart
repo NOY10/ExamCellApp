@@ -1,7 +1,10 @@
 import 'dart:math';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:examcellapp/views/NavBar/NavBar.dart';
 import 'package:examcellapp/views/Teacher/analysis/markAnalysis.dart';
 import 'package:examcellapp/views/Teacher/analysis/scatter.dart';
+import 'package:examcellapp/views/Teacher/tutorService.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -41,18 +44,34 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
       List<Map<String, dynamic>> data =
         List<Map<String, dynamic>>.from(json.decode(response.body));
 
-      for (var student in data) {
-        // Calculate pass status for the student
-        bool passTotal = isPassingTotal(student);
-        bool passCa = isPassCa(student);
-        bool passPractical = isPassingPractical(student);
-        bool passExam = isPassingExam(student);
+      if(widget.mCode != "CTE305"){
+        for (var student in data) {
+          // Calculate pass status for the student
+          bool passTotal = isPassingTotal(student);
+          bool passCa = isPassCa(student);
+          bool passPractical = isPassingPractical(student);
+          bool passExam = isPassingExam(student);
 
-        // Append pass status to the student's data
-        student['passTotal'] = passTotal;
-        student['passCa'] = passCa;
-        student['passPractical'] = passPractical;
-        student['passExam'] = passExam;
+          // Append pass status to the student's data
+          student['passTotal'] = passTotal;
+          student['passCa'] = passCa;
+          student['passPractical'] = passPractical;
+          student['passExam'] = passExam;
+        }
+      }else{
+        for (var student in data) {
+          // Calculate pass status for the student
+          bool passTotal = isPassingTotal(student);
+          bool passCa = isPassCa(student);
+         // bool passPractical = isPassingPractical(student);
+          bool passExam = isPassingExam(student);
+
+          // Append pass status to the student's data
+          student['passTotal'] = passTotal;
+          student['passCa'] = passCa;
+          //student['passPractical'] = passPractical;
+          student['passExam'] = passExam;
+        }
       }
 
       
@@ -75,7 +94,32 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
             fontSize: 18,
           ),
         ),
-        backgroundColor: Colors.blue,
+        backgroundColor: const Color.fromRGBO(33, 150, 243, 1),
+        actions: [
+            PopupMenuButton(
+              icon: Icon(Icons.more_vert, color: Colors.white,), // Three vertical dots icon
+              itemBuilder: (BuildContext context) {
+                return [
+                  PopupMenuItem(
+                    child: Text('Delete Mark'),
+                    value: 'delete',
+                  ),
+                  PopupMenuItem(
+                    child: Text('Edit Mark'),
+                    value: 'item2',
+                  ),
+                  // Add more menu items as needed
+                ];
+              },
+              onSelected: (value) {
+                // Handle the selected menu item
+                if(value == "delete"){
+                  _showDeleteConfirmationDialog(context);
+                }
+              },
+              offset: Offset(0,50),
+            ),
+          ],
       ),
      
       body: FutureBuilder(
@@ -115,6 +159,22 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
       ),
     );
   }
+
+  void _showDeleteConfirmationDialog(BuildContext context) {
+  AwesomeDialog(
+    context: context,
+    dialogType: DialogType.question,
+    headerAnimationLoop: false,
+    animType: AnimType.BOTTOMSLIDE,
+    title: 'Confirmation',
+    desc: 'Are you sure you want to delete this mark?',
+    btnCancelOnPress: () {},
+    btnOkOnPress: () {
+      // Perform the deletion logic here
+      print(deleteMark(widget.mCode));
+    },
+  )..show();
+}
 
   SizedBox chart(double buttonWidth, List<String> category, BuildContext context, List<Map<String, dynamic>> data) {
     return SizedBox(
@@ -226,9 +286,13 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
             controller: _pageController,
             children: List.generate(category.length, (index) {
               final cat = category[index];
-              return Center(
-                child: ScatterPlotChart(data: data, category: cat),
-              );
+              if(widget.mCode == "CTE305"){
+                return Text("No Practical");
+              }else{
+                return Center(
+                  child: ScatterPlotChart(data: data, category: cat),
+                );
+              }
             }),
             onPageChanged: (index) {
               setState(() {
@@ -261,11 +325,13 @@ bool isPassingExam(Map<String, dynamic> student) {
 }
 
 bool isPassingPractical(Map<String, dynamic> student) {
-  double practical = student['practical'].toDouble(); 
-  double maxPractical = student['MaxPractical'].toDouble(); 
-  return practical >= (0.4 * maxPractical);
-  
+  double? practical = student['practical']?.toDouble(); 
+  double? maxPractical = student['MaxPractical']?.toDouble(); 
+
+  // Check for null values before performing calculations
+  return practical != null && maxPractical != null && practical >= (0.4 * maxPractical);
 }
+
 
 bool isPassCa(Map<String, dynamic> student) {
   double ca = student['ca'].toDouble(); 

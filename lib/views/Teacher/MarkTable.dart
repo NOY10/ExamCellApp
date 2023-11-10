@@ -4,6 +4,7 @@ import 'package:examcellapp/views/Teacher/filePicker/filePicker.dart';
 import 'package:examcellapp/views/Teacher/notification/tutorNotitification.dart';
 import 'package:flutter_editable_table/flutter_editable_table.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
@@ -64,11 +65,11 @@ class _EditableMarkTable extends State<markTable> {
       "editable": true,
       "input_decoration": {"min_lines": 1, "max_lines": 1, "max_length": 64, "hint_text": "Please input the sub-caption", "fill_color": null},
       "constrains": {"required": true},
-      "style": {"font_weight": "normal", "font_size": 14.0, "font_color": "#333333", "background_color": null, "horizontal_alignment": "center", "vertical_alignment": "center", "text_align": "center"}
+      "style": {"font_weight": "normal", "font_size": 14.0, "font_color": "#101010", "background_color": null, "horizontal_alignment": "center", "vertical_alignment": "center", "text_align": "center"}
     }
   },
   "columns": [ // Column
-
+  
     {
       "primary_key": false,
       "auto_increase": false,
@@ -79,10 +80,10 @@ class _EditableMarkTable extends State<markTable> {
       "description": "User Name",
       "display": true,
       "editable": false,
-      "width_factor": 0.2,
-      "input_decoration": {"min_lines": 1, "max_lines": 1, "max_length": 128, "hint_text": "Please input the name"},
+      "width_factor": 0.3,
+      "input_decoration": {"min_lines": 1, "max_lines": 1, "max_length": 2, "hint_text": "Please input the name"},
       "constrains": {"minimum": 0, "maximum": 99999999},
-      "style": {"font_weight": "bold", "font_size": 14.0, "font_color": "#333333", "background_color": "#b5cfd2", "horizontal_alignment": "center", "vertical_alignment": "center", "text_align": "center"}
+      "style": {"font_weight": "bold", "font_size": 14.0, "font_color": "#101010", "background_color": "42A5F5", "horizontal_alignment": "center", "vertical_alignment": "center", "text_align": "left"}
     },
     {
       "primary_key": false,
@@ -95,9 +96,9 @@ class _EditableMarkTable extends State<markTable> {
       "display": true,
       "editable": false,
       "width_factor": 0.2,
-      "input_decoration": {"min_lines": 1, "max_lines": 1, "max_length": 128, "hint_text": ""},
+      "input_decoration": {"min_lines": 1, "max_lines": 1, "max_length": 2, "hint_text": ""},
       "constrains": {"minimum": 0, "maximum": 99999999},
-      "style": {"font_weight": "bold", "font_size": 14.0, "font_color": "#333333", "background_color": "#b5cfd2", "horizontal_alignment": "center", "vertical_alignment": "center", "text_align": "center"}
+      "style": {"font_weight": "bold", "font_size": 14.0, "font_color": "#101010", "background_color": "#42A5F5", "horizontal_alignment": "center", "vertical_alignment": "center", "text_align": "center"}
     },
     {
       "primary_key": false,
@@ -109,10 +110,10 @@ class _EditableMarkTable extends State<markTable> {
       "description": "User ID",
       "display": true,
       "editable": true,
-      "width_factor": 0.2,
-      "input_decoration": {"min_lines": 1, "max_lines": 1, "max_length": 128, "hint_text": ""},
+      "width_factor": 0.15,
+      "input_decoration": {"min_lines": 1, "max_lines": 1, "max_length": 2, "hint_text": ""},
       "constrains": {"minimum": 0, "maximum": 99999999},
-      "style": {"font_weight": "bold", "font_size": 14.0, "font_color": "#333333", "background_color": "#b5cfd2", "horizontal_alignment": "center", "vertical_alignment": "center", "text_align": "center"}
+      "style": {"font_weight": "bold", "font_size": 14.0, "font_color": "#101010", "background_color": "#42A5F5", "horizontal_alignment": "center", "vertical_alignment": "center", "text_align": "center"}
     },
     {
       "primary_key": false,
@@ -124,25 +125,25 @@ class _EditableMarkTable extends State<markTable> {
       "description": "Semester ID",
       "display": true,
       "editable": true,
-      "width_factor": 0.2,
-      "input_decoration": {"min_lines": 1, "max_lines": 1, "max_length": 128, "hint_text": ""},
+      "width_factor": 0.15,
+      "input_decoration": {"min_lines": 1, "max_lines": 1, "max_length": 2, "hint_text": ""},
       "constrains": {"minimum": 0, "maximum": 99999999},
-      "style": {"font_weight": "bold", "font_size": 14.0, "font_color": "#333333", "background_color": "#b5cfd2", "horizontal_alignment": "center", "vertical_alignment": "center", "text_align": "center"}
+      "style": {"font_weight": "bold", "font_size": 14.0, "font_color": "#101010", "background_color": "#42A5F5", "horizontal_alignment": "center", "vertical_alignment": "center", "text_align": "center"}
     },
     {
       "primary_key": false,
       "auto_increase": false,
       "name": "practical",
-      "title": "Practical",
+      "title": "PA",
       "type": "float", // Data types support [integer/int], [float/double/decimal], [bool], [date], [datetime], [string], different types have different interaction behaviors and keyboard
       "format": null,
       "description": "Semester ID",
       "display": true,
       "editable": true,
-      "width_factor": 0.2,
-      "input_decoration": {"min_lines": 1, "max_lines": 1, "max_length": 128, "hint_text": ""},
+      "width_factor": 0.15,
+      "input_decoration": {"min_lines": 1, "max_lines": 1, "max_length": 2, "hint_text": ""},
       "constrains": {"minimum": 0, "maximum": 99999999},
-      "style": {"font_weight": "bold", "font_size": 14.0, "font_color": "#333333", "background_color": "#b5cfd2", "horizontal_alignment": "center", "vertical_alignment": "center", "text_align": "center"}
+      "style": {"font_weight": "bold", "font_size": 14.0, "font_color": "#101010", "background_color": "#42A5F5", "horizontal_alignment": "center", "vertical_alignment": "center", "text_align": "center"}
     },
   ],
   "rows": [],
@@ -238,13 +239,71 @@ class _EditableMarkTable extends State<markTable> {
         title: Text(widget.mCode ,
         style: TextStyle(color: Colors.white),),
         backgroundColor: Colors.blue,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right:8.0),
+            child: PopupMenuButton(
+              color: Colors.white,
+              icon: Icon(Icons.more_vert, color: Colors.white),
+              itemBuilder: (BuildContext context) {
+                return [
+                  PopupMenuItem(
+                    child: Text('Excel',),
+                    value: 'excel',
+                  ),
+                  PopupMenuItem(
+                    child: Text('Save'),
+                    value: 'save',
+                  ),
+                  PopupMenuItem(
+                    child: Text('Clear'),
+                    value: 'clear',
+                  ),
+                ];
+              },
+              onSelected: (value) {
+                if (value == 'save') {
+                  var tableData = _editableTableKey.currentState?.currentData.rows;
+                      var jsonData = jsonEncode(tableData);
+                      //print(widget.mCode);
+                      if(widget.mCode == 'CTE307' || widget.mCode == 'CTE305'){
+                        sendJsonToApi(addColumnsToList(jsonData));
+                        sendTutorNotification(widget.tid, widget.mCode, widget.semester);
+                        diaglog(context);
+                      }else if (validateMarks(jsonData)) {
+                        sendJsonToApi(addColumnsToList(jsonData));
+                        sendTutorNotification(widget.tid, widget.mCode, widget.semester);
+                        diaglog(context);
+                      } else {
+                        diaglog2(context);
+                      }
+                } else if (value == 'excel') {
+                  retrieveExcel();
+                } else if (value == 'clear') {
+                  setState(() {
+                        for (var row in data["rows"]){
+                          row["ca"] = '';
+                          row["exam"] = '';
+                          row["practical"] = '';
+                        }
+                      });
+                }
+              },
+              offset: Offset(0, 50),
+            ),
+          ),
+        ],
+        
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            heading(),
-            buttons(),
-            tableMark(),
+            //heading(),
+            //buttons(),
+            Padding(
+              padding: const EdgeInsets.only(left:8.0),
+              child: tableMark(),
+            ),
           ],
         ),
       ),
@@ -265,7 +324,12 @@ class _EditableMarkTable extends State<markTable> {
                   onPressed: () {
                     var tableData = _editableTableKey.currentState?.currentData.rows;
                     var jsonData = jsonEncode(tableData);
-                    if (validateMarks(jsonData)) {
+                    print(widget.mCode);
+                    if(widget.mCode == 'CTE307' || widget.mCode == 'CTE305'){
+                      sendJsonToApi(addColumnsToList(jsonData));
+                      sendTutorNotification(widget.tid, widget.mCode, widget.semester);
+                      diaglog(context);
+                    }else if (validateMarks(jsonData)) {
                       sendJsonToApi(addColumnsToList(jsonData));
                       sendTutorNotification(widget.tid, widget.mCode, widget.semester);
                       diaglog(context);
@@ -358,7 +422,7 @@ diaglog2(BuildContext context) {
             id: int.parse(excelContent[i][1]),
             ca: int.parse(excelContent[i][2]),
             exam: int.parse(excelContent[i][3]),
-            practical: int.parse(excelContent[i][4]),
+            practical: (widget.mCode == "CTE305" || widget.mCode == "CTE307") ? 0 : int.parse(excelContent[i][4]),
           ));
         }
 
@@ -369,7 +433,7 @@ diaglog2(BuildContext context) {
             'ID': '0${student.id}',
             'ca': student.ca,
             'exam': student.exam,
-            'practical': (widget.mCode == "CTE305" || widget.mCode == "307") ? null : student.practical, 
+            'practical': (widget.mCode == "CTE305" || widget.mCode == "CTE307") ? null : student.practical, 
           };
         }).toList();
 
@@ -378,6 +442,8 @@ diaglog2(BuildContext context) {
         data['rows'] = studentListAsMaps;
         haveExcel = true;
       });
+    }else{
+      print("Excel Fetch Failed!");
     }
   }
 }
@@ -395,12 +461,13 @@ bool validateMarks(String data) {
 
     return true;
   }
+  
   FutureBuilder<List<Map<String, dynamic>>> tableMark() {
     return FutureBuilder(
       future: fetchData(widget.mCode, widget.semester),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator(); // Display a loading indicator.
+          return Center(child: SpinKitChasingDots(color: Colors.blue,)); // Display a loading indicator.
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {

@@ -23,8 +23,8 @@ class _StudentLineChartState extends State<StudentLineChart> {
 
   @override
   Widget build(BuildContext context) {
-    //print(widget.marks);
-    List<dynamic> widgetMarks = [81.996666, 64.75, 78.78, 79.4];
+    // print(widget.marks.length);
+    List<dynamic> widgetMarks = widget.marks;
 List<double> marks = List<double>.generate(widgetMarks.length, (index) => widgetMarks[index].toDouble());
 
     return Stack(

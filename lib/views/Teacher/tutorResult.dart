@@ -2,6 +2,7 @@ import 'package:examcellapp/views/Teacher/MarkTable.dart';
 import 'package:examcellapp/views/Teacher/TutorMananger.dart';
 import 'package:examcellapp/views/Teacher/analysis/undeclaredAnalysis.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -39,18 +40,50 @@ class _ViewResultScreenState extends State<ViewResultScreen> {
           //   thickness: 2,
           //   indent: 1,
           // ),
-          const Text(
-            'Graded Modules',
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-          ),
+          // const Text(
+          //   'Graded Modules',
+          //   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          // ),
           Expanded(
             child: FutureBuilder(
               future: fetchData("AS2023"),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child: SpinKitChasingDots(color: Colors.blue,));
                 } else if (snapshot.hasError) {
-                  return Center(child: Text('${snapshot.error}'));
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 50.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // Add an Image widget here
+                          Opacity(
+                            opacity: 0.5,
+                            child: Image.asset(
+                              'assets/images/noData.png', // Replace with the path to your error image
+                              width: 140, // Adjust the width as needed
+                              height: 140, // Adjust the height as needed
+                            ),
+                          ),
+                          SizedBox(height: 10), // Add some space between the image and text
+                          Opacity(
+                            opacity: 0.5,
+                            child: Text(
+                              'No Marks Entered!',
+                              style: TextStyle(
+                                // Customize the style of the error text here
+                                color: Colors.blue,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+
                 } else {
                   if (snapshot.hasData) {
                     List<Map<String, dynamic>> data =
