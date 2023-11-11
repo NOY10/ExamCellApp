@@ -21,6 +21,7 @@ class _gradedMarkViewState extends State<gradedMarkView> {
   EmployeeDataSource employeeDataSource = EmployeeDataSource([]);
   List<GridColumn> _columns = [];
   double _zoom = 1.0;
+  final int TEXT_COLOR = 0xFF1A1717;
 
   Future<List<Employee>> fetchEmployees(String tid, String code) async {
     var url = "https://resultsystemdb.000webhostapp.com/getUndeclaredMark.php?tid=$tid&code=$code";
@@ -114,7 +115,8 @@ class _gradedMarkViewState extends State<gradedMarkView> {
     return Container(
       child: Column(
         children: [
-          //header(),
+          banner(context),
+          SizedBox(height: 5,),
           semesterTable(),
         ],
       ),
@@ -124,7 +126,7 @@ class _gradedMarkViewState extends State<gradedMarkView> {
 
   Padding header() {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(right:8.0, left: 8.0),
       child: Row(
         children: [
           Text(
@@ -144,6 +146,30 @@ class _gradedMarkViewState extends State<gradedMarkView> {
           ),
         ],
       ),
+    );
+  }
+
+    Padding banner(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 1),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: 50,
+        color: Color.fromARGB(255, 223, 229, 252),
+  
+          child: Padding(
+            padding: const EdgeInsets.only(top:12.0, left: 8.0),
+            child: Text(
+              'Academic Mark',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color:Color(TEXT_COLOR),
+              ),
+              textAlign: TextAlign.left,
+            ),
+          ),
+        ),
     );
   }
 
@@ -200,12 +226,13 @@ class EmployeeDataSource extends DataGridSource {
 
   @override
   List<DataGridRow> get rows => employees
+      .where((e) => e.sid.isNotEmpty) // Filter out rows with empty sid
       .map<DataGridRow>((e) => DataGridRow(cells: [
             DataGridCell<String>(columnName: 'ID', value: e.sid),
             DataGridCell<String>(columnName: 'CA', value: e.CA),
             DataGridCell<String>(columnName: 'Practical', value: e.Practical),
             DataGridCell<String>(columnName: 'Exam', value: e.Exam),
-            DataGridCell<String>(columnName: 'Total', value: e.Total), // Add Remarks cell
+            DataGridCell<String>(columnName: 'Total', value: e.Total),
           ]))
       .toList();
 
@@ -222,6 +249,7 @@ class EmployeeDataSource extends DataGridSource {
     );
   }
 }
+
 
 class Employee {
   String sid,
