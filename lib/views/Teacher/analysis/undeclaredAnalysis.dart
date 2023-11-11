@@ -243,12 +243,6 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
                 ),
               ),
               Text(
-                fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    //color: Colors.white,
-                  ),
-                ),
-                Text(
                 'Fail: ${countPassFail(data, cat)['fail'].toString()}',
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
@@ -259,7 +253,7 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
           ),
         ],
       ),
-
+    );
   }
 
   Column scatterplot(List<String> category, double buttonWidth,
@@ -338,9 +332,6 @@ bool isPassingExam(Map<String, dynamic> student) {
 }
 
 bool isPassingPractical(Map<String, dynamic> student) {
-  double practical = student['practical'].toDouble();
-  double maxPractical = student['MaxPractical'].toDouble();
-  return practical >= (0.4 * maxPractical);
   double? practical = student['practical']?.toDouble();
   double? maxPractical = student['MaxPractical']?.toDouble();
 
