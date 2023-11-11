@@ -20,7 +20,7 @@ class StudentResult extends StatelessWidget {
             indent: 1,
           ),
           Expanded(
-            flex: 4,
+            flex: 3,
             child: semesterResult(),
           ),
         ],
