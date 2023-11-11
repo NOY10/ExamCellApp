@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Declaration extends StatefulWidget {
   const Declaration({Key? key}) : super(key: key);
@@ -24,6 +25,15 @@ class _DeclarationState extends State<Declaration> {
       });
     }
   }
+
+    void declareResult() async{
+    final Uri url = Uri.parse("https://resultsystemdb.000webhostapp.com/examcell/declare.php");
+
+    final response = await http.get(url);
+
+    print(response.body);
+  }
+
 
   void _submitDeclaration() {
     // Handle the declaration submission here
@@ -89,7 +99,7 @@ class _DeclarationState extends State<Declaration> {
             ),
             SizedBox(height: 20.0),
             ElevatedButton(
-              onPressed: _submitDeclaration,
+              onPressed: declareResult,
               child: Text('Submit Declaration'),
             ),
           ],

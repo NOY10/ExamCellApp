@@ -1,6 +1,7 @@
 import 'package:examcellapp/views/Teacher/MarkTable.dart';
 import 'package:examcellapp/views/Teacher/TutorMananger.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -29,21 +30,21 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const Divider(
-            color: Colors.blue,
-            thickness: 2,
-            indent: 1,
-          ),
-          const Text(
-            'List of Modules you are currently teaching',
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-          ),
+          // const Divider(
+          //   color: Colors.blue,
+          //   thickness: 2,
+          //   indent: 1,
+          // ),
+          // const Text(
+          //   'List of Modules you are currently teaching',
+          //   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          // ),
           Expanded(
             child: FutureBuilder(
               future: fetchData("AS2023"),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child: SpinKitChasingDots(color: Colors.blue,));
                 } else if (snapshot.hasError) {
                   return Center(child: Text('${snapshot.error}'));
                 } else {
@@ -70,8 +71,11 @@ class ProfileScreen extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 ListTile(
-                                  leading: Icon(Icons.message),
-                                  title: Text(moduleData['mCode']),
+                                  //leading: Icon(Icons.),
+                                  title: Text(moduleData['mCode'],
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500
+                                  ),),
                                   subtitle: Text(moduleData['mName']),
                                   trailing: InkWell(
                                     onTap: () {
@@ -85,8 +89,18 @@ class ProfileScreen extends StatelessWidget {
                                         ),
                                       );
                                     },
-                                    child:
-                                        Icon(Icons.arrow_forward_ios_outlined),
+                                    child:Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.blue, // Set the background color of the circle
+                                      ),
+                                      padding: EdgeInsets.all(8), // Adjust the padding as needed
+                                      child: Icon(
+                                        Icons.arrow_forward_ios_outlined,
+                                        color: Colors.white, // Set the color of the arrow icon
+                                      ),
+                                    ),
+
                                     
                                   ),
                                 ),

@@ -25,7 +25,7 @@ class _LoginState extends State<Login> {
 
   Future login() async {
     final Uri url =
-        Uri.parse("https://examcellflutter.000webhostapp.com/login.php");
+        Uri.parse("https://resultsystemdb.000webhostapp.com/login.php");
     final response = await http.post(url, body: {
       "Email": email.text,
       "Password": password.text,
@@ -48,13 +48,13 @@ class _LoginState extends State<Login> {
         fontSize: 16.0,
       );
 
-      if (current == "Student") {
+      if (current == "student") {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => StudentHome()));
-      } else if (current == "Examcell") {
+      } else if (current == "examcell") {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => ExamcellHome()));
-      } else if (current == "Tutor") {
+      } else if (current == "tutor") {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => MyHomePage()));
       }
