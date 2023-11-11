@@ -27,6 +27,7 @@ class undeclaredAnalysis extends StatefulWidget {
 class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
+  
 
   void _onCategoryTap(int index) {
     setState(() {
@@ -188,10 +189,10 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                           child: Container(
                             width: MediaQuery.of(context).size.width,
-                            color: Colors.grey,
+                            color: Color.fromARGB(255, 223, 229, 252),
                             child: chartheader(data, cat)),
                         ),
                         ScatterPlotChart(data: data, category: cat,),
@@ -221,8 +222,9 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
         children: [
           Text(title,
           style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                    fontSize: 14,
+                fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    //color: Colors.white,
                   ),),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -233,6 +235,7 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
                 style: const TextStyle(
                 fontWeight: FontWeight.bold,
                     fontSize: 14,
+                    //color: Colors.white,
                   ),
                 ),
                 Text(
@@ -240,6 +243,7 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
                 style: const TextStyle(
                 fontWeight: FontWeight.bold,
                     fontSize: 14,
+                    //color: Colors.white,
                   ),
                 ),
             ],

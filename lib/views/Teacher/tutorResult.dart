@@ -53,7 +53,7 @@ class _ViewResultScreenState extends State<ViewResultScreen> {
                 } else if (snapshot.hasError) {
                   return Center(
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 50.0),
+                      padding: const EdgeInsets.only(left: 30.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -108,8 +108,11 @@ class _ViewResultScreenState extends State<ViewResultScreen> {
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 ListTile(
-                                  leading: Icon(Icons.message),
-                                  title: Text(moduleData['code']),
+                                  //leading: Icon(Icons.message),
+                                  title: Text(moduleData['code'],
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                  ),),
                                   subtitle: Text(moduleData['name']),
                                   trailing: InkWell(
                                     onTap: () {
@@ -122,8 +125,17 @@ class _ViewResultScreenState extends State<ViewResultScreen> {
                                         ),
                                       );
                                     },
-                                    child:
-                                        Icon(Icons.arrow_forward_ios_outlined),
+                                    child:Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.blue, // Set the background color of the circle
+                                      ),
+                                      padding: EdgeInsets.all(8), // Adjust the padding as needed
+                                      child: Icon(
+                                        Icons.arrow_forward_ios_outlined,
+                                        color: Colors.white, // Set the color of the arrow icon
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],
