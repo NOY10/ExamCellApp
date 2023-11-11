@@ -49,7 +49,7 @@ dependencies:
   flutter_editable_table: ^1.1.2
   awesome_dialog: ^3.1.0
   flutter_spinkit: ^5.2.0
-
+  flutter_riverpod: ^2.4.5
 
 dev_dependencies:
   flutter_test:
@@ -80,7 +80,8 @@ flutter:
     - Images/email.svg
     - Images/password.svg
     - Images/password_hide.svg
-  #   - images/a_dot_ham.jpeg
+    - Images/eye-svgrepo-com.svg
+    # - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

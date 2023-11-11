@@ -27,7 +27,6 @@ class undeclaredAnalysis extends StatefulWidget {
 class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
   final PageController _pageController = PageController();
   int _currentIndex = 0;
-  
 
   void _onCategoryTap(int index) {
     setState(() {
@@ -43,9 +42,9 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
 
     if (response.statusCode == 200) {
       List<Map<String, dynamic>> data =
-        List<Map<String, dynamic>>.from(json.decode(response.body));
+          List<Map<String, dynamic>>.from(json.decode(response.body));
 
-      if(widget.mCode != "CTE305"){
+      if (widget.mCode != "CTE305") {
         for (var student in data) {
           // Calculate pass status for the student
           bool passTotal = isPassingTotal(student);
@@ -59,12 +58,12 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
           student['passPractical'] = passPractical;
           student['passExam'] = passExam;
         }
-      }else{
+      } else {
         for (var student in data) {
           // Calculate pass status for the student
           bool passTotal = isPassingTotal(student);
           bool passCa = isPassCa(student);
-         // bool passPractical = isPassingPractical(student);
+          // bool passPractical = isPassingPractical(student);
           bool passExam = isPassingExam(student);
 
           // Append pass status to the student's data
@@ -74,8 +73,6 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
           student['passExam'] = passExam;
         }
       }
-
-      
 
       return data;
     } else {
@@ -97,55 +94,56 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
         ),
         backgroundColor: const Color.fromRGBO(33, 150, 243, 1),
         actions: [
-            PopupMenuButton(
-              icon: Icon(Icons.more_vert, color: Colors.white,), // Three vertical dots icon
-              itemBuilder: (BuildContext context) {
-                return [
-                  PopupMenuItem(
-                    child: Text('Delete Mark'),
-                    value: 'delete',
-                  ),
-                  PopupMenuItem(
-                    child: Text('Edit Mark'),
-                    value: 'item2',
-                  ),
-                  // Add more menu items as needed
-                ];
-              },
-              onSelected: (value) {
-                // Handle the selected menu item
-                if(value == "delete"){
-                  _showDeleteConfirmationDialog(context);
-                }
-              },
-              offset: Offset(0,50),
-            ),
-          ],
+          PopupMenuButton(
+            icon: Icon(
+              Icons.more_vert,
+              color: Colors.white,
+            ), // Three vertical dots icon
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem(
+                  child: Text('Delete Mark'),
+                  value: 'delete',
+                ),
+                PopupMenuItem(
+                  child: Text('Edit Mark'),
+                  value: 'item2',
+                ),
+                // Add more menu items as needed
+              ];
+            },
+            onSelected: (value) {
+              // Handle the selected menu item
+              if (value == "delete") {
+                _showDeleteConfirmationDialog(context);
+              }
+            },
+            offset: Offset(0, 50),
+          ),
+        ],
       ),
-     
       body: FutureBuilder(
         future: fetch(widget.tid, widget.mCode),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
-              child: SpinKitChasingDots(
-                color: Colors.blue,
-                size: 50.0,
-              )
-            );
+                child: SpinKitChasingDots(
+              color: Colors.blue,
+              size: 50.0,
+            ));
           } else if (snapshot.hasError) {
             return Center(child: Text('${snapshot.error}'));
           } else {
             if (snapshot.hasData) {
               List<Map<String, dynamic>> data =
                   snapshot.data as List<Map<String, dynamic>>;
-              List<String> category = ['ca', 'practical', 'exam','total'];
-              
+              List<String> category = ['ca', 'practical', 'exam', 'total'];
+
               return SingleChildScrollView(
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height + 500,
                   child: Column(
-                    children: [   
+                    children: [
                       chart(buttonWidth, category, context, data),
                       gradedMarkView(tid: widget.tid, code: widget.mCode),
                     ],
@@ -162,57 +160,62 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
   }
 
   void _showDeleteConfirmationDialog(BuildContext context) {
-  AwesomeDialog(
-    context: context,
-    dialogType: DialogType.question,
-    headerAnimationLoop: false,
-    animType: AnimType.BOTTOMSLIDE,
-    title: 'Confirmation',
-    desc: 'Are you sure you want to delete this mark?',
-    btnCancelOnPress: () {},
-    btnOkOnPress: () {
-      // Perform the deletion logic here
-      print(deleteMark(widget.mCode));
-    },
-  )..show();
-}
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.question,
+      headerAnimationLoop: false,
+      animType: AnimType.BOTTOMSLIDE,
+      title: 'Confirmation',
+      desc: 'Are you sure you want to delete this mark?',
+      btnCancelOnPress: () {},
+      btnOkOnPress: () {
+        // Perform the deletion logic here
+        print(deleteMark(widget.mCode));
+      },
+    )..show();
+  }
 
-  SizedBox chart(double buttonWidth, List<String> category, BuildContext context, List<Map<String, dynamic>> data) {
+  SizedBox chart(double buttonWidth, List<String> category,
+      BuildContext context, List<Map<String, dynamic>> data) {
     return SizedBox(
-              width: buttonWidth*3,
-              height: 400,
-              child: PageView(
-                controller: _pageController,
-                children: List.generate(category.length, (index) {
-                  final cat = category[index];
-                  return Center(
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            color: Color.fromARGB(255, 223, 229, 252),
-                            child: chartheader(data, cat)),
-                        ),
-                        ScatterPlotChart(data: data, category: cat,),
-                      ],
-                    ),
-                  );
-                }),
-              ),
-            );
+      width: buttonWidth * 3,
+      height: 400,
+      child: PageView(
+        controller: _pageController,
+        children: List.generate(category.length, (index) {
+          final cat = category[index];
+          return Center(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                  child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      color: Color.fromARGB(255, 223, 229, 252),
+                      child: chartheader(data, cat)),
+                ),
+                ScatterPlotChart(
+                  data: data,
+                  category: cat,
+                ),
+              ],
+            ),
+          );
+        }),
+      ),
+    );
   }
 
   Padding chartheader(List<Map<String, dynamic>> data, String cat) {
     String title = '';
-    if(cat == 'ca'){
+    if (cat == 'ca') {
       title = 'Continuos Assessment';
-    }else if(cat == 'practical'){
+    } else if (cat == 'practical') {
       title = 'Practical Assessment';
-    }if(cat == 'exam'){
+    }
+    if (cat == 'exam') {
       title = 'Exam Assessment';
-    }else if(cat == 'total'){
+    } else if (cat == 'total') {
       title = 'Aggregate';
     }
     return Padding(
@@ -220,12 +223,14 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title,
-          style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                    fontSize: 16,
-                    //color: Colors.white,
-                  ),),
+          Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 16,
+              //color: Colors.white,
+            ),
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -233,6 +238,11 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
               Text(
                 'Pass: ${countPassFail(data, cat)['pass'].toString()}',
                 style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+              ),
+              Text(
                 fontWeight: FontWeight.bold,
                     fontSize: 14,
                     //color: Colors.white,
@@ -241,20 +251,19 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
                 Text(
                 'Fail: ${countPassFail(data, cat)['fail'].toString()}',
                 style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    //color: Colors.white,
-                  ),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
                 ),
+              ),
             ],
           ),
         ],
       ),
-    );
+
   }
 
-  Column scatterplot(
-      List<String> category, double buttonWidth, List<Map<String, dynamic>> data) {
+  Column scatterplot(List<String> category, double buttonWidth,
+      List<Map<String, dynamic>> data) {
     return Column(
       children: [
         Container(
@@ -290,9 +299,9 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
             controller: _pageController,
             children: List.generate(category.length, (index) {
               final cat = category[index];
-              if(widget.mCode == "CTE305"){
+              if (widget.mCode == "CTE305") {
                 return Text("No Practical");
-              }else{
+              } else {
                 return Center(
                   child: ScatterPlotChart(data: data, category: cat),
                 );
@@ -317,57 +326,59 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
 }
 
 bool isPassingTotal(Map<String, dynamic> student) {
-  double total = student['total'].toDouble(); 
+  double total = student['total'].toDouble();
   return total >= 50;
 }
 
 bool isPassingExam(Map<String, dynamic> student) {
-  double exam = student['exam'].toDouble(); 
-  double maxExam = student['maxExam'].toDouble(); 
+  double exam = student['exam'].toDouble();
+  double maxExam = student['maxExam'].toDouble();
 
   return exam >= (0.4 * maxExam);
 }
 
 bool isPassingPractical(Map<String, dynamic> student) {
-  double? practical = student['practical']?.toDouble(); 
-  double? maxPractical = student['MaxPractical']?.toDouble(); 
+  double practical = student['practical'].toDouble();
+  double maxPractical = student['MaxPractical'].toDouble();
+  return practical >= (0.4 * maxPractical);
+  double? practical = student['practical']?.toDouble();
+  double? maxPractical = student['MaxPractical']?.toDouble();
 
   // Check for null values before performing calculations
-  return practical != null && maxPractical != null && practical >= (0.4 * maxPractical);
+  return practical != null &&
+      maxPractical != null &&
+      practical >= (0.4 * maxPractical);
 }
 
-
 bool isPassCa(Map<String, dynamic> student) {
-  double ca = student['ca'].toDouble(); 
-  double maxCa = student['maxCA'].toDouble(); 
+  double ca = student['ca'].toDouble();
+  double maxCa = student['maxCA'].toDouble();
   return ca >= (0.4 * maxCa);
 }
 
-Map<String, int> countPassFail(List<Map<String, dynamic>> data, String type){
+Map<String, int> countPassFail(List<Map<String, dynamic>> data, String type) {
   int passCount = 0;
   int failCount = 0;
 
-  if(type == 'ca'){
-    for(var mark in data){
+  if (type == 'ca') {
+    for (var mark in data) {
       bool passCa = isPassCa(mark);
       passCa ? passCount++ : failCount++;
     }
-  }else if(type == 'practical'){
-    for(var mark in data){
+  } else if (type == 'practical') {
+    for (var mark in data) {
       bool passPractical = isPassingPractical(mark);
 
       passPractical ? passCount++ : failCount++;
     }
-  }else if(type == 'exam'){
-    for(var mark in data){
+  } else if (type == 'exam') {
+    for (var mark in data) {
+      bool passExam = isPassingExam(mark);
 
-    bool passExam = isPassingExam(mark);
-
-    passExam ? passCount++ : failCount++;
-  }
-    }else if(type == 'total'){
-      for(var mark in data){
-
+      passExam ? passCount++ : failCount++;
+    }
+  } else if (type == 'total') {
+    for (var mark in data) {
       bool passExam = isPassingTotal(mark);
 
       passExam ? passCount++ : failCount++;

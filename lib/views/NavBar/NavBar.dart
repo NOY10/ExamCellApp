@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+import 'package:examcellapp/views/theme/theme.dart';
 
 class NavBar extends StatefulWidget {
   NavBar({Key? key}) : super(key: key);
@@ -141,7 +142,8 @@ class _NavBarState extends State<NavBar> {
     required VoidCallback onClicked,
   }) =>
       Container(
-        color: Colors.blue,
+        // color: Colors.blue,
+        color: theme().primaryColor,
         padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,7 +158,7 @@ class _NavBarState extends State<NavBar> {
                     backgroundImage: NetworkImage(urlImage),
                   ),
                 ),
-                SizedBox(width: 10),
+                SizedBox(width: 20),
                 Spacer(),
                 GestureDetector(
                   // Wrap the "clear" icon with GestureDetector
@@ -171,13 +173,30 @@ class _NavBarState extends State<NavBar> {
                 ),
               ],
             ),
-            Text(
-              name,
-              style: const TextStyle(fontSize: 20, color: Colors.black),
+            SizedBox(
+              height: 10,
             ),
             Text(
-              email,
-              style: const TextStyle(fontSize: 14, color: Colors.black),
+              name,
+              style: const TextStyle(fontSize: 18, color: Colors.white),
+            ),
+            // Text(
+            //   email,
+            //   style: const TextStyle(
+            //     fontSize: 15,
+            //     color: Colors.white,
+            //   ),
+            // ),
+            SizedBox(height: 2),
+            Opacity(
+              opacity: 0.8,
+              child: Text(
+                email,
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.white,
+                ),
+              ),
             ),
           ],
         ),

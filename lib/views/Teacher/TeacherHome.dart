@@ -40,7 +40,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> setData() async {
     SharedPreferencesManager manager = SharedPreferencesManager();
     String? storedUserID = await manager.getUserID();
-    final Uri url = Uri.parse("https://resultsystemdb.000webhostapp.com/getTutor.php?tid=$storedUserID");
+    final Uri url = Uri.parse(
+        "https://resultsystemdb.000webhostapp.com/getTutor.php?tid=$storedUserID");
     var response = await http.get(url);
     List stdData = json.decode(response.body);
     if (response.statusCode == 200) {
@@ -55,7 +56,6 @@ class _MyHomePageState extends State<MyHomePage> {
         await prefs.setString('SemNo', std['SemNo']);
         print("success");
       }
-      
     } else {
       throw Exception('Failed to load data');
     }
@@ -91,34 +91,44 @@ class _MyHomePageState extends State<MyHomePage> {
           });
         },
       ),
-      bottomNavigationBar: ClipRRect(
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(23.0),
-        ),
-        child: BottomNavigationBar(
-          backgroundColor: Colors.blue,
-          selectedItemColor: Color.fromARGB(255, 245, 247, 245),
-          currentIndex: _currentIndex,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.remove_red_eye),
-              label: 'View Result',
-            ),
-          ],
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-              _pageController.animateToPage(
-                index,
-                duration: const Duration(milliseconds: 400),
-                curve: Curves.easeInOut,
-              );
-            });
-          },
+      bottomNavigationBar: SizedBox(
+        height: 50,
+        child: ClipRRect(
+          borderRadius: const BorderRadius.vertical(
+            top: Radius.circular(26.0),
+          ),
+          child: BottomNavigationBar(
+            backgroundColor: Colors.blue,
+            // unselectedItemColor: Color.fromARGB(255, 12, 241, 126),
+            selectedItemColor: Color.fromARGB(255, 245, 247, 245),
+            currentIndex: _currentIndex,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.person,
+                  size: 20,
+                ),
+                label: 'Profile',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.remove_red_eye,
+                  size: 20,
+                ),
+                label: 'View Result',
+              ),
+            ],
+            onTap: (index) {
+              setState(() {
+                _currentIndex = index;
+                _pageController.animateToPage(
+                  index,
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.easeInOut,
+                );
+              });
+            },
+          ),
         ),
       ),
     );

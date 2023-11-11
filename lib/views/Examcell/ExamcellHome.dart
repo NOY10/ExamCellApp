@@ -28,72 +28,70 @@ class _ExamcellHomeState extends State<ExamcellHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: NavBar(),
-        appBar: AppBar(
-          backgroundColor: Colors.blue,
-          title: Text(
-            _pageTitles[_currentIndex],
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
-          ),
-          titleTextStyle: const TextStyle(
+      drawer: NavBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: Text(
+          _pageTitles[_currentIndex],
+          style: TextStyle(
             color: Colors.white,
             fontSize: 20,
           ),
-          iconTheme: IconThemeData(
-            color: Colors.white,
-          ),
-          actions: <Widget>[
-            IconButton(
-              onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder:(context) => AnnouncementMain(),
-                  ));
-                }, 
-              icon: Icon(Icons.notifications)),
-          ]
         ),
-        body: PageView(
-          controller: _pageController,
-          children: _pages,
-          onPageChanged: (index) {
+        titleTextStyle: const TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
+      ),
+      body: PageView(
+        controller: _pageController,
+        children: _pages,
+        onPageChanged: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+      ), // Display the selected page
+      bottomNavigationBar: ClipRRect(
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(26.0),
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.blue,
+          // unselectedItemColor: Color.fromARGB(255, 12, 241, 126),
+          selectedItemColor: Color.fromARGB(255, 245, 247, 245),
+          currentIndex: _currentIndex,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home_filled,
+                size: 20,
+              ),
+              label: 'Dashboard',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.format_align_right_sharp,
+                size: 20,
+              ),
+              label: 'Declaration',
+            ),
+          ],
+          onTap: (index) {
             setState(() {
               _currentIndex = index;
+              _pageController.animateToPage(
+                index,
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.easeInOut,
+              );
             });
           },
-        ), // Display the selected page
-        bottomNavigationBar: ClipRRect(
-          borderRadius: const BorderRadius.vertical(
-            top: Radius.circular(25.0),
-          ),
-          child: BottomNavigationBar(
-            backgroundColor: Colors.blue,
-            // unselectedItemColor: Color.fromARGB(255, 12, 241, 126),
-            selectedItemColor: Color.fromARGB(255, 245, 247, 245),
-            currentIndex: _currentIndex,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home_filled),
-                label: 'Dashboard',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.format_align_right_sharp),
-                label: 'Declaration',
-              ),
-            ],
-            onTap: (index) {
-              setState(() {
-                _currentIndex = index;
-                _pageController.animateToPage(
-                  index,
-                  duration: const Duration(milliseconds: 400),
-                  curve: Curves.easeInOut,
-                );
-              });
-            },
-          ),
-        ));
+        ),
+      ),
+    );
   }
 }
