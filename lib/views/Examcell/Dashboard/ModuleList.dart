@@ -1,5 +1,6 @@
+import 'package:examcellapp/views/Examcell/Dashboard/allStdResult.dart';
 import 'package:flutter/material.dart';
-import 'ModuleResultPage.dart';
+// import 'ModuleResultPage.dart';
 
 class ModuleList extends StatelessWidget {
   final List<String> moduleList;
@@ -97,13 +98,9 @@ class ModuleList extends StatelessWidget {
               ),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    '/ResultView',
-                    arguments: {
-                      'deptName': deptNames,
-                      'semester': semester,
-                    },
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => resultTable()),
                   );
                 },
                 child: Container(

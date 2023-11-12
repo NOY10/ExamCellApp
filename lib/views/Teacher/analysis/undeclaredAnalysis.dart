@@ -162,18 +162,61 @@ class _undeclaredAnalysisState extends State<undeclaredAnalysis> {
   void _showDeleteConfirmationDialog(BuildContext context) {
     AwesomeDialog(
       context: context,
-      dialogType: DialogType.question,
+      dialogType: DialogType.noHeader,
       headerAnimationLoop: false,
-      animType: AnimType.BOTTOMSLIDE,
+      showCloseIcon: false,
+      animType: AnimType.topSlide,
       title: 'Confirmation',
       desc: 'Are you sure you want to delete this mark?',
-      btnCancelOnPress: () {},
-      btnOkOnPress: () {
+       btnOkOnPress: () {
         // Perform the deletion logic here
         print(deleteMark(widget.mCode));
+        _showSuccesfulDelete(context);
       },
+      btnCancelOnPress: () {},
+      btnOkColor: Colors.blue,
+      dismissOnBackKeyPress: true,
+
     )..show();
   }
+
+  void _showSuccesfulDelete(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.noHeader,
+      headerAnimationLoop: false,
+      showCloseIcon: false,
+      animType: AnimType.topSlide,
+      title: 'Deleted Successful!',
+      //desc: 'Are you sure you want to delete this mark?',
+      //  btnOkOnPress: () {
+      //   // Perform the deletion logic here
+      //   print(deleteMark(widget.mCode));
+      // },
+      //btnCancelOnPress: () {},
+      btnOkColor: Colors.blue,
+      dismissOnBackKeyPress: true,
+      autoHide: const Duration(seconds: 1),
+
+    ).show();
+  }
+
+  // To use the custom dialog in your code:
+  
+  // void _showDeleteConfirmationDialog(BuildContext context) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return CustomDeleteConfirmationDialog(
+  //         onConfirm: () {
+  //           // Perform the deletion logic here
+  //           print(deleteMark(widget.mCode));
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
+  
 
   SizedBox chart(double buttonWidth, List<String> category,
       BuildContext context, List<Map<String, dynamic>> data) {
@@ -378,3 +421,34 @@ Map<String, int> countPassFail(List<Map<String, dynamic>> data, String type) {
 
   return {'pass': passCount, 'fail': failCount};
 }
+
+class CustomDeleteConfirmationDialog extends StatelessWidget {
+  final Function onConfirm;
+
+  CustomDeleteConfirmationDialog({required this.onConfirm});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Confirmation'),
+      content: Text('Are you sure you want to delete this mark?'),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop(); // Close the dialog
+          },
+          child: Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            onConfirm(); // Call the provided onConfirm function
+            Navigator.of(context).pop(); // Close the dialog
+          },
+          child: Text('Delete', style: TextStyle(color: Colors.red)),
+        ),
+      ],
+    );
+  }
+}
+
+

@@ -7,18 +7,18 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Column(
-        children: [
-          // Expanded(
-          //   flex: 1,
-          //   child: AnnouncementMain(),
-          // ),
-          Expanded(
-            child: DeptResult(),
-          ),
-        ],
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 800,
+              child: DeptResult(),
+            ),
+          ],
+        ),
       ),
     );
   }
+
 }

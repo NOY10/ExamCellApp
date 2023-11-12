@@ -200,10 +200,12 @@ class _DeptResultState extends State<DeptResult> {
     '3rd Year': {
       'Architecture Department': ['3', '3', '3'],
       'Civil Engineering': ['CE101', 'CE201', 'CE301'],
+      'Information Technology': ['CTE305', 'CTE306', 'CTE307', 'CTE308', 'DIS302'],
       'Electronics & Communication Engineering': ['ECE101', 'ECE201', 'ECE301'],
       'Electrical Engineering': ['EE101', 'EE201', 'EE301'],
-      'Information Technology': ['CTE305', 'CTE306', 'CTE307', 'CTE308', 'DIS302'],
       'Instrumentation and Control Engineering': ['ICE101', 'ICE201', 'ICE301'],
+      'Geology': ['ECE101', 'ECE201', 'ECE301'],
+      
     },
     '4th Year': {
       'Architecture Department': ['4', '4', '4'],
@@ -301,7 +303,7 @@ class YearDepartments extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 400,
+      height: MediaQuery.of(context).size.height,
       child: ListView(
         children: deptList.map((deptName) {
           final modules = moduleData[deptName];
@@ -348,18 +350,23 @@ class Department extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 60,
+      decoration: BoxDecoration(
+        border: Border(
+          left: BorderSide(width: 60.0, color: Colors.blue)
+        ),
+      ),
       child: Row(
         children: [
-          Container(
-            color: Colors.blue,
-            width: MediaQuery.of(context).size.width / 7,
-            // child: Image.asset(
-            //   'assets/images/CST_logo.png',
-            //   fit: BoxFit.cover,
-            // ),
-          ),
-          Expanded(
-            child: Row(
+          // Container(
+          //   color: Colors.blue,
+          //   width: MediaQuery.of(context).size.width / 7,
+          //   // child: Image.asset(
+          //   //   'assets/images/CST_logo.png',
+          //   //   fit: BoxFit.cover,
+          //   // ),
+          // ),
+          
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
@@ -376,7 +383,6 @@ class Department extends StatelessWidget {
                 ),
               ],
             ),
-          ),
         ],
       ),
     );

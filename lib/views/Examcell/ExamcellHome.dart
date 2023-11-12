@@ -43,7 +43,25 @@ class _ExamcellHomeState extends State<ExamcellHome> {
         iconTheme: IconThemeData(
           color: Colors.white,
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right:8.0),
+            child: IconButton(
+              icon: Icon(
+                Icons.notifications, // Use the appropriate notification icon
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AnnouncementMain()),
+                );
+              },
+            ),
+          ),
+        ],
       ),
+      
       body: PageView(
         controller: _pageController,
         children: _pages,

@@ -2,250 +2,343 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 class AllStdResult extends StatelessWidget {
+  
   final String jsonData = '''
+  [
   {
-    "02210233": {
-      "name": "TSHERING NORPHEL",
-      "modules": [
-        {
-          "code": "ACS101",
-          "tid": "RUB2002010012",
-          "ca": 80.75,
-          "exam": null,
-          "practical": null,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
+    "name": "JIGME PHUNTSHO WANGYEL",
+    "id": "02210200",
+    "modules": [
+      {
+        "Module": "Software Engineering",
+        "ModuleCode": "CTE305",
+        "semester": "AS2023",
+        "marks": {
+          "ca": 48,
+          "exam": 45,
+          "practical": null
         },
-        {
-          "code": "CHE101",
-          "tid": "RUB200705012",
-          "ca": 31.13,
-          "exam": 33,
-          "practical": 23.55,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
+        "maxMarks": {
+          "maxCA": 50,
+          "maxExam": 50,
+          "maxPractical": null
         },
-        {
-          "code": "EGP101",
-          "tid": "RUB2002010012",
-          "ca": 46.87,
-          "exam": 31.5,
-          "practical": null,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
+        "total": 93,
+        "totalCredit": 1116,
+        "remark": "Pass",
+        "percentage": 93
+      },
+      {
+        "Module": "Human Computer Interaction",
+        "ModuleCode": "CTE307",
+        "semester": "AS2023",
+        "marks": {
+          "ca": 48,
+          "exam": 45,
+          "practical": null
         },
-        {
-          "code": "PHY101",
-          "tid": "RUB200805011",
-          "ca": 22.5,
-          "exam": 32.5,
-          "practical": 31.05,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2023"
+        "maxMarks": {
+          "maxCA": 50,
+          "maxExam": 50,
+          "maxPractical": null
         },
-        {
-          "code": "CPL101",
-          "tid": "RUB201204008",
-          "ca": 28.25,
-          "exam": 30,
-          "practical": 23.38,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
+        "total": 93,
+        "totalCredit": 1116,
+        "remark": "Pass",
+        "percentage": 93
+      },
+      {
+        "Module": "Advanced Web Technology",
+        "ModuleCode": "CTE308",
+        "semester": "AS2023",
+        "marks": {
+          "ca": 28,
+          "exam": 32,
+          "practical": 19
         },
-        {
-          "code": "MAT101",
-          "tid": "RUB200805218",
-          "ca": 42.5,
-          "exam": 35,
-          "practical": null,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
-        }
-      ]
-    },
-    "02210215": {
-      "name": "PHURPA TSHERING",
-      "modules": [
-        {
-          "code": "ACS101",
-          "tid": "RUB2002010012",
-          "ca": 60,
-          "exam": null,
-          "practical": null,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
+        "maxMarks": {
+          "maxCA": 35,
+          "maxExam": 40,
+          "maxPractical": 25
         },
-        {
-          "code": "CHE101",
-          "tid": "RUB200705012",
-          "ca": 30,
-          "exam": 30,
-          "practical": 20,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
+        "total": 79,
+        "totalCredit": 948,
+        "remark": "Pass",
+        "percentage": 79
+      },
+      {
+        "Module": "Object Oriented Analysis & Design",
+        "ModuleCode": "DIS302",
+        "semester": "AS2023",
+        "marks": {
+          "ca": 28,
+          "exam": 32,
+          "practical": 19
         },
-        {
-          "code": "EGP101",
-          "tid": "RUB2002010012",
-          "ca": 40,
-          "exam": 30,
-          "practical": null,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
+        "maxMarks": {
+          "maxCA": 35,
+          "maxExam": 40,
+          "maxPractical": 25
         },
-        {
-          "code": "PHY101",
-          "tid": "RUB200805011",
-          "ca": 20,
-          "exam": 30,
-          "practical": 30,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
+        "total": 79,
+        "totalCredit": 948,
+        "remark": "Pass",
+        "percentage": 79
+      }
+    ]
+  },
+  {
+    "name": "PHURPA TSHERING",
+    "id": "02210215",
+    "modules": [
+      {
+        "Module": "Software Engineering",
+        "ModuleCode": "CTE305",
+        "semester": "AS2023",
+        "marks": {
+          "ca": 39,
+          "exam": 42,
+          "practical": null
         },
-        {
-          "code": "CPL101",
-          "tid": "RUB201204008",
-          "ca": 25,
-          "exam": 30,
-          "practical": 30,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
+        "maxMarks": {
+          "maxCA": 50,
+          "maxExam": 50,
+          "maxPractical": null
         },
-        {
-          "code": "MAT101",
-          "tid": "RUB200805218",
-          "ca": 40,
-          "exam": 35,
-          "practical": null,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
-        }
-      ]
-    },
-    "02210217": {
-      "name": "LOBZA",
-      "modules": [
-        {
-          "code": "ACS101",
-          "tid": "RUB2002010012",
-          "ca": 60,
-          "exam": null,
-          "practical": null,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
+        "total": 81,
+        "totalCredit": 972,
+        "remark": "Pass",
+        "percentage": 81
+      },
+      {
+        "Module": "Human Computer Interaction",
+        "ModuleCode": "CTE307",
+        "semester": "AS2023",
+        "marks": {
+          "ca": 39,
+          "exam": 42,
+          "practical": null
         },
-        {
-          "code": "CHE101",
-          "tid": "RUB200705012",
-          "ca": 30,
-          "exam": 30,
-          "practical": 20,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
+        "maxMarks": {
+          "maxCA": 50,
+          "maxExam": 50,
+          "maxPractical": null
         },
-        {
-          "code": "EGP101",
-          "tid": "RUB2002010012",
-          "ca": 40,
-          "exam": 30,
-          "practical": null,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
+        "total": 81,
+        "totalCredit": 972,
+        "remark": "Pass",
+        "percentage": 81
+      },
+      {
+        "Module": "Advanced Web Technology",
+        "ModuleCode": "CTE308",
+        "semester": "AS2023",
+        "marks": {
+          "ca": 21,
+          "exam": 26,
+          "practical": 20
         },
-        {
-          "code": "PHY101",
-          "tid": "RUB200805011",
-          "ca": 20,
-          "exam": 30,
-          "practical": 30,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
+        "maxMarks": {
+          "maxCA": 35,
+          "maxExam": 40,
+          "maxPractical": 25
         },
-        {
-          "code": "CPL101",
-          "tid": "RUB201204008",
-          "ca": 25,
-          "exam": 30,
-          "practical": 30,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
+        "total": 67,
+        "totalCredit": 804,
+        "remark": "Pass",
+        "percentage": 67
+      },
+      {
+        "Module": "Object Oriented Analysis & Design",
+        "ModuleCode": "DIS302",
+        "semester": "AS2023",
+        "marks": {
+          "ca": 21,
+          "exam": 26,
+          "practical": 20
         },
-        {
-          "code": "MAT101",
-          "tid": "RUB200805218",
-          "ca": 40,
-          "exam": 35,
-          "practical": null,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
-        }
-      ]
-    },
-    "02210210": {
-      "name": "LOBZA",
-      "modules": [
-        {
-          "code": "ACS101",
-          "tid": "RUB2002010012",
-          "ca": 60,
-          "exam": null,
-          "practical": null,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
+        "maxMarks": {
+          "maxCA": 35,
+          "maxExam": 40,
+          "maxPractical": 25
         },
-        {
-          "code": "CHE101",
-          "tid": "RUB200705012",
-          "ca": 30,
-          "exam": 30,
-          "practical": 20,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
+        "total": 67,
+        "totalCredit": 804,
+        "remark": "Pass",
+        "percentage": 67
+      }
+    ]
+  },
+  {
+    "name": "PRALAD MISHRA",
+    "id": "02210217",
+    "modules": [
+      {
+        "Module": "Software Engineering",
+        "ModuleCode": "CTE305",
+        "semester": "AS2023",
+        "marks": {
+          "ca": 42,
+          "exam": 40,
+          "practical": null
         },
-        {
-          "code": "EGP101",
-          "tid": "RUB2002010012",
-          "ca": 40,
-          "exam": 30,
-          "practical": null,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
+        "maxMarks": {
+          "maxCA": 50,
+          "maxExam": 50,
+          "maxPractical": null
         },
-        {
-          "code": "PHY101",
-          "tid": "RUB200805011",
-          "ca": 20,
-          "exam": 30,
-          "practical": 30,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
+        "total": 82,
+        "totalCredit": 984,
+        "remark": "Pass",
+        "percentage": 82
+      },
+      {
+        "Module": "Human Computer Interaction",
+        "ModuleCode": "CTE307",
+        "semester": "AS2023",
+        "marks": {
+          "ca": 42,
+          "exam": 40,
+          "practical": null
         },
-        {
-          "code": "CPL101",
-          "tid": "RUB201204008",
-          "ca": 25,
-          "exam": 30,
-          "practical": 30,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
+        "maxMarks": {
+          "maxCA": 50,
+          "maxExam": 50,
+          "maxPractical": null
         },
-        {
-          "code": "MAT101",
-          "tid": "RUB200805218",
-          "ca": 40,
-          "exam": 35,
-          "practical": null,
-          "dateOfExam": "2021-12-20",
-          "semester": "AS2021"
-        }
-      ]
-    }
+        "total": 82,
+        "totalCredit": 984,
+        "remark": "Pass",
+        "percentage": 82
+      },
+      {
+        "Module": "Advanced Web Technology",
+        "ModuleCode": "CTE308",
+        "semester": "AS2023",
+        "marks": {
+          "ca": 27,
+          "exam": 27,
+          "practical": 23
+        },
+        "maxMarks": {
+          "maxCA": 35,
+          "maxExam": 40,
+          "maxPractical": 25
+        },
+        "total": 77,
+        "totalCredit": 924,
+        "remark": "Pass",
+        "percentage": 77
+      },
+      {
+        "Module": "Object Oriented Analysis & Design",
+        "ModuleCode": "DIS302",
+        "semester": "AS2023",
+        "marks": {
+          "ca": 27,
+          "exam": 27,
+          "practical": 23
+        },
+        "maxMarks": {
+          "maxCA": 35,
+          "maxExam": 40,
+          "maxPractical": 25
+        },
+        "total": 77,
+        "totalCredit": 924,
+        "remark": "Pass",
+        "percentage": 77
+      }
+    ]
+  },
+  {
+    "name": "TSHERING NORPHEL",
+    "id": "02210233",
+    "modules": [
+      {
+        "Module": "Software Engineering",
+        "ModuleCode": "CTE305",
+        "semester": "AS2023",
+        "marks": {
+          "ca": 32,
+          "exam": 25,
+          "practical": null
+        },
+        "maxMarks": {
+          "maxCA": 50,
+          "maxExam": 50,
+          "maxPractical": null
+        },
+        "total": 57,
+        "totalCredit": 684,
+        "remark": "Pass",
+        "percentage": 57
+      },
+      {
+        "Module": "Human Computer Interaction",
+        "ModuleCode": "CTE307",
+        "semester": "AS2023",
+        "marks": {
+          "ca": 33,
+          "exam": 25,
+          "practical": null
+        },
+        "maxMarks": {
+          "maxCA": 50,
+          "maxExam": 50,
+          "maxPractical": null
+        },
+        "total": 58,
+        "totalCredit": 696,
+        "remark": "Pass",
+        "percentage": 58
+      },
+      {
+        "Module": "Advanced Web Technology",
+        "ModuleCode": "CTE308",
+        "semester": "AS2023",
+        "marks": {
+          "ca": 32,
+          "exam": 19,
+          "practical": 22
+        },
+        "maxMarks": {
+          "maxCA": 35,
+          "maxExam": 40,
+          "maxPractical": 25
+        },
+        "total": 73,
+        "totalCredit": 876,
+        "remark": "Pass",
+        "percentage": 73
+      },
+      {
+        "Module": "Object Oriented Analysis & Design",
+        "ModuleCode": "DIS302",
+        "semester": "AS2023",
+        "marks": {
+          "ca": 32,
+          "exam": 19,
+          "practical": 22
+        },
+        "maxMarks": {
+          "maxCA": 35,
+          "maxExam": 40,
+          "maxPractical": 25
+        },
+        "total": 73,
+        "totalCredit": 876,
+        "remark": "Pass",
+        "percentage": 73
+      }
+    ]
   }
+]
   ''';
 
   @override
-  Widget build(BuildContext context) {
-    Map<String, dynamic> data = jsonDecode(jsonData);
+   Widget build(BuildContext context) {
+    List<Map<String, dynamic>> userData = List<Map<String, dynamic>>.from(jsonDecode(jsonData));
 
     double minRowHeight = 200.0; // Set the desired row height
 
@@ -254,246 +347,52 @@ class AllStdResult extends StatelessWidget {
       child: SizedBox(
         height: MediaQuery.of(context).size.height - 170,
         child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-              child: DataTable(
-                columnSpacing: 20,
-                columns: [
-                  DataColumn(label: Text('SID')),
-                  DataColumn(label: Text('Name')),
-                  DataColumn(label: Text('Module Codes')),
-                  DataColumn(label: Text('CA')),
-                  DataColumn(label: Text('Practical')),
-                  DataColumn(label: Text('Exam')),
-                ],
-                dataRowHeight: minRowHeight,
-                rows: data.entries.map((entry) {
-                  List<DataCell> cells = [
-                    DataCell(Center(child: Text(entry.key))),
-                    DataCell(Text(entry.value['name'])),
-                    DataCell(
-                      Center(
-                        child: Text(
-                          entry.value['modules']
-                              .map((module) => module['code'])
-                              .join('\n'),
-                        ),
-                      ),
-                    ),
-                    DataCell(
-                      Center(
-                        child: Text(
-                          entry.value['modules']
-                              .map((module) => '${module['ca']}')
-                              .join('\n'),
-                        ),
-                      ),
-                    ),
-                    DataCell(
-                      Center(
-                        child: Text(
-                          entry.value['modules']
-                              .map((module) => '${module['practical'] ?? "--"}')
-                              .join('\n'),
-                        ),
-                      ),
-                    ),
-                    DataCell(
-                      Center(
-                        child: Text(
-                          entry.value['modules']
-                              .map((module) => '${module['exam'] ?? "--"}')
-                              .join('\n'),
-                        ),
-                      ),
-                    ),
-                  ];
-                  // Create empty DataCells if there are not enough modules
-                  while (cells.length < 6) {
-                    cells.add(DataCell(Text('')));
-                  }
-                  return DataRow(cells: cells);
-                }).toList(),
-              ),
-            ),
+          scrollDirection: Axis.vertical,
+          child: DataTable(
+            columnSpacing: 20,
+            columns: [
+              DataColumn(label: Text('Name')),
+              DataColumn(label: Text('SID')),
+              for (int i = 0; i < userData[0]['modules'].length; i++)
+                DataColumn(
+                  label: Text('Module ${i + 1}'),
+                ),
+              DataColumn(label: Text('Remark')),
+              DataColumn(label: Text('Aggregate')),
+            ],
+            dataRowHeight: minRowHeight,
+            rows: userData.map((user) {
+              List<DataCell> cells = [
+                DataCell(Text(user['name'])),
+                DataCell(Text(user['id'])),
+              ];
+
+              // Add DataCells for each module
+              for (var module in user['modules']) {
+                cells.add(DataCell(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text('CA: ${module['marks']['ca']}'),
+                      Text('Practical: ${module['marks']['practical'] ?? "--"}'),
+                      Text('Exam: ${module['marks']['exam'] ?? "--"}'),
+                      Text('Total: ${module['total']}'),
+                    ],
+                  ),
+                ));
+              }
+
+              // Add Remark and Aggregate DataCells
+              cells.add(DataCell(Text(user['modules'][0]['remark'])));
+              cells.add(DataCell(Text('${user['modules'][0]['percentage']}%')));
+
+              return DataRow(cells: cells);
+            }).toList(),
           ),
-      );
+        ),
+      ),
+    );
   }
 }
 
 
-
-// import 'package:flutter/material.dart';
-// import 'package:syncfusion_flutter_datagrid/datagrid.dart';
-// import 'package:http/http.dart' as http;
-// import 'dart:async';
-// import 'dart:convert';
-
-// class AllStdResult extends StatefulWidget {
-//   const AllStdResult({super.key});
-
-//   @override
-//   State<AllStdResult> createState() => _AllStdResultState();
-// }
-
-// class _AllStdResultState extends State<AllStdResult> {
-//   StudentDataSource studentDataSource = StudentDataSource([]);
-//   List<GridColumn> columns = [];
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     columns = getColumns();
-//   }
-
-//   Future<List<StudentR>> fetchModuleResult() async {
-//     final Map<String, String>? args =
-//         ModalRoute.of(context)!.settings.arguments as Map<String, String>?;
-//     final String deptNames = args?['deptName'] ?? 'No deptName';
-//     final String semester = args?['semester'] ?? 'No year';
-//     var dept;
-
-//     if (deptNames == "Architecture Department") {
-//       dept = "BEA";
-//     } else if (deptNames == "Information Technology") {
-//       dept = "BEIT";
-//     }
-
-//     final Uri url = Uri.parse(
-//         "https://examcellflutter.000webhostapp.com/individual_module.php");
-
-//     final response = await http.post(url, body: {
-//       "deptName": dept,
-//       "semester": semester,
-//     });
-
-//     try {
-//       if (response.statusCode == 200) {
-//         final jsonResponse = json.decode(response.body);
-
-//         if (jsonResponse is Map<String, dynamic>) {
-//           final sid = jsonResponse['sid'];
-//           final name = jsonResponse['name'];
-//           final practical = jsonResponse['practical'];
-//           final ca = jsonResponse['ca'];
-//           final exam = jsonResponse['exam'];
-
-//           final student = StudentR(
-//             StudentId: sid.toString(),
-//             Name: name.toString(),
-//             Practical: practical.toString(),
-//             CA: ca.toString(),
-//             Exam: exam.toString(),
-//           );
-
-//           // Return a list with the single student
-//           return [student];
-//         } else {
-//           throw Exception('Unexpected response format');
-//         }
-//       } else {
-//         throw Exception(
-//             'Failed to fetch data. Status code: ${response.statusCode}');
-//       }
-//     } catch (e) {
-//       throw Exception('Error while fetching data: $e');
-//     }
-//   }
-
-//   List<GridColumn> getColumns() {
-//     return <GridColumn>[
-//       GridColumn(
-//         columnName: 'sid',
-//         label: Container(alignment: Alignment.center, child: Text('StudentId')),
-//         width: 150,
-//       ),
-//       GridColumn(
-//         columnName: 'name',
-//         label: Container(alignment: Alignment.center, child: Text('Name')),
-//         width: 80,
-//       ),
-//       GridColumn(
-//         columnName: 'practical',
-//         label: Container(alignment: Alignment.center, child: Text('Practical')),
-//         width: 70,
-//       ),
-//       GridColumn(
-//         columnName: 'ca',
-//         label: Container(alignment: Alignment.center, child: Text('CA')),
-//         width: 70,
-//       ),
-//       GridColumn(
-//         columnName: 'exam',
-//         label: Container(alignment: Alignment.center, child: Text('Exam')),
-//         width: 70,
-//       ),
-//     ];
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       // Example content for StdResultA
-//       padding: EdgeInsets.all(20),
-//       decoration: BoxDecoration(
-//         border: Border.all(color: Colors.blue),
-//         color: Colors.white,
-//       ),
-//       child: Text(
-//         'This is the content of StdResultA.',
-//         style: TextStyle(fontSize: 16),
-//       ),
-//     );
-//   }
-// }
-
-// class StudentDataSource extends DataGridSource {
-//   List<StudentR> studentRs = [];
-
-//   StudentDataSource(this.studentRs);
-
-//   @override
-//   List<DataGridRow> get rows => studentRs
-//       .map<DataGridRow>((e) => DataGridRow(cells: [
-//             DataGridCell<String>(columnName: 'sid', value: e.StudentId),
-//             DataGridCell<String>(columnName: 'name', value: e.Name),
-//             DataGridCell<String>(columnName: 'practical', value: e.Practical),
-//             DataGridCell<String>(columnName: 'ca', value: e.CA),
-//             DataGridCell<String>(columnName: 'exam', value: e.Exam),
-//           ]))
-//       .toList();
-
-//   @override
-//   DataGridRowAdapter buildRow(DataGridRow row) {
-//     return DataGridRowAdapter(
-//       cells: row.getCells().map<Widget>((e) {
-//         return Container(
-//           alignment: Alignment.center,
-//           padding: EdgeInsets.all(8.0),
-//           child: Text(e.value.toString()),
-//         );
-//       }).toList(),
-//     );
-//   }
-// }
-
-// class StudentR {
-//   String StudentId, Name, CA, Practical, Exam;
-
-//   StudentR({
-//     required this.StudentId,
-//     required this.Name,
-//     required this.CA,
-//     required this.Practical,
-//     required this.Exam,
-//   });
-
-//   factory StudentR.fromJson(Map<String, dynamic> json) {
-//     return StudentR(
-//       StudentId: json["sid"] as String? ?? '',
-//       Name: json['name'] as String? ?? '',
-//       Practical: json['practical'].toString(),
-//       CA: json['ca'].toString(),
-//       Exam: json['exam'].toString(),
-//     );
-//   }
-// }

@@ -4,26 +4,26 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class StudentResultView extends StatefulWidget {
-  final String sid;
-  final String semester;
+class examCellModule extends StatefulWidget {
 
-  const StudentResultView({
-    required this.semester,
-    required this.sid,
+  final String code;
+
+  const examCellModule({
+    required this.code,
     Key? key}) : super(key: key);
 
   @override
-  State<StudentResultView> createState() => _StudentResultViewState();
+  State<examCellModule> createState() => _gradedMarkViewState();
 }
 
-class _StudentResultViewState extends State<StudentResultView> {
+class _gradedMarkViewState extends State<examCellModule> {
   EmployeeDataSource employeeDataSource = EmployeeDataSource([]);
   List<GridColumn> _columns = [];
   double _zoom = 1.0;
+  final int TEXT_COLOR = 0xFF1A1717;
 
-  Future<List<Employee>> fetchEmployees(String sid, String semester) async {
-    var url = 'https://resultsystemdb.000webhostapp.com/getResult.php?sid=$sid&semester=$semester';
+  Future<List<Employee>> fetchEmployees(String code) async {
+    var url = "https://resultsystemdb.000webhostapp.com/examcell/getModuleMark.php?code=${code}";
 
     try {
       final response = await http.get(Uri.parse(url));
@@ -33,39 +33,23 @@ class _StudentResultViewState extends State<StudentResultView> {
         List<Employee> employees =
             list.map<Employee>((json) => Employee.fromJson(json)).toList();
 
-        double grandTotalCm = employees
-            .map((e) => double.parse(e.TotCm))
-            .fold(0, (prev, amount) => prev + amount);
-        double grandTotalCmMax = employees
-            .map((e) => double.parse(e.TotCmMax))
-            .fold(0, (prev, amount) => prev + amount);
-
-        double aggregate = (grandTotalCm / grandTotalCmMax) * 100;
 
         Employee grandTotalRow = Employee(
-          ModuleName: 'Grand Total',
-          ModuleCode: '',
+          sid: '',
           Credit: '',
           CA: '',
           Practical: '',
           Exam: '',
           Total: '',
-          TotCm: grandTotalCm.toStringAsFixed(2),
-          TotCmMax: grandTotalCmMax.toStringAsFixed(0),
-          Remarks: '',
         );
 
         Employee aggregateRow = Employee(
-          ModuleName: 'Aggregate',
-          ModuleCode: '',
+          sid: '',
           Credit: '',
           CA: '',
           Practical: '',
           Exam: '',
           Total: '',
-          TotCm: '',
-          TotCmMax: '${aggregate.toStringAsFixed(2)}%',
-          Remarks: '',
         );
 
         employees.add(grandTotalRow);
@@ -94,22 +78,12 @@ class _StudentResultViewState extends State<StudentResultView> {
   List<GridColumn> getColumns() {
     return <GridColumn>[
       GridColumn(
-        columnName: 'ModuleName',
+        columnName: 'ID',
         label:
-            Container(alignment: Alignment.center, child: Text('Module Name')),
+            Container(alignment: Alignment.center, child: Text('StudentID')),
         width: 150,
       ),
-      GridColumn(
-        columnName: 'ModuleCode',
-        label:
-            Container(alignment: Alignment.center, child: Text('Module Code')),
-        width: 100,
-      ),
-      GridColumn(
-        columnName: 'Credit',
-        label: Container(alignment: Alignment.center, child: Text('Credit')),
-        width: 70,
-      ),
+
       GridColumn(
         columnName: 'CA',
         label: Container(alignment: Alignment.center, child: Text('CA')),
@@ -130,22 +104,6 @@ class _StudentResultViewState extends State<StudentResultView> {
         label: Container(alignment: Alignment.center, child: Text('Total')),
         width: 70,
       ),
-      GridColumn(
-        columnName: 'Total CM',
-        label: Container(alignment: Alignment.center, child: Text('Total CM')),
-        width: 100,
-      ),
-      GridColumn(
-        columnName: 'Total CM Max',
-        label:
-            Container(alignment: Alignment.center, child: Text('Total CM Max')),
-        width: 100,
-      ),
-      GridColumn(
-        columnName: 'Remarks',
-        label: Container(alignment: Alignment.center, child: Text('Remarks')),
-        width: 100, // Adjust the width as needed.
-      ),
     ];
   }
 
@@ -165,64 +123,29 @@ class _StudentResultViewState extends State<StudentResultView> {
 
   }
 
-  Padding banner(BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 4),
-    child: Container(
-      width: MediaQuery.of(context).size.width,
-      height: 50,
-      color: Color.fromARGB(255, 223, 229, 252),
-      child: Center(
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left:8.0),
-              child: Text(
-                "ID: ${widget.sid}",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.left,
-              ),
-            ),
-            SizedBox(width: 10,),
-            Text(
-              "Semester: ${widget.semester}",
+
+
+    Padding banner(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 1),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: 50,
+        color: Color.fromARGB(255, 223, 229, 252),
+  
+          child: Padding(
+            padding: const EdgeInsets.only(top:12.0, left: 8.0),
+            child: Text(
+              'Academic Mark',
               style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color:Color(TEXT_COLOR),
               ),
               textAlign: TextAlign.left,
             ),
-          ],
+          ),
         ),
-      ),
-    ),
-  );
-}
-
-
-  Padding header() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        children: [
-          Text(
-            "ID: ${widget.sid}",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.left,
-          ),
-          SizedBox(width: 10,),
-          Text(
-            "Semester: ${widget.semester}",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.left,
-          ),
-        ],
-      ),
     );
   }
 
@@ -231,7 +154,7 @@ class _StudentResultViewState extends State<StudentResultView> {
   GestureDetector semesterTable() {
     return GestureDetector(
       child: FutureBuilder<List<Employee>>(
-        future: fetchEmployees(widget.sid, widget.semester),
+        future: fetchEmployees(widget.code),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
@@ -279,18 +202,13 @@ class EmployeeDataSource extends DataGridSource {
 
   @override
   List<DataGridRow> get rows => employees
+      .where((e) => e.sid.isNotEmpty) // Filter out rows with empty sid
       .map<DataGridRow>((e) => DataGridRow(cells: [
-            DataGridCell<String>(columnName: 'ModuleName', value: e.ModuleName),
-            DataGridCell<String>(columnName: 'ModuleCode', value: e.ModuleCode),
-            DataGridCell<String>(columnName: 'Credit', value: e.Credit),
+            DataGridCell<String>(columnName: 'ID', value: e.sid),
             DataGridCell<String>(columnName: 'CA', value: e.CA),
             DataGridCell<String>(columnName: 'Practical', value: e.Practical),
             DataGridCell<String>(columnName: 'Exam', value: e.Exam),
             DataGridCell<String>(columnName: 'Total', value: e.Total),
-            DataGridCell<String>(columnName: 'TotCm', value: e.TotCm),
-            DataGridCell<String>(columnName: 'TotCmMax', value: e.TotCmMax),
-            DataGridCell<String>(
-                columnName: 'Remarks', value: e.Remarks), // Add Remarks cell
           ]))
       .toList();
 
@@ -308,46 +226,33 @@ class EmployeeDataSource extends DataGridSource {
   }
 }
 
+
 class Employee {
-  String ModuleCode,
+  String sid,
       Credit,
       CA,
       Practical,
       Exam,
-      ModuleName,
-      Total,
-      TotCm,
-      TotCmMax,
-      Remarks;
+      Total;
 
   Employee({
-    required this.ModuleCode,
-    required this.ModuleName,
+    required this.sid,
     required this.Credit,
     required this.CA,
     required this.Practical,
     required this.Exam,
     required this.Total,
-    required this.TotCm,
-    required this.TotCmMax,
-    required this.Remarks,
   });
 
   factory Employee.fromJson(Map<String, dynamic> json) {
     double total = double.parse(json['total'].toString());
-    String remarks = total > 50.0 ? 'Pass' : 'Fail';
-
     return Employee(
-      ModuleCode: json['code'] as String? ?? '',
-      ModuleName: json['name'] as String? ?? '',
+      sid: json['sid'] as String? ?? '',
       Credit: json['credit'].toString(),
       CA: json['ca'].toString(),
       Practical: json['practical'].toString(),
       Exam: json['exam'].toString(),
       Total: total.toString(),
-      TotCm: json['totCm'].toString(),
-      TotCmMax: json['totCmMax'].toString(),
-      Remarks: remarks,
     );
   }
 }
