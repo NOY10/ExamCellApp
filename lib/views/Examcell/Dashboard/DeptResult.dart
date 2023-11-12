@@ -375,7 +375,8 @@ class Department extends StatelessWidget {
                     deptName,
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 11,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

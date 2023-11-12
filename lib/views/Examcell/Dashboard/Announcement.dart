@@ -75,41 +75,61 @@ class _AnnouncementMainState extends State<AnnouncementMain> {
                 itemCount: data.length,
                 itemBuilder: (BuildContext context, int index) {
                   final item = data[index];
-                  return Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: Color(0xffcccccc),
-                          width: 1,
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                      context,
+                      '/moduleResultPage',
+                      arguments: {
+                        'moduleName': item["name"].toString(),
+                        'moduleCode': item["mid"].toString(),
+                        'deptName': item["program"] == 'BEIT' ? "Information Technology" : "NoDept",
+                        'semester': 'AS2023',
+                      },
+                    );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Color(0xffcccccc),
+                            width: 1,
+                          )
                         )
-                      )
-                    ),
-                    
-                    child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                item["mid"],
-                                style: const TextStyle(fontSize: 12, color: Colors.black),
+                      ),
+                      
+                      child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  item["mid"],
+                                  style: const TextStyle(
+                                    fontSize: 14, 
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500),
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Mobile Application Development",
-                                style: const TextStyle(fontSize: 12, color: Colors.black),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  item["name"],
+                                  style: const TextStyle(
+                                    fontSize: 14, 
+                                    color: Color.fromARGB(183, 0, 0, 0),
+                                    fontWeight: FontWeight.w500),
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Submitted on ${item["Time(Notification.date)"]}",
-                                style: const TextStyle(fontSize: 12, color: Colors.black),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Submitted on ${item["date"]}",
+                                  style: const TextStyle(fontSize: 12, color: Colors.black),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                      ),
                     ),
                   );
                 },

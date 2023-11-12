@@ -1,3 +1,4 @@
+import 'package:examcellapp/views/Examcell/Dashboard/allStdResult.dart';
 import 'package:flutter/material.dart';
 import 'package:examcellapp/views/Examcell/Dashboard/AllStdResult.dart';
 
@@ -34,7 +35,7 @@ class ResultView extends StatelessWidget {
               ],
             ),
             SizedBox(height: 20),
-            AllStdResult(),
+            resultTable(),
           ],
         ),
       ),

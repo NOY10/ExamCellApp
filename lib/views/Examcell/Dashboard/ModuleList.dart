@@ -49,7 +49,8 @@ class ModuleList extends StatelessWidget {
                         moduleName,
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 10,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                       SizedBox(
@@ -60,6 +61,7 @@ class ModuleList extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 10,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     ],
@@ -79,7 +81,10 @@ class ModuleList extends StatelessWidget {
                       },
                     );
                   },
-                  child: Icon(Icons.arrow_forward, color: Colors.blue),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right:8.0),
+                    child: Icon(Icons.arrow_forward, color: Colors.blue),
+                  ),
                 )
               ],
             ),
@@ -98,6 +103,13 @@ class ModuleList extends StatelessWidget {
               ),
               child: GestureDetector(
                 onTap: () {
+                  // Navigator.pushNamed(
+                  //   context,
+                  //   '/ResultView',
+                  //   arguments: {
+                  //     'deptName': deptNames,
+                  //     'semester': semester,
+                  //   },
                   Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => resultTable()),
