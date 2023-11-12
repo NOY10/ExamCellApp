@@ -33,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
 
   final List<String> _pageTitles = [
-    'Result Processing System',
+    'Dashboard',
     'View Result',
   ];
 
@@ -105,10 +105,10 @@ class _MyHomePageState extends State<MyHomePage> {
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.person,
+                  Icons.home_filled,
                   size: 20,
                 ),
-                label: 'Profile',
+                label: 'Dashboard',
               ),
               BottomNavigationBarItem(
                 icon: Icon(

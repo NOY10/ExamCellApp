@@ -82,18 +82,18 @@ class _NavBarState extends State<NavBar> {
                 )),
               ),
               const SizedBox(height: 16),
-              buildMenuItem(
-                text: 'Dark Mode',
-                icon: Icons.dark_mode_outlined,
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Divider(
-                  color: Colors.black,
-                  height: 1,
-                ),
-              ),
-              const SizedBox(height: 5),
+              // buildMenuItem(
+              //   text: 'Dark Mode',
+              //   icon: Icons.dark_mode_outlined,
+              // ),
+              // const Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: 16.0),
+              //   child: Divider(
+              //     color: Colors.black,
+              //     height: 1,
+              //   ),
+              // ),
+              // const SizedBox(height: 5),
               buildMenuItem(
                 text: 'About',
                 icon: Icons.info_outline_rounded,
@@ -105,7 +105,7 @@ class _NavBarState extends State<NavBar> {
                 icon: Icons.settings_outlined,
                 onClicked: () => selectedItem(context, 1),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 5),
               buildMenuItem(
                 text: 'Help',
                 icon: Icons.help_outline,
