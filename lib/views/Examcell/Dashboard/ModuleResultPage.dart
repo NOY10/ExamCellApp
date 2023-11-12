@@ -12,6 +12,7 @@ class ModuleResultPage extends StatefulWidget {
 class _ModuleResultPageState extends State<ModuleResultPage> {
   StudentDataSource studentDataSource = StudentDataSource([]);
   List<GridColumn> columns = [];
+  //String tutor = '';
 
   @override
   void initState() {
@@ -25,17 +26,16 @@ class _ModuleResultPageState extends State<ModuleResultPage> {
     final String moduleCode = args?['moduleCode'] ?? 'No Module Code';
     final String semester = args?['semester'] ?? 'No year';
 
-    final Uri url = Uri.parse(
-        "https://resultsystemdb.000webhostapp.com/examcell/individual_module.php");
 
-    final response = await http.post(url, body: {
-      "moduleCode": moduleCode,
-      "semester": semester,
-    });
+    final Uri url = Uri.parse(
+        "https://resultsystemdb.000webhostapp.com/examcell/getModuleMark.php?code=${moduleCode}");
 
     try {
+      final response = await http.get(url);
+
       if (response.statusCode == 200) {
         var list = json.decode(response.body);
+        //tutor = list[0]["tutorName"];
         List<StudentR> employees =
             list.map<StudentR>((json) => StudentR.fromJson(json)).toList();
         return employees;
@@ -61,18 +61,28 @@ class _ModuleResultPageState extends State<ModuleResultPage> {
         width: 150,
       ),
       GridColumn(
-        columnName: 'practical',
-        label: Container(alignment: Alignment.center, child: Text('Practical')),
-        width: 70,
-      ),
-      GridColumn(
         columnName: 'ca',
         label: Container(alignment: Alignment.center, child: Text('CA')),
         width: 70,
       ),
       GridColumn(
+        columnName: 'practical',
+        label: Container(alignment: Alignment.center, child: Text('Practical')),
+        width: 70,
+      ),
+      GridColumn(
         columnName: 'exam',
         label: Container(alignment: Alignment.center, child: Text('Exam')),
+        width: 70,
+      ),
+      GridColumn(
+        columnName: 'total',
+        label: Container(alignment: Alignment.center, child: Text('Total')),
+        width: 70,
+      ),
+      GridColumn(
+        columnName: 'remark',
+        label: Container(alignment: Alignment.center, child: Text('Remark')),
         width: 70,
       ),
     ];
@@ -242,9 +252,11 @@ class StudentDataSource extends DataGridSource {
       .map<DataGridRow>((e) => DataGridRow(cells: [
             DataGridCell<String>(columnName: 'sid', value: e.StudentId),
             DataGridCell<String>(columnName: 'name', value: e.Name),
-            DataGridCell<String>(columnName: 'practical', value: e.Practical),
             DataGridCell<String>(columnName: 'ca', value: e.CA),
+            DataGridCell<String>(columnName: 'practical', value: e.Practical),
             DataGridCell<String>(columnName: 'exam', value: e.Exam),
+            DataGridCell<String>(columnName: 'total', value: e.Total),
+            DataGridCell<String>(columnName: 'remark', value: e.Remark),
           ]))
       .toList();
 
@@ -263,7 +275,7 @@ class StudentDataSource extends DataGridSource {
 }
 
 class StudentR {
-  String StudentId, Name, CA, Practical, Exam;
+  String StudentId, Name, CA, Practical, Exam, Remark, Total;
 
   StudentR({
     required this.StudentId,
@@ -271,6 +283,8 @@ class StudentR {
     required this.CA,
     required this.Practical,
     required this.Exam,
+    required this.Total,
+    required this.Remark,
   });
 
   factory StudentR.fromJson(Map<String, dynamic> json) {
@@ -280,6 +294,8 @@ class StudentR {
       Practical: json['practical'].toString(),
       CA: json['ca'].toString(),
       Exam: json['exam'].toString(),
+      Total: json['total'].toString(),
+      Remark: json['remark'].toString(),
     );
   }
 }

@@ -1,11 +1,7 @@
 import 'package:examcellapp/views/Teacher/notification/tutorNotitification.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-void main() {
-  runApp(const MaterialApp(
-    home: AnnouncementMain(),
-  ));
-}
 
 class AnnouncementMain extends StatefulWidget {
   const AnnouncementMain({super.key});
@@ -55,7 +51,7 @@ class _AnnouncementMainState extends State<AnnouncementMain> {
         future: receiveNotifications(),
         builder: (context, snapshot){
           if(snapshot.connectionState == ConnectionState.waiting){
-            return CircularProgressIndicator();
+            return Center(child: SpinKitChasingDots(color: Colors.blue));
           } else {
             if(snapshot.hasData) {
               List<Map<String, dynamic>> data = snapshot.data as List<Map<String, dynamic>>;
