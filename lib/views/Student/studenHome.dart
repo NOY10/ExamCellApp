@@ -171,7 +171,7 @@ class _StudentHomeState extends State<StudentHome> {
   ];
 
   String getAppBarTitle() {
-    return _currentIndex == 0 ? "Result Processing System" : "Result";
+    return _currentIndex == 0 ? "Dashboard" : "Result";
   }
 
   Future<void> setData() async {
@@ -298,7 +298,7 @@ class _StudentHomeState extends State<StudentHome> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.message_outlined,
+                  Icons.remove_red_eye,
                   size: 20,
                 ),
                 label: 'View Result',

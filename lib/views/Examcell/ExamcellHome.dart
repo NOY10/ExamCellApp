@@ -1,4 +1,3 @@
-
 import 'package:examcellapp/views/Examcell/Dashboard.dart';
 import 'package:examcellapp/views/Examcell/Dashboard/Announcement.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +22,6 @@ class _ExamcellHomeState extends State<ExamcellHome> {
     'Dashboard',
     'Declaration',
   ];
-
 
   @override
   Widget build(BuildContext context) {
