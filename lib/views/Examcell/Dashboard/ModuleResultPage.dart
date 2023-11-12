@@ -1,4 +1,6 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -203,9 +205,39 @@ class _ModuleResultPageState extends State<ModuleResultPage> {
               future: fetchModuleResult(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  }
+                 if (snapshot.hasError) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/pending.png',
+                        width: 150,
+                        height: 150,
+                      ),
+                      SizedBox(height: 10), // Add some space between the image and buttons
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Marksheet Pending...',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14,
+                              color: Colors.blue,
+                            ),),
+                          SizedBox(height: 10,),// Add some space between buttons
+                          ElevatedButton(
+                            onPressed: () {
+                              showRemindeDialog(context);
+                            },
+                            child: Text('Send Reminder?'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                }
+
                   if (snapshot.hasData) {
                     studentDataSource = StudentDataSource(snapshot.data!);
                     return SingleChildScrollView(
@@ -228,9 +260,8 @@ class _ModuleResultPageState extends State<ModuleResultPage> {
                   }
                 }
                 return Center(
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    value: 0.8,
+                  child: SpinKitChasingDots(
+                    color: Colors.blue,
                   ),
                 );
               },
@@ -299,3 +330,22 @@ class StudentR {
     );
   }
 }
+
+void showRemindeDialog(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.question,
+      headerAnimationLoop: false,
+      showCloseIcon: false,
+      animType: AnimType.topSlide,
+      title: 'Name',
+      desc: 'Send Reminder?',
+       btnOkOnPress: () {
+        print('Reminder');
+      },
+      btnCancelOnPress: () {},
+      btnOkColor: Colors.blue,
+      dismissOnBackKeyPress: true,
+
+    )..show();
+  }
