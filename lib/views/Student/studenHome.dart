@@ -139,6 +139,7 @@
 import 'package:examcellapp/views/Student/stdDashboard.dart';
 import 'package:examcellapp/views/Student/stdDetailManager.dart';
 import 'package:examcellapp/views/Student/stdResultView/stdResult.dart';
+import 'package:examcellapp/views/Student/studentNotification.dart';
 import 'package:flutter/material.dart';
 import 'package:examcellapp/views/NavBar/NavBar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -218,7 +219,11 @@ class _StudentHomeState extends State<StudentHome> {
               color: const Color.fromARGB(255, 238, 235, 235),
               size: 30,
             ),
-            onPressed: () => print("notification"),
+            onPressed: () {
+              Navigator.push(
+                context, 
+                MaterialPageRoute(builder: (context) =>  notiStudent()));
+            },
           )
         ],
         backgroundColor: Color(primary),

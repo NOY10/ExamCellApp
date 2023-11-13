@@ -25,17 +25,19 @@ class ResultView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  deptName,
+                  "Infromation Technology",
                   style: TextStyle(fontSize: 14),
                 ),
                 Text(
-                  'Semester: $semester',
+                  'Semester: AS2023',
                   style: TextStyle(fontSize: 14),
                 ),
               ],
             ),
             SizedBox(height: 20),
-            resultTable(),
+            Container(
+                height: MediaQuery.of(context).size.width,
+                child: resultTable()),
           ],
         ),
       ),

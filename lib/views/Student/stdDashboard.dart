@@ -268,13 +268,12 @@
 //   }
 // }
 
-import 'package:examcellapp/views/Student/stdDetailManager.dart';
+import 'package:examcellapp/views/Examcell/utility.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:examcellapp/views/Student/stdLineChart.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class StudentDashboard extends StatefulWidget {
   const StudentDashboard({Key? key}) : super(key: key);
@@ -329,6 +328,22 @@ class _StudentDashboardState extends State<StudentDashboard> {
           assessment(),
           banner(context),
           moduleCard(context),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Aggregate Vs. Semester",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black87, // Add your desired text color
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ),
+          ),
+
           StudentLineChart(marks: marks),
         ],
       ),
@@ -357,106 +372,138 @@ class _StudentDashboardState extends State<StudentDashboard> {
     return [];
   }
 
-  Container moduleCard(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(18),
-      height: 140,
-      child: Row(
-        children: [
-          Card(
-            color: Color(CARD_COLOR),
-            child: Container(
-              width: MediaQuery.of(context).size.width / 3 - 20,
-              padding: EdgeInsets.all(14),
-              child: const Column(
-                children: [
-                  Text(
-                    'Completed Modules',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 14),
-                    child: Text(
-                      '5',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 18,
+  FutureBuilder moduleCard(BuildContext context) {
+  return FutureBuilder(
+    future: isDeclared(),
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return SpinKitChasingDots(color: Colors.blue);
+      } else if (snapshot.hasData) {
+        print(snapshot.data);
+
+        // Initialize module values
+        int completedModules = 26;
+        int repeatModules = 0;
+        int currentModules = 5;
+
+        // Check if the data is 'declared' and adjust values accordingly
+        if (snapshot.data == 'declared') {
+          completedModules += 5;  // Add 5 to completed modules
+          currentModules -= 5;    // Subtract 5 from current modules
+        }
+
+        // Return the container with updated values
+        return Container(
+          margin: EdgeInsets.all(18),
+          height: 140,
+          child: Row(
+            children: [
+              Card(
+                color: Color(CARD_COLOR),
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 3 - 20,
+                  padding: EdgeInsets.all(14),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Completed Modules',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
                           color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 14),
+                        child: Text(
+                          '$completedModules',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
+              Card(
+                color: Color(CARD_COLOR),
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 3 - 20,
+                  padding: EdgeInsets.all(14),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Repeat Modules',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 14),
+                        child: Text(
+                          '$repeatModules',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Card(
+                color: Color(CARD_COLOR),
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 3 - 20,
+                  padding: EdgeInsets.all(14),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Current Modules',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 14),
+                        child: Text(
+                          '$currentModules',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
           ),
-          Card(
-            color: Color(CARD_COLOR),
-            child: Container(
-              width: MediaQuery.of(context).size.width / 3 - 20,
-              padding: EdgeInsets.all(14),
-              child: const Column(
-                children: [
-                  Text(
-                    'Repeat Modules',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 14),
-                    child: Text(
-                      '5',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Card(
-            color: Color(CARD_COLOR),
-            child: Container(
-              width: MediaQuery.of(context).size.width / 3 - 20,
-              padding: EdgeInsets.all(14),
-              child: const Column(
-                children: [
-                  Text(
-                    'Current Modules',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 14),
-                    child: Text(
-                      '5',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
+        );
+      } else {
+        return Text('No Data');
+      }
+    },
+  );
+}
+
 
   Center assessment() {
     return Center(

@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:math';
+import 'package:examcellapp/views/Teacher/TutorMananger.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<Map<String, dynamic>>> receiveModuleMarkForEC(String code) async {
@@ -15,6 +17,73 @@ Future<List<Map<String, dynamic>>> receiveModuleMarkForEC(String code) async {
   }
 }
 
+Future<String> isDeclared() async {
+  var response = await http.get(Uri.parse("https://resultsystemdb.000webhostapp.com/examcell/isDeclared.php"));
+
+  if(response.statusCode == 200){
+    String str = response.body;
+    print(str);
+    return str;
+  } else {
+    throw Exception('Failed to load isDeclared');
+  }
+}
+
+Future<String> setRemider(String tid, String code, String date) async {
+  final url = Uri.parse("https://resultsystemdb.000webhostapp.com/examcell/tutorReminder.php?tid=$tid&code=$code&date=$date");
+  try {
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      return response.body; // Output from the PHP script (e.g., "Success" or "Failed")
+    } else {
+      throw Exception('Failed to connect to the server');
+    }
+  } catch (error) {
+    return error.toString(); // Handle the error, such as showing an error message to the user
+  }
+}
+
+
+Future<List<Map<String, dynamic>>> getRemider() async {
+  SharedPreferencesManager manager = SharedPreferencesManager();
+    String? storedUserID = await manager.getUserID();
+  final url = Uri.parse("https://resultsystemdb.000webhostapp.com/examcell/getReminder.php?tid=${storedUserID}");
+  try {
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonData = json.decode(response.body);
+
+      // If jsonData is already a list of maps, you can return it directly
+      return List<Map<String, dynamic>>.from(jsonData);
+    } else {
+      throw Exception('Failed to connect to the server');
+    }
+  } catch (error) {
+    throw Exception('Error: $error');
+  }
+}
+
+Future<List<Map<String, dynamic>>> getResultReminder() async {
+  // SharedPreferencesManager manager = SharedPreferencesManager();
+  //   String? storedUserID = await manager.getUserID();
+  final url = Uri.parse("https://resultsystemdb.000webhostapp.com/examcell/studentReminder.php");
+  try {
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonData = json.decode(response.body);
+
+      // If jsonData is already a list of maps, you can return it directly
+      return List<Map<String, dynamic>>.from(jsonData);
+    } else {
+      throw Exception('Failed to connect to the server');
+    }
+  } catch (error) {
+    throw Exception('Error: $error');
+  }
+}
 
 // import 'package:flutter/material.dart';
 // import 'package:syncfusion_flutter_datagrid/datagrid.dart';

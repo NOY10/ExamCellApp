@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:examcellapp/views/Examcell/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -106,7 +107,9 @@ class _ModuleResultPageState extends State<ModuleResultPage> {
           child: Text(
             "Module Name: $moduleName",
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: Colors.black87
             ),
           ),
         ),
@@ -116,7 +119,9 @@ class _ModuleResultPageState extends State<ModuleResultPage> {
             "Max Marks: 100",
             textAlign: TextAlign.start,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: Colors.black87
             ),
           ),
         ),
@@ -130,7 +135,9 @@ class _ModuleResultPageState extends State<ModuleResultPage> {
           child: Text(
             "Module Code: $moduleCode",
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: Colors.black87
             ),
           ),
         ),
@@ -140,7 +147,9 @@ class _ModuleResultPageState extends State<ModuleResultPage> {
             "Credit Value: 12",
             textAlign: TextAlign.start,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: Colors.black87
             ),
           ),
         ),
@@ -154,7 +163,9 @@ class _ModuleResultPageState extends State<ModuleResultPage> {
           child: Text(
             "Department: $deptName",
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: Colors.black87
             ),
           ),
         ),
@@ -164,7 +175,9 @@ class _ModuleResultPageState extends State<ModuleResultPage> {
             "Semester: $semester",
             textAlign: TextAlign.start,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: Colors.black87
             ),
           ),
         ),
@@ -200,7 +213,7 @@ class _ModuleResultPageState extends State<ModuleResultPage> {
             ),
           ),
           Expanded(
-            flex: 6,
+            flex: 5,
             child: FutureBuilder<List<StudentR>>(
               future: fetchModuleResult(),
               builder: (context, snapshot) {
@@ -292,17 +305,27 @@ class StudentDataSource extends DataGridSource {
       .toList();
 
   @override
-  DataGridRowAdapter buildRow(DataGridRow row) {
-    return DataGridRowAdapter(
-      cells: row.getCells().map<Widget>((e) {
-        return Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(8.0),
-          child: Text(e.value.toString()),
-        );
-      }).toList(),
-    );
-  }
+DataGridRowAdapter buildRow(DataGridRow row) {
+  String remark = row.getCells().firstWhere((cell) => cell.columnName == 'remark').value.toString();
+  bool isFail = remark.toLowerCase() == 'fail';
+
+  return DataGridRowAdapter(
+    cells: row.getCells().map<Widget>((e) {
+      return Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.all(8.0),
+        color: isFail ? Colors.black : null,
+        child: Text(
+          e.value.toString(),
+          style: TextStyle(
+            color: isFail ? Colors.white : null,
+          ),
+        ),
+      );
+    }).toList(),
+  );
+}
+
 }
 
 class StudentR {
@@ -338,13 +361,30 @@ void showRemindeDialog(BuildContext context) {
       headerAnimationLoop: false,
       showCloseIcon: false,
       animType: AnimType.topSlide,
-      title: 'Name',
-      desc: 'Send Reminder?',
+      title: 'Notify the tutor in charge?',
+      desc: '',
        btnOkOnPress: () {
-        print('Reminder');
+        print(setRemider('RUB201204006', 'CTE306', '2023-11-30'));
+        showAutoHideDialog(context);
       },
       btnCancelOnPress: () {},
       btnOkColor: Colors.blue,
+      dismissOnBackKeyPress: true,
+
+    ).show();
+  }
+
+
+void showAutoHideDialog(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.noHeader,
+      headerAnimationLoop: false,
+      showCloseIcon: false,
+      animType: AnimType.topSlide,
+      title: 'Reminder Sent!',
+      //desc: 'Send Reminder?',
+       autoHide: Duration(seconds: 3),
       dismissOnBackKeyPress: true,
 
     )..show();

@@ -103,6 +103,8 @@ class _LoginState extends State<Login> {
 
     String current = data['role'];
 
+    print(data);
+
     setState(() {
       isEmailWrong = false;
       isPasswordWrong = false;
@@ -111,6 +113,9 @@ class _LoginState extends State<Login> {
     if (current != "Error") {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('userID', data['userID']);
+      await prefs.setString('userRole', data['role']);
+      await prefs.setString('userName', data['Name']);
+      await prefs.setString('userEmail', data['email']);
 
       if (current == "student") {
         Fluttertoast.showToast(
@@ -165,14 +170,14 @@ class _LoginState extends State<Login> {
         });
       }
 
-      Fluttertoast.showToast(
-          msg: "Email and/or password are/is incorrect",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+      // Fluttertoast.showToast(
+      //     msg: "Email and/or password are/is incorrect",
+      //     toastLength: Toast.LENGTH_SHORT,
+      //     gravity: ToastGravity.CENTER,
+      //     timeInSecForIosWeb: 1,
+      //     backgroundColor: Colors.red,
+      //     textColor: Colors.white,
+      //     fontSize: 16.0);
     }
   }
 
@@ -211,7 +216,18 @@ class _LoginState extends State<Login> {
                 child: Column(
                   verticalDirection: VerticalDirection.down,
                   children: [
-                    SizedBox(height: 20),
+                    // Image.asset(
+                    //   "assets/images/logo-removebg-preview.png",
+                    //   height: 120,
+                    //   width: 240,),
+                    //   Text(
+                    //     "Result Processing System",
+                    //     style: TextStyle(
+                    //       fontSize: 16,
+                    //       fontWeight: FontWeight.w700,
+                    //       color: const Color.fromARGB(255, 71, 170, 252),
+                    //     ),),
+                    SizedBox(height: 120),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40),
                       child: TextField(
@@ -315,71 +331,71 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     SizedBox(height: 30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 30),
-                            child: Divider(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Text(
-                            'Or',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 30),
-                            child: Divider(
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 30),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 70),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // sign up with Google action
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(188, 255, 255, 255),
-                          foregroundColor: Colors.black,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'Images/google_logo.png',
-                              height: 30,
-                              width: 30,
-                            ),
-                            SizedBox(width: 10),
-                            Text(
-                              'Sign Up with Google',
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     Expanded(
+                    //       child: Padding(
+                    //         padding: const EdgeInsets.symmetric(horizontal: 30),
+                    //         child: Divider(
+                    //           color: Colors.black,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     Padding(
+                    //       padding: const EdgeInsets.symmetric(horizontal: 20),
+                    //       child: Text(
+                    //         'Or',
+                    //         style: TextStyle(
+                    //           fontSize: 16,
+                    //           fontWeight: FontWeight.bold,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     Expanded(
+                    //       child: Padding(
+                    //         padding: const EdgeInsets.symmetric(horizontal: 30),
+                    //         child: Divider(
+                    //           color: Colors.black,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    // SizedBox(height: 30),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(horizontal: 70),
+                    //   child: ElevatedButton(
+                    //     onPressed: () {
+                    //       // sign up with Google action
+                    //     },
+                    //     style: ElevatedButton.styleFrom(
+                    //       backgroundColor:
+                    //           const Color.fromARGB(188, 255, 255, 255),
+                    //       foregroundColor: Colors.black,
+                    //       shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.circular(20),
+                    //       ),
+                    //     ),
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         Image.asset(
+                    //           'Images/google_logo.png',
+                    //           height: 30,
+                    //           width: 30,
+                    //         ),
+                    //         SizedBox(width: 10),
+                    //         Text(
+                    //           'Sign Up with Google',
+                    //           style: TextStyle(
+                    //             fontSize: 14,
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

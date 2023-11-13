@@ -1,5 +1,8 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:examcellapp/views/Examcell/utility.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:http/http.dart' as http;
 
 class Declaration extends StatefulWidget {
   const Declaration({Key? key}) : super(key: key);
@@ -11,15 +14,28 @@ class Declaration extends StatefulWidget {
 class _DeclarationState extends State<Declaration> {
   DateTime? selectedDate;
   TextEditingController textController = TextEditingController();
-  bool isResultDeclared = false; // Track if the result is declared
+  String isResultDeclared = ''; // Track if the result is declared
 
-  void declareResult() async {
-    // Perform the result declaration logic
-    // For demonstration purposes, we'll just print a message
-    print('Result declared on: $selectedDate');
-    setState(() {
-      isResultDeclared = true;
-    });
+  void declareResult(String semester, DateTime date, String status) async {
+    final url = Uri.parse("https://resultsystemdb.000webhostapp.com/examcell/declare.php?semester=${semester}&date=${date}&status=${status}");
+
+  try {
+    final response = await http.post(url);
+
+    if (response.statusCode == 200) {
+      if(response.body == 'Success'){
+        print('Result declared on: $selectedDate');
+        setState(() {
+          isResultDeclared = 'declared';
+        });
+      }
+    } else {
+      throw Exception('Failed to declare data');
+    }
+  } catch (error) {
+    throw Exception('Failed to connect to the server');
+  }
+    
   }
 
   @override
@@ -37,38 +53,60 @@ class _DeclarationState extends State<Declaration> {
             //   ],
             // ),
             SizedBox(height: 20.0),
-            isResultDeclared
-                ? Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
-                    child: Center(
-                      child: Text(
-                        'Result declared on: ${selectedDate?.toLocal()?.toString().split(' ')[0] ?? 'Select a date'}',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                        ),
-                      ),
-                    ),
-                  )
-                : SizedBox(
-                    width: MediaQuery.of(context).size.width - 40,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () => showDeclarationDialog(context),
-                      child: Text(
-                        'Declaration',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
+            FutureBuilder(
+              future: isDeclared(),
+              builder: (context, snapshot) {
+                if(snapshot.connectionState == ConnectionState.waiting){
+                  return Center(child: SpinKitChasingDots(color: Colors.blue,));
+                }else if(snapshot.hasData){
+                  print(snapshot.data);
+                  if (snapshot.data == 'declared') {
+                    return declareResultPage();
+                  } else {
+                    return declaredResultPage(context);
+                  }
+                }else{
+                  return Text("No Data");
+                }
+              }
+            ),
           ],
         ),
       ),
     );
+  }
+
+  SizedBox declaredResultPage(BuildContext context) {
+    return SizedBox(
+                      width: MediaQuery.of(context).size.width - 40,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () => showDeclarationDialog(context),
+                        child: Text(
+                          'Declaration',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    );
+  }
+
+  Padding declareResultPage() {
+    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20.0),
+                      child: Center(
+                        child: Text(
+                          'Result declared on: ${selectedDate?.toLocal()?.toString().split(' ')[0] ?? 'Select a date'}',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                    );
   }
 
   GestureDetector datePicker(BuildContext context) {
@@ -109,7 +147,7 @@ class _DeclarationState extends State<Declaration> {
       title: 'Result Declaration',
       desc: 'Declare the Result for AS2023?',
       btnOkOnPress: () {
-        declareResult();
+        //declareResult();
         showSecondDialog(context);
       },
       btnCancelOnPress: () {},
@@ -166,6 +204,7 @@ class _DeclarationState extends State<Declaration> {
       title: 'Are You Sure?',
       // desc: 'Declare the Result for AS2023?',
       btnOkOnPress: () {
+        declareResult("AS2023", date, "1");
         showThirdDialog(context, date);
         setState(() {
           selectedDate = date;
@@ -174,7 +213,7 @@ class _DeclarationState extends State<Declaration> {
       btnCancelOnPress: () {
         setState(() {
           selectedDate = null;
-          isResultDeclared = false; // Clear the result declaration status
+          isResultDeclared = ''; // Clear the result declaration status
         });
       },
       btnOkColor: Colors.blue,
