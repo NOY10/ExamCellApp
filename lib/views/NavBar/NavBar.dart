@@ -36,18 +36,20 @@ class _NavBarState extends State<NavBar> {
 
   Future<void> loadSharedPreferences() async {
     if (!dataLoaded) {
-      final String? userID = prefs.getString('userID');
-      final Uri url =
-          Uri.parse("https://examcellflutter.000webhostapp.com/NavInfo.php");
+      final String? userEmail= prefs.getString('userEmail');
+      final String? userName = prefs.getString('userName');
 
-      final response = await http.post(url, body: {
-        "userID": userID,
-      });
+      // final Uri url =
+      //     Uri.parse("https://examcellflutter.000webhostapp.com/NavInfo.php");
 
-      var data = json.decode(response.body);
+      // final response = await http.post(url, body: {
+      //   "userID": userID,
+      // });
+
+      // var data = json.decode(response.body);
       setState(() {
-        name = data['name'];
-        email = data['email'];
+        name = userName!;
+        email = userEmail!;
         dataLoaded = true;
       });
     }

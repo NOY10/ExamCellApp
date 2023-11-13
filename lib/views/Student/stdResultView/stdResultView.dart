@@ -294,19 +294,40 @@ class EmployeeDataSource extends DataGridSource {
           ]))
       .toList();
 
-  @override
-  DataGridRowAdapter buildRow(DataGridRow row) {
-    return DataGridRowAdapter(
-      cells: row.getCells().map<Widget>((e) {
-        return Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(8.0),
-          child: Text(e.value.toString()),
-        );
-      }).toList(),
-    );
+
+    @override
+    DataGridRowAdapter buildRow(DataGridRow row) {
+      bool isFail = row.getCells().any((e) =>
+          e.columnName == 'Remarks' && e.value.toString().toLowerCase() == 'fail');
+
+      return DataGridRowAdapter(
+        cells: row.getCells().map<Widget>((e) {
+          return Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(8.0),
+            color: (e.columnName == 'Practical' || e.columnName == 'Exam') &&
+                    e.value == '0'
+                ? Colors.black
+                : isFail
+                    ? Colors.black
+                    : null,
+            child: Text(
+              e.value.toString(),
+              style: TextStyle(
+                color: (e.columnName == 'Practical' || e.columnName == 'Exam') &&
+                        e.value == '0'
+                    ? Colors.white
+                    : isFail
+                        ? Colors.white
+                        : null,
+              ),
+            ),
+          );
+        }).toList(),
+      );
+    }
+
   }
-}
 
 class Employee {
   String ModuleCode,
@@ -342,8 +363,8 @@ class Employee {
       ModuleName: json['name'] as String? ?? '',
       Credit: json['credit'].toString(),
       CA: json['ca'].toString(),
-      Practical: json['practical'].toString(),
-      Exam: json['exam'].toString(),
+      Practical: json['practical'].toString() == 'null' ? '0' : json['practical'].toString(),
+      Exam: json['exam'].toString() == 'null' ? '0' : json['exam'].toString(),
       Total: total.toString(),
       TotCm: json['totCm'].toString(),
       TotCmMax: json['totCmMax'].toString(),

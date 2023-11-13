@@ -1,5 +1,6 @@
 import 'package:examcellapp/views/Student/stdDetailManager.dart';
 import 'package:examcellapp/views/Teacher/Landing.dart';
+import 'package:examcellapp/views/Teacher/notification/notiTutor.dart';
 import 'package:examcellapp/views/Teacher/tutorResult.dart';
 import 'package:flutter/material.dart';
 import 'package:examcellapp/views/NavBar/NavBar.dart';
@@ -81,6 +82,20 @@ class _MyHomePageState extends State<MyHomePage> {
         iconTheme: IconThemeData(
           color: Colors.white,
         ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.notifications,
+              color: const Color.fromARGB(255, 238, 235, 235),
+              size: 30,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context, 
+                MaterialPageRoute(builder: (context) =>  notiTutor()));
+            },
+          )
+        ],
       ),
       body: PageView(
         controller: _pageController,

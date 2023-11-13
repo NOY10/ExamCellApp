@@ -15,10 +15,6 @@ class _resultTableState extends State<resultTable> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("Result"),
-          backgroundColor: Colors.blue,
-        ),
         body: FutureBuilder(
           future: getStudentDataSource(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -293,7 +289,7 @@ class StudentDataGridSource extends DataGridSource {
           ),
           DataGridCell<String>(
             columnName: 'Practical_${dataGridRow.modules.indexOf(module) + 1}',
-            value: module.marks['practical'].toString(),
+            value: module.marks['practical'].toString() == 'null' ? '--' : module.marks['practical'].toString(),
           ),
           DataGridCell<String>(
             columnName: 'Total_${dataGridRow.modules.indexOf(module) + 1}',

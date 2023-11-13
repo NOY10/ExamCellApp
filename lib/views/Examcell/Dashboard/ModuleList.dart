@@ -1,3 +1,4 @@
+import 'package:examcellapp/views/Examcell/Dashboard/ResultView.dart';
 import 'package:examcellapp/views/Examcell/Dashboard/allStdResult.dart';
 import 'package:flutter/material.dart';
 // import 'ModuleResultPage.dart';
@@ -112,7 +113,7 @@ class ModuleList extends StatelessWidget {
                   //   },
                   Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => resultTable()),
+                  MaterialPageRoute(builder: (context) => ResultView()),
                   );
                 },
                 child: Container(

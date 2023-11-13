@@ -238,16 +238,28 @@ class EmployeeDataSource extends DataGridSource {
 
   @override
   DataGridRowAdapter buildRow(DataGridRow row) {
-    return DataGridRowAdapter(
-      cells: row.getCells().map<Widget>((e) {
-        return Container(
-          alignment: Alignment.center,
-          padding: EdgeInsets.all(8.0),
-          child: Text(e.value.toString()),
-        );
-      }).toList(),
-    );
-  }
+  bool isFail = double.parse(row.getCells()[1].value.toString()) + double.parse(row.getCells()[2].value.toString()) < 24 ||
+      double.parse(row.getCells()[3].value.toString()) < 16 ||
+      double.parse(row.getCells()[4].value.toString()) < 50;
+
+
+  return DataGridRowAdapter(
+    cells: row.getCells().map<Widget>((e) {
+      return Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.all(8.0),
+        color: isFail ? Colors.black : null,
+        child: Text(
+          e.value.toString(),
+          style: TextStyle(
+            color: isFail ? Colors.white : null,
+          ),
+        ),
+      );
+    }).toList(),
+  );
+}
+
 }
 
 
